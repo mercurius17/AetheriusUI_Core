@@ -274,6 +274,7 @@
     const open = next.kind !== 'gameplay';
     shell.classList.toggle('is-open', open);
     shell.classList.toggle('is-workspace', next.kind === 'workspace');
+    shell.classList.toggle('is-server-workspace', next.kind === 'workspace' && next.moduleId === 'server');
     shell.setAttribute('aria-hidden', String(!open));
     if (next.kind === 'workspace') {
       radial.hidden = false;
@@ -822,8 +823,9 @@
   }, true);
 
   renderNodes();
-  // Native focus is acquired only by Meridian's configured hotkey. Local previews may opt in.
-  const preview = new URLSearchParams(window.location.search).has('preview');
+  // HTTP local é prévia; o arquivo carregado pelo jogo não recebe a captura.
+  const localHttpPreview = /^https?:$/.test(window.location.protocol) && isSourcePreview();
+  const preview = new URLSearchParams(window.location.search).has('preview') || localHttpPreview;
   shell.classList.toggle('is-preview', preview);
   if (preview || isSourcePreview()) {
     const script = document.createElement('script');

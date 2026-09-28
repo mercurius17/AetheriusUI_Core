@@ -44,7 +44,7 @@ O arquivo de referência e os documentos de entrada ficam em `referencias/` no c
 
 ## Prévia no Live Server
 
-Para conferir apenas a interface no Live Server do VS Code, abra `frontend/Data/MeridianUI/aetheriusui/index.html?preview`. A prévia exibe a captura `ScreenShot112.png` com leve desfoque atrás do anel; no jogo, o fundo geral continua transparente. O slot **SERVIDOR** carrega automaticamente uma fixture vazia de **Informações do servidor** quando a página é servida a partir do código fonte; ela não consulta dados reais. As outras fixtures de demonstração têm suas condições de carregamento em [`frontend/test-fixtures/README.md`](frontend/test-fixtures/README.md).
+Para conferir apenas a interface no Live Server do VS Code, abra `frontend/Data/MeridianUI/aetheriusui/index.html`. Em `localhost` ou `127.0.0.1`, a prévia exibe automaticamente a captura `ScreenShot112.png` com leve desfoque atrás do anel; no jogo, o fundo geral continua transparente. O slot **SERVIDOR** carrega uma fixture vazia de **Informações do servidor** sobre um painel preto translúcido; ela não consulta dados reais. As outras fixtures de demonstração têm suas condições de carregamento em [`frontend/test-fixtures/README.md`](frontend/test-fixtures/README.md).
 
 ## Validação registrada
 
