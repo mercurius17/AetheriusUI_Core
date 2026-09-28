@@ -8,7 +8,7 @@
 - Tipografia local: `frontend/Data/MeridianUI/aetheriusui/fonts/futura-book-bt.ttf`, cópia byte a byte do arquivo fornecido nesta tarefa e usada em `@font-face`.
 - Escala base de espaçamento: 4 px.
 
-O shell usa superfícies planas, linhas finas e ícones vetoriais monocromáticos. O blur do mundo não é simulado com `backdrop-filter`; o fallback é o overlay escuro. A rotação radial usa onze ângulos derivados de `2π/N`; o centro mede 1.15× o diâmetro externo. A abertura/volta usa Web Animations API para mover o elemento selecionado até o cabeçalho e respeita `prefers-reduced-motion`.
+O shell usa superfícies planas, linhas finas e ícones vetoriais monocromáticos. O blur do mundo não é simulado com `backdrop-filter`; o fallback é o overlay escuro. A rotação radial usa onze ângulos derivados de `2π/N`; o centro mede 1.15× o diâmetro externo. As posições e o raio são calculados dentro da área útil do radial, com margem para os nós e a legenda inferior. A abertura/volta usa Web Animations API para mover o elemento selecionado até o cabeçalho e respeita `prefers-reduced-motion`.
 
 ## Assets
 

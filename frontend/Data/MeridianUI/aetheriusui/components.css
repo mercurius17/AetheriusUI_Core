@@ -43,6 +43,7 @@
 .ui-empty-state h3,.ui-empty-state p{margin:0;font-weight:400}
 .ui-empty-state h3{color:var(--text);font-size:13px}
 .ui-empty-state p{font-size:11px}
+.server-preview-empty{min-height:min(42vh,320px);align-content:center;border:1px solid var(--line);background:rgba(13,20,15,.35)}
 .ui-skeleton{display:grid;gap:10px;padding:12px}
 .ui-skeleton i{height:6px;background:linear-gradient(90deg,rgba(169,179,172,.13),rgba(169,179,172,.03));animation:skeleton-pulse 1.4s ease-in-out infinite alternate}
 .ui-skeleton i:nth-child(3n + 2){width:72%}.ui-skeleton i:nth-child(3n){width:54%}

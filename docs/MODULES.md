@@ -21,7 +21,7 @@ Cada registro declara versão, janela do SDK, label, rota raiz e subrotas, slot,
 
 ## Fixtures de demonstração
 
-`frontend/test-fixtures/` registra dois módulos externos removíveis: uma fixture `class` de eco que exercita request/response e uma fixture `shop` com painel em branco. Elas exercitam slots, mount/unmount e navegação. A fixture `shop` não apresenta serviço, preço, catálogo, pagamento, apoiador ou estado persistente. Ela não é a Loja final e só entra no pacote de desenvolvimento quando explicitamente habilitada.
+`frontend/test-fixtures/` registra três módulos externos removíveis: uma fixture `class` de eco que exercita request/response, uma fixture `shop` com painel em branco e uma fixture `server` com estado vazio para prévia visual. Elas exercitam slots, mount/unmount e navegação. A fixture `shop` não apresenta serviço, preço, catálogo, pagamento, apoiador ou estado persistente. A fixture `server` não fornece dados de conexão. Elas não são módulos finais e só entram no pacote de desenvolvimento quando explicitamente habilitadas.
 
 ## Processo de integração
 

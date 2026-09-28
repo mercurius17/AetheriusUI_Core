@@ -215,11 +215,13 @@
   }
 
   function renderNodes() {
+    const width = radialItems.clientWidth;
+    const height = radialItems.clientHeight;
+    if (!width || !height) return;
     radialItems.replaceChildren();
-    const width = window.innerWidth;
-    const height = window.innerHeight;
-    const diameter = Math.max(68, Math.min(116, Math.min(width, height) * 0.105));
-    const radius = Math.min(width * 0.43, height * 0.40);
+    const diameter = Math.max(60, Math.min(116, Math.min(window.innerWidth, window.innerHeight) * 0.105));
+    const captionClearance = Math.max(48, height * 0.08);
+    const radius = Math.max(0, Math.min(width * 0.43, (width - diameter) / 2 - 12, (height - diameter) / 2 - captionClearance));
     const external = NAV.filter(function (item) { return !item.center; });
     const step = (Math.PI * 2) / external.length;
     const center = document.getElementById('character-node');
@@ -302,6 +304,7 @@
         if (oldEntry) unmountEntry(oldEntry);
       }
       if (next.kind === 'radial') {
+        renderNodes();
         radial.classList.remove('is-entering');
         void radial.offsetWidth;
         radial.classList.add('is-entering');
@@ -587,10 +590,19 @@
     window.__aetheriusFixturesLoaded = true;
     ['class-echo-module.js', 'shop-slot-module.js'].forEach(function (file) {
       const script = document.createElement('script');
-      script.src = './test-fixtures/' + file;
+      script.src = fixtureScriptPath(file);
       script.async = true;
       document.head.appendChild(script);
     });
+  }
+
+  function isSourcePreview() {
+    const local = window.location.protocol === 'file:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    return local && /\/frontend\/Data\/MeridianUI\/aetheriusui\/(?:index\.html)?$/i.test(window.location.pathname);
+  }
+
+  function fixtureScriptPath(file) {
+    return (isSourcePreview() ? '../../../test-fixtures/' : './test-fixtures/') + file;
   }
 
   function announce(text) {
@@ -810,5 +822,11 @@
 
   renderNodes();
   // Native focus is acquired only by Meridian's configured hotkey. Local previews may opt in.
-  if (new URLSearchParams(window.location.search).has('preview')) onFocus();
+  const preview = new URLSearchParams(window.location.search).has('preview');
+  if (preview || isSourcePreview()) {
+    const script = document.createElement('script');
+    script.src = fixtureScriptPath('server-info-module.js');
+    document.head.appendChild(script);
+  }
+  if (preview) onFocus();
 }());

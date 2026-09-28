@@ -8,12 +8,13 @@
 | Envelope, limite, sessão, dedupe e patch revision | EXECUTADO | Testes unitários do protocolo, router, revisão e SDK. |
 | Lifecycle de adapter, cancelamento e unload único | EXECUTADO | Testes unitários do registry incluindo unload durante mount e remount durante cleanup. |
 | Frontend SDK correlation/session e bridge UTF-8 | EXECUTADO | Testes de contrato locais; não exercitam Skyrim/CEF. |
-| Shell, componentes e IDs das fixtures | EXECUTADO (estático) | Teste textual do contrato; registro/navegação real das fixtures ainda requer Meridian runtime. |
+| Shell, componentes e IDs das fixtures | EXECUTADO (estático) | Teste textual do contrato; o fluxo real de `class` e `shop` ainda requer Meridian runtime. |
+| Radial e fixture `server` no Live Server | EXECUTADO | Inspeção visual em viewport 864×892: onze nós externos visíveis, radial centrado e legenda separada. Clique em SERVIDOR abriu o estado vazio de Informações do servidor; nenhum dado foi simulado. |
 | Client TypeScript build | EXECUTADO | `yarn build` em `referencias/repositories/aetherius-client/client`; Webpack 5.94 compilou com sucesso. |
 | Server TypeScript build | EXECUTADO | `npm run build-ts` em `referencias/repositories/aetherius-server/server`; `tsc` e bundle esbuild passaram. |
 | Core automatizado | EXECUTADO | `tests/run-tests.ps1`: 14/14 aprovados. |
 | TypeScript estrito dos SDKs/shared/testes | EXECUTADO | `tsc --noEmit --strict` com libs ES2022/DOM e tipos Node passou. |
-| Sintaxe JavaScript de shell, HUD e fixtures | EXECUTADO | `node --check` nos quatro arquivos JS. |
+| Sintaxe JavaScript de shell, HUD e fixtures | EXECUTADO | `node --check` passou para shell e nova fixture `server`; a checagem anterior cobriu HUD e fixtures `class` e `shop`. |
 | Font fornecida/copiada | EXECUTADO | SHA-256 idêntico nos dois arquivos: `B4B2D1B59DAF1BB628FA987F9AFCC3D16764AA7D6B858F4E683C6BE2867D9727`. |
 | Bridge C++ / Meridian API | BLOQUEADO | Gerador Visual Studio não encontrou toolchain MSVC; tentativa MinGW detectou GCC 8.1, mas `CommonLibSSEConfig.cmake` não está instalado. Nenhum binário nativo foi gerado. |
 | Registro/navegação E2E das fixtures `class` e `shop` | NÃO EXECUTADO | Requer pacote C++ compilado, Meridian e Skyrim; fixtures estão fora da distribuição padrão. |

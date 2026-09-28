@@ -42,6 +42,10 @@ frontend/Data/MeridianUI/aetheriusui/fonts/futura-book-bt.ttf
 
 O arquivo de referência e os documentos de entrada ficam em `referencias/` no checkout local e também não são enviados ao repositório público por padrão.
 
+## Prévia no Live Server
+
+Para conferir apenas a interface no Live Server do VS Code, abra `frontend/Data/MeridianUI/aetheriusui/index.html?preview`. O slot **SERVIDOR** carrega automaticamente uma fixture vazia de **Informações do servidor** quando a página é servida a partir do código fonte; ela não consulta dados reais. As outras fixtures de demonstração têm suas condições de carregamento em [`frontend/test-fixtures/README.md`](frontend/test-fixtures/README.md).
+
 ## Validação registrada
 
 - Core: 14 testes aprovados.
