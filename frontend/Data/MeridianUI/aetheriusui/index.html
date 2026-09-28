@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <meta name="color-scheme" content="dark">
+  <title>Aetherius UI</title>
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./components.css">
+</head>
+<body>
+  <main id="aetherius-shell" class="shell" aria-hidden="true">
+    <div class="world-shade" aria-hidden="true"></div>
+    <header class="shell-header">
+      <div class="wordmark"><span class="wordmark-mark" aria-hidden="true">A</span><span>AETHERIUS</span></div>
+      <div class="header-context"><span class="eyebrow">NAVEGAÇÃO</span><span id="header-title">ESCOLHA UM DESTINO</span></div>
+      <button class="icon-button close-button" id="close-shell" aria-label="Fechar interface" title="Fechar interface">
+        <svg aria-hidden="true"><use href="./icons/icons.svg#close"></use></svg>
+      </button>
+    </header>
+
+    <section id="radial-view" class="radial-view" aria-label="Destinos do Aetherius UI">
+      <div class="radial-orbit" aria-hidden="true"></div>
+      <div class="radial-center-glow" aria-hidden="true"></div>
+      <div id="radial-items" class="radial-items"></div>
+      <button class="radial-node radial-node-center" id="character-node" data-module-id="character" aria-label="Personagem, módulo externo indisponível">
+        <span class="node-icon"><svg aria-hidden="true"><use href="./icons/icons.svg#person"></use></svg></span>
+        <span class="node-label">PERSONAGEM</span>
+        <span class="node-status">MÓDULO EXTERNO</span>
+      </button>
+      <div class="radial-caption"><span class="caption-line"></span><span>SELECIONE UM MÓDULO</span><span class="caption-line"></span></div>
+    </section>
+
+    <section id="workspace-view" class="workspace-view" aria-label="Área do módulo" hidden>
+      <div class="workspace-frame">
+        <div class="workspace-topline">
+          <div class="workspace-heading">
+            <span class="eyebrow">AETHERIUS UI <span class="crumb-slash">/</span> MÓDULO EXTERNO</span>
+            <h1 id="workspace-title">MÓDULO</h1>
+          </div>
+          <button class="back-button" id="back-to-radial"><span class="back-arrow" aria-hidden="true">‹</span> VOLTAR À NAVEGAÇÃO</button>
+        </div>
+        <div class="workspace-rule"></div>
+        <div id="module-content" class="module-content" tabindex="-1">
+          <div class="unavailable-card">
+            <div class="unavailable-symbol" aria-hidden="true"><svg><use href="./icons/icons.svg#module"></use></svg></div>
+            <div class="unavailable-copy">
+              <span class="eyebrow">SLOT RESERVADO</span>
+              <h2>Módulo externo não registrado</h2>
+              <p>Este destino já tem uma posição estável no Aetherius UI. Ele será exibido aqui quando um adapter compatível for instalado.</p>
+            </div>
+            <span class="status-badge"><span class="status-dot"></span> INDISPONÍVEL</span>
+          </div>
+          <div class="component-showcase" aria-label="Componentes disponíveis para módulos">
+            <div class="showcase-label">COMPONENTES DO WORKSPACE</div>
+            <div class="showcase-grid">
+              <article class="showcase-panel"><div class="panel-heading"><span>PAINEL</span><span class="panel-kicker">BASE</span></div><div class="skeleton-lines"><i></i><i></i><i></i></div></article>
+              <article class="showcase-panel"><div class="panel-heading"><span>ESTADO</span><span class="status-badge small"><span class="status-dot"></span> AGUARDANDO</span></div><div class="empty-inline"><span class="empty-glyph">—</span><span>Sem dados fornecidos pelo módulo.</span></div></article>
+            </div>
+          </div>
+        </div>
+        <footer class="workspace-footer"><span id="workspace-route">/</span><span>ESTADO DO MÓDULO FORNECIDO POR ADAPTER</span></footer>
+      </div>
+    </section>
+
+    <footer class="shell-footer"><span><kbd>TAB</kbd> NAVEGAR <span class="footer-separator">·</span> <kbd>ESC</kbd> VOLTAR</span><span class="footer-version">CORE 1.0 <i></i> <span id="server-status">AGUARDANDO SESSÃO</span></span></footer>
+    <div id="toast-region" class="toast-region" role="status" aria-live="polite"></div>
+  </main>
+  <script src="./shell.js"></script>
+</body>
+</html>

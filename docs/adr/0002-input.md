@@ -1,0 +1,6 @@
+# ADR 0002: bridge Meridian e gate de input
+
+- Status: provisório; aprovação de produção bloqueada por prova M0.
+- Contexto: o Meridian `main` auditado publica as APIs `Meridian.View/1` e `Meridian.Input/1` sobre `IUIPlatformAPI` 1.0. `View/1` oferece foco da página; `Input/1` configura navegação de controle e atalhos. A API pública verificada não define passagem seletiva de WASD/corrida simultânea ao consumo de outras teclas.
+- Decisão: o plugin consumidor usa `View::Query`, `Input::Query`, listeners públicos e conteúdo local `mod://aetheriusui/`. A Main View e a HUD View são persistentes; somente a Main View recebe foco. `TAB` é interceptado pelo sink nativo e o atalho de controle usa `LeftShoulder + Start`. O foco é `Unpaused`, sem blur de framebuffer. Nenhum hook de `PollInputDevices` ou alteração de internals do Meridian é adotado.
+- Consequências: o ciclo de vida e o visual podem ser compilados/inspecionados antes do teste in-game, mas o requisito WASD + bloqueio seletivo continua sem prova. A configuração pública atual pode capturar teclado/mouse enquanto focada e não promete passagem de movimento. M0 está pendente e a produção permanece bloqueada até o proprietário testar essa combinação no runtime real ou aprovar uma solução compatível com API pública.

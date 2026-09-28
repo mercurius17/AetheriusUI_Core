@@ -1,0 +1,28 @@
+# Artefatos locais e dependências
+/tmp/
+/tests/build/
+/native/build/
+/native/build-*/
+**/node_modules/
+**/.DS_Store
+*.log
+
+# Checkouts completos usados apenas como referência de desenvolvimento
+/referencias/repositories/
+
+# Materiais fornecidos para orientar a implementação; não redistribuir por padrão
+/referencias/*.pdf
+/referencias/*.ttf
+/referencias/agent.md
+/referencias/PROMPT_IMPLEMENTACAO_AETHERIUS_UI_LUNA_v2.md
+/referencias/Planejamento_Completo_Implementacao_Aetherius_UI.md
+
+# A fonte foi usada no checkout local, mas sua licença de redistribuição não foi informada
+/frontend/Data/MeridianUI/aetheriusui/fonts/futura-book-bt.ttf
+
+# Segredos e configuração local
+.env
+.env.*
+!.env.example
+*.pem
+*.key

@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <title>Aetherius HUD</title>
+  <link rel="stylesheet" href="./styles.css">
+  <style>
+    html,body{pointer-events:none;background:transparent}.hud{position:fixed;left:3.2vw;bottom:4vh;display:none;gap:8px;align-items:center}.hud.is-visible{display:flex}.hud-stat{width:180px}.hud-label,.hud-name{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:5px;color:var(--text);font-size:8px;letter-spacing:.15em;text-shadow:0 1px 4px #000}.hud-name{justify-content:flex-start;margin:0}.hud-icon{width:12px;height:12px;fill:none;stroke:var(--accent);stroke-width:1.45;stroke-linecap:round;stroke-linejoin:round}.hud-value{color:var(--muted)}.hud-track{height:5px;background:rgba(2,6,3,.74);border:1px solid rgba(192,218,201,.25)}.hud-fill{height:100%;width:0;background:var(--accent);transition:width .18s linear}.hud-fill[data-tone="health"]{background:#bd665b}.hud-fill[data-tone="magicka"]{background:#649cc5}.hud-fill[data-tone="stamina"]{background:#bdab61}.hud-needs{display:flex;gap:6px;margin-left:6px}.hud-need{display:none;width:22px;height:22px;place-items:center;border:1px solid rgba(192,218,201,.35);background:rgba(3,7,4,.7)}.hud-need.is-visible{display:grid}.hud-need svg{width:13px;height:13px;fill:none;stroke:var(--muted);stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
+  </style>
+</head>
+<body>
+  <section id="aetherius-hud" class="hud" aria-hidden="true">
+    <div class="hud-stat" data-stat="health"><div class="hud-label"><span class="hud-name"><svg class="hud-icon" aria-hidden="true"><use href="./icons/icons.svg#health"></use></svg>VIDA</span><span class="hud-value"></span></div><div class="hud-track"><div class="hud-fill" data-tone="health"></div></div></div>
+    <div class="hud-stat" data-stat="magicka"><div class="hud-label"><span class="hud-name"><svg class="hud-icon" aria-hidden="true"><use href="./icons/icons.svg#magicka"></use></svg>MAGIA</span><span class="hud-value"></span></div><div class="hud-track"><div class="hud-fill" data-tone="magicka"></div></div></div>
+    <div class="hud-stat" data-stat="stamina"><div class="hud-label"><span class="hud-name"><svg class="hud-icon" aria-hidden="true"><use href="./icons/icons.svg#stamina"></use></svg>VIGOR</span><span class="hud-value"></span></div><div class="hud-track"><div class="hud-fill" data-tone="stamina"></div></div></div>
+    <div class="hud-needs"><span class="hud-need" data-need="hunger" title="Fome"><svg aria-hidden="true"><use href="./icons/icons.svg#hunger"></use></svg></span><span class="hud-need" data-need="thirst" title="Sede"><svg aria-hidden="true"><use href="./icons/icons.svg#thirst"></use></svg></span><span class="hud-need" data-need="fatigue" title="Fadiga"><svg aria-hidden="true"><use href="./icons/icons.svg#fatigue"></use></svg></span></div>
+  </section>
+  <script src="./hud.js"></script>
+</body>
+</html>
