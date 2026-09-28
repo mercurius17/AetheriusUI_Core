@@ -44,7 +44,7 @@ O arquivo de referência e os documentos de entrada ficam em `referencias/` no c
 
 ## Prévia no Live Server
 
-Para conferir apenas a interface no Live Server do VS Code, abra `frontend/Data/MeridianUI/aetheriusui/index.html?preview`. O slot **SERVIDOR** carrega automaticamente uma fixture vazia de **Informações do servidor** quando a página é servida a partir do código fonte; ela não consulta dados reais. As outras fixtures de demonstração têm suas condições de carregamento em [`frontend/test-fixtures/README.md`](frontend/test-fixtures/README.md).
+Para conferir apenas a interface no Live Server do VS Code, abra `frontend/Data/MeridianUI/aetheriusui/index.html?preview`. A prévia exibe a captura `ScreenShot112.png` com leve desfoque atrás do anel; no jogo, o fundo geral continua transparente. O slot **SERVIDOR** carrega automaticamente uma fixture vazia de **Informações do servidor** quando a página é servida a partir do código fonte; ela não consulta dados reais. As outras fixtures de demonstração têm suas condições de carregamento em [`frontend/test-fixtures/README.md`](frontend/test-fixtures/README.md).
 
 ## Validação registrada
 
@@ -59,4 +59,4 @@ Os detalhes e limites estão em [`docs/REPOSITORY_AUDIT.md`](docs/REPOSITORY_AUD
 
 ## Licenciamento
 
-Este repositório não declara uma licença de código. Confirme a titularidade e escolha uma licença antes de reutilizar ou redistribuir o conteúdo. A fonte e os materiais originais fornecidos não são incluídos no commit público.
+Este repositório não declara uma licença de código. Confirme a titularidade e escolha uma licença antes de reutilizar ou redistribuir o conteúdo. A fonte e os materiais originais de referência não são incluídos no commit público; a captura de jogo fornecida para a prévia está em `frontend/Data/MeridianUI/aetheriusui/preview/`.

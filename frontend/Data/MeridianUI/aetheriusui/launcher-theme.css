@@ -19,6 +19,20 @@ body {
   background: #000;
 }
 
+/* Captura do jogo somente na demonstração aberta com ?preview. */
+.shell.is-preview::before {
+  content: '';
+  position: absolute;
+  inset: -12px;
+  background: url('./preview/ScreenShot112.png') center / cover no-repeat;
+  filter: blur(5px);
+  pointer-events: none;
+}
+
+.shell.is-preview.is-workspace::before {
+  display: none;
+}
+
 .shell-header,
 .shell-footer {
   border-color: var(--launcher-green-deep);
@@ -89,15 +103,15 @@ body {
   color: var(--accent);
 }
 
-/* O radial deixa o mundo visível: só linhas, ícones e texto são desenhados. */
+/* O anel deixa o jogo visível; apenas os botões circulares recebem fundo. */
 .radial-orbit {
   width: var(--radial-ring-diameter, min(60vh, 53vw));
-  border-color: rgba(79, 199, 135, .29);
+  border-color: rgba(220, 228, 231, .25);
   box-shadow: none;
 }
 
 .radial-orbit::before {
-  border-color: rgba(79, 199, 135, .12);
+  border-color: rgba(220, 228, 231, .13);
 }
 
 .radial-orbit::after,
@@ -107,48 +121,59 @@ body {
 
 .radial-node,
 .radial-node-center {
-  border-color: rgba(79, 199, 135, .48);
-  background: transparent;
-  color: var(--text);
-  box-shadow: none;
+  border-color: rgba(174, 188, 194, .46);
+  background: radial-gradient(circle at 46% 38%, rgba(0, 0, 0, .98) 12%, rgba(0, 0, 0, .88) 57%, rgba(0, 0, 0, .60) 100%);
+  color: #fff;
+  box-shadow: 0 7px 24px rgba(0, 0, 0, .25);
   text-shadow: 0 2px 7px #000;
 }
 
 .radial-node-outer,
 .radial-node-center {
-  border-radius: 9px;
+  border-radius: 50%;
 }
 
 .radial-node:hover,
 .radial-node:focus-visible,
 .radial-node.is-selected {
-  border-color: var(--accent);
-  background: transparent;
-  color: var(--launcher-cream);
-  box-shadow: 0 0 0 1px rgba(79, 199, 135, .35);
+  border-color: #e4ebee;
+  background: radial-gradient(circle at 46% 38%, rgba(0, 0, 0, 1) 12%, rgba(0, 0, 0, .91) 57%, rgba(0, 0, 0, .64) 100%);
+  color: #fff;
+  box-shadow: 0 0 0 1px rgba(230, 236, 238, .3), 0 9px 26px rgba(0, 0, 0, .38);
 }
 
 .radial-node .node-icon {
-  color: var(--accent);
+  color: #aab5bb;
+  opacity: 1;
+}
+
+.radial-node.is-unavailable .node-icon {
+  opacity: 1;
+}
+
+.radial-node .node-icon svg,
+.radial-node-center .node-icon svg {
+  width: clamp(31px, 4.1vh, 39px);
+  height: clamp(31px, 4.1vh, 39px);
+  fill: currentColor;
+  stroke: none;
 }
 
 .radial-node .node-label {
+  color: #fff;
+  font-size: clamp(7px, .95vh, 9px);
   font-weight: 800;
-  letter-spacing: .10em;
-}
-
-.radial-node .node-status {
-  color: #a69d8e;
+  letter-spacing: .04em;
 }
 
 .radial-node-center {
-  border-color: var(--accent);
+  border-color: rgba(216, 225, 229, .68);
 }
 
 .radial-node-center .node-label {
-  color: var(--launcher-cream);
-  font: bold 11px Georgia, serif;
-  letter-spacing: .08em;
+  color: #fff;
+  font: 800 clamp(8px, 1.05vh, 10px) AetheriusFutura, sans-serif;
+  letter-spacing: .03em;
 }
 
 .radial-caption {

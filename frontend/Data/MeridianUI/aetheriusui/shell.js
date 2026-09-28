@@ -192,10 +192,10 @@
 
   function availabilityReason(id) {
     const entry = modules.get(id);
-    if (!entry) return 'Módulo externo não registrado.';
+    if (!entry) return 'Menu indisponível.';
     try {
       const result = entry.definition.availability && entry.definition.availability();
-      return result && typeof result.reason === 'string' ? result.reason.replace(/[\u0000-\u001f\u007f]/g, '').slice(0, 120) : 'Módulo externo indisponível.';
+      return result && typeof result.reason === 'string' ? result.reason.replace(/[\u0000-\u001f\u007f]/g, '').slice(0, 120) : 'Menu indisponível.';
     } catch (_) { return 'O módulo falhou ao verificar disponibilidade.'; }
   }
 
@@ -220,8 +220,8 @@
     if (!width || !height) return;
     radialItems.replaceChildren();
     const diameter = Math.max(60, Math.min(116, Math.min(window.innerWidth, window.innerHeight) * 0.105));
-    const cardWidth = diameter * 1.16;
-    const cardHeight = diameter * 0.90;
+    const cardWidth = diameter;
+    const cardHeight = diameter;
     const captionClearance = Math.max(48, height * 0.08);
     const radius = Math.max(0, Math.min(width * 0.43, (width - cardWidth) / 2 - 12, (height - cardHeight) / 2 - captionClearance));
     radial.style.setProperty('--radial-ring-diameter', radius * 2 + 'px');
@@ -234,7 +234,6 @@
     center.setAttribute('aria-disabled', String(!characterAvailable));
     center.setAttribute('aria-label', 'Personagem' + (characterAvailable ? '' : ', ' + availabilityReason('character')));
     center.title = characterAvailable ? 'PERSONAGEM' : availabilityReason('character');
-    center.querySelector('.node-status').textContent = characterAvailable ? 'DISPONÍVEL' : 'MÓDULO EXTERNO';
     external.forEach(function (item, index) {
       const angle = -Math.PI / 2 + index * step;
       const x = width / 2 + radius * Math.cos(angle);
@@ -253,9 +252,8 @@
       node.setAttribute('aria-label', item.label + (available ? '' : ', ' + reason));
       node.setAttribute('aria-disabled', String(!available));
       node.title = available ? item.label : reason;
-      node.innerHTML = '<span class="node-icon"><svg aria-hidden="true"><use href="./icons/icons.svg#' + item.icon + '"></use></svg></span><span class="node-label"></span><span class="node-status"></span>';
+      node.innerHTML = '<span class="node-icon"><svg aria-hidden="true"><use href="./icons/nav-icons.svg#' + item.icon + '"></use></svg></span><span class="node-label"></span>';
       node.querySelector('.node-label').textContent = item.label;
-      node.querySelector('.node-status').textContent = available ? 'DISPONÍVEL' : 'MÓDULO EXTERNO';
       node.addEventListener('mouseenter', function () { hoveredId = item.id; node.classList.add('is-selected'); });
       node.addEventListener('mouseleave', function () { if (hoveredId === item.id) hoveredId = null; node.classList.remove('is-selected'); });
       node.addEventListener('focus', function () { hoveredId = item.id; node.classList.add('is-selected'); });
@@ -329,12 +327,12 @@
   function renderUnavailable(descriptor) {
     const box = document.createElement('div');
     box.className = 'unavailable-card';
-    box.innerHTML = '<div class="unavailable-symbol"><svg aria-hidden="true"><use href="./icons/icons.svg#module"></use></svg></div><div class="unavailable-copy"><span class="eyebrow">SLOT RESERVADO</span><h2>Módulo externo não registrado</h2><p>Este destino tem uma posição estável no Aetherius UI. Instale um adapter compatível para conectar seu módulo.</p></div><span class="status-badge"><span class="status-dot"></span> INDISPONÍVEL</span>';
+    box.innerHTML = '<div class="unavailable-symbol"><svg aria-hidden="true"><use href="./icons/icons.svg#module"></use></svg></div><div class="unavailable-copy"><span class="eyebrow">SLOT RESERVADO</span><h2>Conteúdo indisponível</h2><p>Este destino tem uma posição estável no Aetherius UI. Instale um adapter compatível para conectar seu módulo.</p></div><span class="status-badge"><span class="status-dot"></span> INDISPONÍVEL</span>';
     moduleContent.appendChild(box);
     if (descriptor && descriptor.id === 'shop') {
       const hint = document.createElement('p');
       hint.className = 'fixture-only-note';
-      hint.textContent = 'A integração de loja pertence a um módulo externo.';
+      hint.textContent = 'A integração da loja ainda não está disponível.';
       moduleContent.appendChild(hint);
     }
   }
@@ -826,6 +824,7 @@
   renderNodes();
   // Native focus is acquired only by Meridian's configured hotkey. Local previews may opt in.
   const preview = new URLSearchParams(window.location.search).has('preview');
+  shell.classList.toggle('is-preview', preview);
   if (preview || isSourcePreview()) {
     const script = document.createElement('script');
     script.src = fixtureScriptPath('server-info-module.js');
