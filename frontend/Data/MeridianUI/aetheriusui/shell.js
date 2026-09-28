@@ -220,8 +220,11 @@
     if (!width || !height) return;
     radialItems.replaceChildren();
     const diameter = Math.max(60, Math.min(116, Math.min(window.innerWidth, window.innerHeight) * 0.105));
+    const cardWidth = diameter * 1.16;
+    const cardHeight = diameter * 0.90;
     const captionClearance = Math.max(48, height * 0.08);
-    const radius = Math.max(0, Math.min(width * 0.43, (width - diameter) / 2 - 12, (height - diameter) / 2 - captionClearance));
+    const radius = Math.max(0, Math.min(width * 0.43, (width - cardWidth) / 2 - 12, (height - cardHeight) / 2 - captionClearance));
+    radial.style.setProperty('--radial-ring-diameter', radius * 2 + 'px');
     const external = NAV.filter(function (item) { return !item.center; });
     const step = (Math.PI * 2) / external.length;
     const center = document.getElementById('character-node');
@@ -244,9 +247,8 @@
       node.dataset.moduleId = item.id;
       node.style.left = x + 'px';
       node.style.top = y + 'px';
-      node.style.width = diameter + 'px';
-      node.style.height = diameter + 'px';
-      node.style.borderRadius = '50%';
+      node.style.width = cardWidth + 'px';
+      node.style.height = cardHeight + 'px';
       node.style.animationDelay = (0.03 + index * 0.012) + 's';
       node.setAttribute('aria-label', item.label + (available ? '' : ', ' + reason));
       node.setAttribute('aria-disabled', String(!available));
@@ -273,6 +275,7 @@
     state = next;
     const open = next.kind !== 'gameplay';
     shell.classList.toggle('is-open', open);
+    shell.classList.toggle('is-workspace', next.kind === 'workspace');
     shell.setAttribute('aria-hidden', String(!open));
     if (next.kind === 'workspace') {
       radial.hidden = false;

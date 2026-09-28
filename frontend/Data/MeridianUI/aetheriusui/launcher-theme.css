@@ -1,0 +1,278 @@
+/* Visual inspirado nos tokens do launcher. A fonte principal continua sendo Futura. */
+:root {
+  --launcher-green-deep: #1d3e2d;
+  --launcher-green-line: #2a5a40;
+  --launcher-cream: #fffaf0;
+}
+
+html,
+body {
+  background: transparent;
+}
+
+.world-shade {
+  pointer-events: none;
+  background: transparent;
+}
+
+.shell.is-workspace .world-shade {
+  background: #000;
+}
+
+.shell-header,
+.shell-footer {
+  border-color: var(--launcher-green-deep);
+  background: transparent;
+  text-shadow: 0 2px 7px #000;
+}
+
+.shell-header {
+  height: 62px;
+}
+
+.wordmark {
+  gap: 9px;
+  letter-spacing: normal;
+}
+
+.wordmark-mark {
+  width: 31px;
+  height: 36px;
+  border: 1px solid #326d4e;
+  clip-path: polygon(50% 0, 100% 17%, 100% 83%, 50% 100%, 0 83%, 0 17%);
+  color: #3ab473;
+  font: bold 25px Georgia, serif;
+  transform: none;
+}
+
+.wordmark-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  line-height: 1;
+}
+
+.wordmark-copy strong {
+  color: #69cf99;
+  font: bold 13px Georgia, serif;
+  letter-spacing: 2px;
+}
+
+.wordmark-copy small {
+  color: #958a79;
+  font-size: 8px;
+  letter-spacing: 3.7px;
+}
+
+.header-context .eyebrow,
+.workspace-heading .eyebrow {
+  color: var(--accent);
+  font-weight: 800;
+}
+
+#header-title {
+  color: var(--launcher-cream);
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.close-button,
+.back-button {
+  border-color: var(--launcher-green-line);
+  border-radius: 7px;
+  background: transparent;
+}
+
+.close-button:hover,
+.back-button:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* O radial deixa o mundo visível: só linhas, ícones e texto são desenhados. */
+.radial-orbit {
+  width: var(--radial-ring-diameter, min(60vh, 53vw));
+  border-color: rgba(79, 199, 135, .29);
+  box-shadow: none;
+}
+
+.radial-orbit::before {
+  border-color: rgba(79, 199, 135, .12);
+}
+
+.radial-orbit::after,
+.radial-center-glow {
+  display: none;
+}
+
+.radial-node,
+.radial-node-center {
+  border-color: rgba(79, 199, 135, .48);
+  background: transparent;
+  color: var(--text);
+  box-shadow: none;
+  text-shadow: 0 2px 7px #000;
+}
+
+.radial-node-outer,
+.radial-node-center {
+  border-radius: 9px;
+}
+
+.radial-node:hover,
+.radial-node:focus-visible,
+.radial-node.is-selected {
+  border-color: var(--accent);
+  background: transparent;
+  color: var(--launcher-cream);
+  box-shadow: 0 0 0 1px rgba(79, 199, 135, .35);
+}
+
+.radial-node .node-icon {
+  color: var(--accent);
+}
+
+.radial-node .node-label {
+  font-weight: 800;
+  letter-spacing: .10em;
+}
+
+.radial-node .node-status {
+  color: #a69d8e;
+}
+
+.radial-node-center {
+  border-color: var(--accent);
+}
+
+.radial-node-center .node-label {
+  color: var(--launcher-cream);
+  font: bold 11px Georgia, serif;
+  letter-spacing: .08em;
+}
+
+.radial-caption {
+  color: var(--launcher-cream);
+  font-weight: 800;
+  text-shadow: 0 2px 7px #000;
+}
+
+.caption-line {
+  background: linear-gradient(90deg, transparent, var(--accent));
+}
+
+.shell-footer {
+  color: #b8ac99;
+  font-weight: 800;
+}
+
+kbd {
+  border-color: var(--launcher-green-line);
+  background: transparent;
+}
+
+/* Os módulos ocupam uma superfície preta sólida, com detalhes do launcher. */
+.workspace-frame,
+.workspace-topline,
+.module-content,
+.workspace-footer {
+  background: #000;
+}
+
+.workspace-frame {
+  border-color: var(--launcher-green-line);
+  border-radius: 11px;
+  box-shadow: 0 22px 60px rgba(0, 0, 0, .65);
+}
+
+.workspace-heading h1 {
+  color: var(--launcher-cream);
+  font: 600 clamp(22px, 2.4vw, 30px)/1.15 Georgia, serif;
+  letter-spacing: 0;
+}
+
+.workspace-rule,
+.workspace-footer {
+  border-color: var(--launcher-green-deep);
+}
+
+.workspace-rule {
+  background: var(--launcher-green-deep);
+}
+
+.back-button {
+  color: #69cf99;
+  background: var(--launcher-green-deep);
+  font-weight: 800;
+}
+
+.unavailable-card,
+.showcase-panel,
+.fixture-panel,
+.ui-panel,
+.ui-item-row,
+.ui-search,
+.server-preview-empty {
+  border-color: var(--launcher-green-line);
+  border-radius: 9px;
+  background: #000;
+}
+
+.unavailable-copy h2 {
+  color: var(--launcher-cream);
+  font: 600 23px/1.2 Georgia, serif;
+}
+
+.unavailable-copy p,
+.ui-panel-copy,
+.ui-empty-state p {
+  color: var(--muted);
+}
+
+.status-badge {
+  border-color: var(--launcher-green-line);
+  border-radius: 20px;
+  background: var(--launcher-green-deep);
+  color: #69cf99;
+  font-weight: 800;
+}
+
+.status-badge .status-dot {
+  background: var(--accent);
+}
+
+.fixture-action,
+.ui-button {
+  border-color: #326e4e;
+  border-radius: 7px;
+  background: var(--launcher-green-deep);
+  color: #69cf99;
+  font-weight: 800;
+}
+
+.fixture-action:hover,
+.ui-button:hover,
+.ui-button:focus-visible {
+  border-color: var(--accent);
+  background: #245238;
+}
+
+.ui-modal {
+  border-color: var(--launcher-green-line);
+  border-radius: 11px;
+  background: #000;
+}
+
+@media (max-width: 600px) {
+  .wordmark-copy strong {
+    font-size: 11px;
+  }
+
+  .wordmark-copy small {
+    font-size: 7px;
+  }
+
+  .header-context {
+    margin-right: 10px;
+  }
+}
