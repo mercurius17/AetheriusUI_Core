@@ -321,6 +321,7 @@
       if (next.kind === 'radial') {
         renderNodes();
         radial.classList.remove('is-entering');
+        radial.classList.toggle('is-returning', previous.kind === 'workspace');
         void radial.offsetWidth;
         radial.classList.add('is-entering');
       }
@@ -441,7 +442,7 @@
     const offsets = [0, .18, .43, .66, .83, 1];
     const order = opening ? shapes : shapes.slice().reverse();
     const frames = order.map(function (clipPath, index) { return { clipPath: clipPath, offset: offsets[index] }; });
-    const animation = workspaceFrame.animate(frames, { duration: 940, easing: 'cubic-bezier(.22,.65,.26,1)', fill: 'both' });
+    const animation = workspaceFrame.animate(frames, { duration: opening ? 940 : 460, easing: 'cubic-bezier(.22,.65,.26,1)', fill: 'both' });
     return animation.finished.catch(function () { /* animação interrompida */ }).then(function () {
       if (!opening) workspace.hidden = true;
       animation.cancel();

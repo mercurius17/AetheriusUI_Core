@@ -186,6 +186,14 @@ body {
   animation: radial-node-elastic-in .62s cubic-bezier(.2, .75, .25, 1) both;
 }
 
+.radial-view.is-entering.is-returning {
+  animation-duration: .38s;
+}
+
+.radial-view.is-returning .radial-node-outer {
+  animation-duration: .3s;
+}
+
 @keyframes radial-elastic-in {
   0% { opacity: 0; transform: scale(.62, 1.22); }
   36% { opacity: 1; transform: scale(1.09, .92); }
@@ -212,6 +220,14 @@ body {
 
   .shell.is-preview .radial-node-outer {
     animation-duration: .62s !important;
+  }
+
+  .shell.is-preview .radial-view.is-entering.is-returning {
+    animation-duration: .38s !important;
+  }
+
+  .shell.is-preview .radial-view.is-returning .radial-node-outer {
+    animation-duration: .3s !important;
   }
 
   .shell.is-preview.is-server-workspace .server-preview-empty {
@@ -254,8 +270,26 @@ kbd {
 }
 
 .shell.is-server-workspace .workspace-frame {
+  border: 0;
   background: rgba(0, 0, 0, .68);
   box-shadow: 0 22px 60px rgba(0, 0, 0, .32);
+}
+
+.shell.is-server-workspace .shell-header,
+.shell.is-server-workspace .shell-footer,
+.shell.is-server-workspace .workspace-footer,
+.shell.is-server-workspace .close-button,
+.shell.is-server-workspace kbd {
+  border: 0;
+}
+
+.shell.is-server-workspace .close-button {
+  color: #fff;
+  filter: drop-shadow(0 1px 4px #000);
+}
+
+.shell.is-server-workspace .workspace-rule {
+  display: none;
 }
 
 .shell.is-server-workspace .workspace-topline,
@@ -265,6 +299,7 @@ kbd {
 }
 
 .shell.is-server-workspace .server-preview-empty {
+  border: 0;
   background: rgba(0, 0, 0, .38);
   animation: server-content-in .46s cubic-bezier(.2, .75, .25, 1) both;
 }
@@ -290,9 +325,23 @@ kbd {
 }
 
 .back-button {
-  color: #69cf99;
-  background: var(--launcher-green-deep);
-  font-weight: 800;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  background: none;
+  color: #fff;
+  font: 700 11px/1.2 'Segoe UI', Arial, sans-serif;
+  letter-spacing: .08em;
+  text-shadow: 0 2px 6px #000;
+}
+
+.back-button:hover,
+.back-button:focus-visible {
+  border: 0;
+  outline: none;
+  background: none;
+  color: #fff;
+  text-decoration: underline;
 }
 
 .unavailable-card,
