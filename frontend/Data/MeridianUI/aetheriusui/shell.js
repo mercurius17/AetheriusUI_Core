@@ -26,6 +26,7 @@
   const radial = document.getElementById('radial-view');
   const radialItems = document.getElementById('radial-items');
   const workspace = document.getElementById('workspace-view');
+  const workspaceFrame = workspace.querySelector('.workspace-frame');
   const headerTitle = document.getElementById('header-title');
   const workspaceTitle = document.getElementById('workspace-title');
   const workspaceRoute = document.getElementById('workspace-route');
@@ -40,7 +41,12 @@
   let hoveredId = null;
   let disposeInputScope = null;
   let radialExitAnimation = null;
+  let workspaceOrigin = null;
   let lastTabAt = 0;
+
+  function reducedMotion() {
+    return !shell.classList.contains('is-preview') && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }
 
   function uid() {
     if (window.crypto && typeof window.crypto.randomUUID === 'function') return window.crypto.randomUUID();
@@ -130,14 +136,14 @@
   function isPermissionId(value) { return typeof value === 'string' && /^[a-z][a-z0-9.-]{0,63}$/.test(value); }
 
   function registerModule(definition) {
-    if (!definition || typeof definition.id !== 'string' || !/^[a-z][a-z0-9-]*(?:\.[a-z0-9-]+)?$/.test(definition.id)) throw new Error('ID de módulo inválido.');
-    if (modules.has(definition.id) || unregistering.has(definition.id)) throw new Error('Módulo já registrado ou finalizando unload.');
+    if (!definition || typeof definition.id !== 'string' || !/^[a-z][a-z0-9-]*(?:\.[a-z0-9-]+)?$/.test(definition.id)) throw new Error('ID de menu inválido.');
+    if (modules.has(definition.id) || unregistering.has(definition.id)) throw new Error('Menu já registrado ou finalizando unload.');
     const descriptor = NAV.find(function (item) { return item.id === definition.id; });
     if (!descriptor || (typeof definition.mount !== 'function' && typeof definition.loader !== 'function') || typeof definition.rootRoute !== 'string' || definition.rootRoute !== descriptor.route || definition.radialSlot !== descriptor.slot) throw new Error('Adapter incompatível com o catálogo.');
     if (!isVersion(definition.version || '') || !isVersion(definition.sdkMin || '') || compareVersions('1.0.0', definition.sdkMin) < 0) throw new Error('Versão do adapter/SDK incompatível.');
     if (definition.sdkMaxExclusive && (!isVersion(definition.sdkMaxExclusive) || compareVersions('1.0.0', definition.sdkMaxExclusive) >= 0)) throw new Error('Versão do SDK incompatível.');
     const subroutes = Array.from(new Set(definition.subroutes || []));
-    if (subroutes.some(function (route) { return !routeIsSafe(route, definition.rootRoute); })) throw new Error('Subrotas devem permanecer dentro da rota raiz do módulo.');
+    if (subroutes.some(function (route) { return !routeIsSafe(route, definition.rootRoute); })) throw new Error('Subrotas devem permanecer dentro da rota raiz do menu.');
     const assets = Array.from(new Set(definition.assets || []));
     if (assets.some(function (asset) { return !isLocalAssetPath(asset); })) throw new Error('Assets devem ser caminhos locais relativos.');
     const capabilities = Array.from(new Set(definition.capabilities || []));
@@ -196,7 +202,7 @@
     try {
       const result = entry.definition.availability && entry.definition.availability();
       return result && typeof result.reason === 'string' ? result.reason.replace(/[\u0000-\u001f\u007f]/g, '').slice(0, 120) : 'Menu indisponível.';
-    } catch (_) { return 'O módulo falhou ao verificar disponibilidade.'; }
+    } catch (_) { return 'O menu falhou ao verificar disponibilidade.'; }
   }
 
   function compareVersions(left, right) {
@@ -279,12 +285,19 @@
     if (next.kind === 'workspace') {
       radial.hidden = false;
       radial.style.pointerEvents = 'none';
-      if (previous.kind === 'radial' && !window.matchMedia('(prefers-reduced-motion: reduce)').matches && typeof radial.animate === 'function') {
-        radialExitAnimation = radial.animate([{ opacity: 1, transform: 'scale(1)' }, { opacity: 0, transform: 'scale(.93)' }], { duration: 230, easing: 'cubic-bezier(.2,.75,.25,1)', fill: 'forwards' });
-        radialExitAnimation.finished.then(function () {
+      if (previous.kind === 'radial' && !reducedMotion() && typeof radial.animate === 'function') {
+        const exitAnimation = radial.animate([
+          { opacity: 1, transform: 'scale(1)' },
+          { opacity: 1, transform: 'scale(.91, 1.08)', offset: .35 },
+          { opacity: .82, transform: 'scale(1.06, .9)', offset: .7 },
+          { opacity: 0, transform: 'scale(.82, .82)' }
+        ], { duration: 690, easing: 'cubic-bezier(.2,.75,.25,1)', fill: 'forwards' });
+        radialExitAnimation = exitAnimation;
+        exitAnimation.finished.then(function () {
           if (state.kind === 'workspace') radial.hidden = true;
+          exitAnimation.cancel();
           radial.style.pointerEvents = '';
-          radialExitAnimation = null;
+          if (radialExitAnimation === exitAnimation) radialExitAnimation = null;
         }).catch(function () { /* animação interrompida por outra transição */ });
       } else {
         radial.hidden = true;
@@ -292,7 +305,7 @@
       workspace.hidden = false;
       const descriptor = NAV.find(function (item) { return item.id === next.moduleId; });
       const entry = modules.get(next.moduleId);
-      workspaceTitle.textContent = descriptor ? descriptor.label : 'MÓDULO';
+      workspaceTitle.textContent = descriptor ? descriptor.label : 'MENU';
       headerTitle.textContent = descriptor ? descriptor.label : 'WORKSPACE';
       workspaceRoute.textContent = next.route;
       moduleContent.replaceChildren();
@@ -311,7 +324,7 @@
         void radial.offsetWidth;
         radial.classList.add('is-entering');
       }
-      headerTitle.textContent = next.kind === 'radial' && next.selectedId ? (NAV.find(function (item) { return item.id === next.selectedId; }) || {}).label || 'ESCOLHA UM DESTINO' : 'ESCOLHA UM DESTINO';
+      headerTitle.textContent = 'ESCOLHA UM DESTINO';
     }
     refreshControllerScope();
   }
@@ -328,7 +341,7 @@
   function renderUnavailable(descriptor) {
     const box = document.createElement('div');
     box.className = 'unavailable-card';
-    box.innerHTML = '<div class="unavailable-symbol"><svg aria-hidden="true"><use href="./icons/icons.svg#module"></use></svg></div><div class="unavailable-copy"><span class="eyebrow">SLOT RESERVADO</span><h2>Conteúdo indisponível</h2><p>Este destino tem uma posição estável no Aetherius UI. Instale um adapter compatível para conectar seu módulo.</p></div><span class="status-badge"><span class="status-dot"></span> INDISPONÍVEL</span>';
+    box.innerHTML = '<div class="unavailable-symbol"><svg aria-hidden="true"><use href="./icons/icons.svg#module"></use></svg></div><div class="unavailable-copy"><span class="eyebrow">SLOT RESERVADO</span><h2>Conteúdo indisponível</h2><p>Este destino tem uma posição estável no Aetherius UI. Instale um adapter compatível para conectar esta área.</p></div><span class="status-badge"><span class="status-dot"></span> INDISPONÍVEL</span>';
     moduleContent.appendChild(box);
     if (descriptor && descriptor.id === 'shop') {
       const hint = document.createElement('p');
@@ -342,7 +355,7 @@
     if (!routeIsSafe(route, entry.definition.rootRoute) || (route !== entry.definition.rootRoute && entry.definition.subroutes.indexOf(route) < 0)) { renderUnavailable(NAV.find(function (item) { return item.id === entry.definition.id; })); return; }
     const area = document.createElement('section');
     area.className = 'module-mount';
-    area.setAttribute('aria-label', 'Conteúdo do módulo ' + entry.definition.id);
+    area.setAttribute('aria-label', 'Conteúdo do menu ' + entry.definition.id);
     moduleContent.appendChild(area);
     const active = { container: area, controller: new AbortController(), ready: null, unmount: null, cancelled: false, cleaned: false, disposers: [] };
     entry.active = active;
@@ -377,7 +390,7 @@
       let instance;
       if (typeof entry.definition.loader === 'function') {
         const runtime = await entry.definition.loader();
-        if (!runtime || typeof runtime.mount !== 'function') throw new Error('Loader de módulo inválido.');
+        if (!runtime || typeof runtime.mount !== 'function') throw new Error('Loader do menu inválido.');
         active.unmount = typeof runtime.unmount === 'function' ? function () { return runtime.unmount(); } : null;
         if (active.cancelled || entry.active !== active) return cleanupMount(active);
         instance = await runtime.mount(area, context);
@@ -394,7 +407,7 @@
       area.replaceChildren();
       const message = document.createElement('p');
       message.className = 'adapter-error';
-      message.textContent = 'O adapter não conseguiu montar este módulo.';
+      message.textContent = 'O adapter não conseguiu abrir este menu.';
       area.appendChild(message);
     });
   }
@@ -408,74 +421,68 @@
     transition = transition.then(async function () {
       if (state.kind !== 'radial') return;
       const source = document.querySelector('.radial-node[data-module-id="' + id + '"]');
-      const morph = source ? createMorphClone(source) : null;
+      const rect = source ? source.getBoundingClientRect() : null;
+      workspaceOrigin = rect ? { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 } : { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+      workspace.classList.add('is-elastic-transition');
       setState({ kind: 'workspace', moduleId: id, route: descriptor.route });
-      if (morph) await animateMorphClone(morph, workspaceTitle);
+      await animateWorkspaceElastic(workspaceOrigin, true);
+      workspace.classList.remove('is-elastic-transition');
     });
   }
 
-  function nextFrame() {
-    return new Promise(function (resolve) { requestAnimationFrame(function () { resolve(); }); });
-  }
-
-  function createMorphClone(source, heading) {
-    const rect = source.getBoundingClientRect();
-    const clone = source.cloneNode(true);
-    clone.removeAttribute('id');
-    clone.removeAttribute('data-module-id');
-    clone.setAttribute('aria-hidden', 'true');
-    clone.classList.add(heading ? 'morph-heading-clone' : 'morph-clone');
-    Object.assign(clone.style, {
-      position: 'fixed', left: rect.left + 'px', top: rect.top + 'px', width: rect.width + 'px', height: rect.height + 'px',
-      margin: '0', transform: 'none', zIndex: '12', pointerEvents: 'none'
+  function animateWorkspaceElastic(origin, opening) {
+    if (reducedMotion() || typeof workspaceFrame.animate !== 'function') return Promise.resolve();
+    const rect = workspaceFrame.getBoundingClientRect();
+    const x = ((origin.x - rect.left) / rect.width * 100).toFixed(2);
+    const y = ((origin.y - rect.top) / rect.height * 100).toFixed(2);
+    const at = ' at ' + x + '% ' + y + '%)';
+    const shapes = ['ellipse(0% 0%' + at, 'ellipse(19% 12%' + at, 'ellipse(52% 68%' + at,
+      'ellipse(119% 84%' + at, 'ellipse(95% 122%' + at, 'ellipse(160% 160%' + at];
+    const offsets = [0, .18, .43, .66, .83, 1];
+    const order = opening ? shapes : shapes.slice().reverse();
+    const frames = order.map(function (clipPath, index) { return { clipPath: clipPath, offset: offsets[index] }; });
+    const animation = workspaceFrame.animate(frames, { duration: 940, easing: 'cubic-bezier(.22,.65,.26,1)', fill: 'both' });
+    return animation.finished.catch(function () { /* animação interrompida */ }).then(function () {
+      if (!opening) workspace.hidden = true;
+      animation.cancel();
     });
-    shell.appendChild(clone);
-    return { clone: clone, rect: rect };
   }
 
-  function animateMorphClone(morph, target) {
-    if (!target || window.matchMedia('(prefers-reduced-motion: reduce)').matches || typeof morph.clone.animate !== 'function') {
-      morph.clone.remove();
-      return Promise.resolve();
-    }
-    return nextFrame().then(function () {
-      const targetRect = target.getBoundingClientRect();
-      const targetIsRadialNode = target.classList.contains('radial-node');
-      const targetHeight = targetIsRadialNode ? targetRect.height : Math.max(20, Math.min(30, targetRect.height));
-      const targetWidth = targetIsRadialNode ? targetRect.width : morph.clone.classList.contains('morph-heading-clone') ? Math.max(36, Math.min(120, targetRect.width)) : targetHeight;
-      const left = targetRect.left + (targetRect.width - targetWidth) / 2;
-      const top = targetRect.top + (targetRect.height - targetHeight) / 2;
-      const animation = morph.clone.animate([
-        { left: morph.rect.left + 'px', top: morph.rect.top + 'px', width: morph.rect.width + 'px', height: morph.rect.height + 'px', opacity: 1 },
-        { left: left + 'px', top: top + 'px', width: targetWidth + 'px', height: targetHeight + 'px', opacity: 0.05 }
-      ], { duration: 260, easing: 'cubic-bezier(.2,.75,.25,1)', fill: 'forwards' });
-      return animation.finished.catch(function () { /* animação cancelada */ }).then(function () { morph.clone.remove(); });
+  function animateRadialClose() {
+    if (reducedMotion() || typeof radial.animate !== 'function') return Promise.resolve();
+    const animation = radial.animate([
+      { opacity: 1, transform: 'scale(1)' },
+      { opacity: 1, transform: 'scale(1.08, .91)', offset: .32 },
+      { opacity: .92, transform: 'scale(.79, 1.07)', offset: .68 },
+      { opacity: 0, transform: 'scale(.28, .38)' }
+    ], { duration: 760, easing: 'cubic-bezier(.25,.65,.2,1)', fill: 'forwards' });
+    return animation.finished.catch(function () { /* animação interrompida */ }).then(function () {
+      radial.hidden = true;
+      animation.cancel();
     });
   }
 
   function goBack() {
     if (state.kind === 'workspace') {
       const moduleId = state.moduleId;
-      transition = transition.then(function () {
+      transition = transition.then(async function () {
         if (state.kind !== 'workspace') return;
         const id = state.moduleId;
         const entry = modules.get(id);
-        return Promise.resolve(entry ? unmountEntry(entry) : undefined).then(async function () {
-          if (state.kind !== 'workspace') return;
-          const source = workspaceTitle;
-          const morph = source ? createMorphClone(source, true) : null;
-          setState({ kind: 'radial', selectedId: id || moduleId });
-          if (morph) {
-            await nextFrame();
-            const target = document.querySelector('.radial-node[data-module-id="' + (id || moduleId) + '"]') || document.getElementById('character-node');
-            if (target) await animateMorphClone(morph, target);
-            else morph.clone.remove();
-          }
-        });
+        workspace.classList.add('is-elastic-transition');
+        await animateWorkspaceElastic(workspaceOrigin || { x: window.innerWidth / 2, y: window.innerHeight / 2 }, false);
+        if (entry) await Promise.resolve(unmountEntry(entry));
+        if (state.kind !== 'workspace') return;
+        setState({ kind: 'radial', selectedId: id || moduleId });
+        workspace.classList.remove('is-elastic-transition');
       });
     } else if (state.kind === 'radial') {
-      setState({ kind: 'gameplay', selectedId: null });
-      requestNativeFocus(false);
+      transition = transition.then(async function () {
+        if (state.kind !== 'radial') return;
+        await animateRadialClose();
+        setState({ kind: 'gameplay', selectedId: null });
+        requestNativeFocus(false);
+      });
     }
   }
 
@@ -562,7 +569,7 @@
               revisions.set(envelope.moduleId, snapshot.revision);
               window.dispatchEvent(new CustomEvent('aetherius-ui-snapshot', { detail: snapshot }));
             }
-          }).catch(function () { announce('Não foi possível sincronizar o estado do módulo.'); }).finally(function () { resyncing.delete(envelope.moduleId); });
+          }).catch(function () { announce('Não foi possível sincronizar o estado do menu.'); }).finally(function () { resyncing.delete(envelope.moduleId); });
         }
         return;
       }

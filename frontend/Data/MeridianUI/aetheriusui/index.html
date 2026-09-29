@@ -13,7 +13,7 @@
   <main id="aetherius-shell" class="shell" aria-hidden="true">
     <div class="world-shade" aria-hidden="true"></div>
     <header class="shell-header">
-      <div class="wordmark"><span class="wordmark-mark" aria-hidden="true">A</span><span class="wordmark-copy"><strong>AETHERIUS</strong><small>ROLEPLAY</small></span></div>
+      <div class="wordmark"><span class="wordmark-logo" aria-hidden="true"><img src="./brand/server-logo.png" alt=""></span><span class="wordmark-copy"><strong>AETHERIUS</strong><small>ROLEPLAY</small></span></div>
       <div class="header-context"><span class="eyebrow">NAVEGAÇÃO</span><span id="header-title">ESCOLHA UM DESTINO</span></div>
       <button class="icon-button close-button" id="close-shell" aria-label="Fechar interface" title="Fechar interface">
         <svg aria-hidden="true"><use href="./icons/icons.svg#close"></use></svg>
@@ -28,15 +28,15 @@
         <span class="node-icon"><svg aria-hidden="true"><use href="./icons/nav-icons.svg#person"></use></svg></span>
         <span class="node-label">PERSONAGEM</span>
       </button>
-      <div class="radial-caption"><span class="caption-line"></span><span>SELECIONE UM MÓDULO</span><span class="caption-line"></span></div>
+      <div class="radial-caption"><span class="caption-line"></span><span>SELECIONE UM DESTINO</span><span class="caption-line"></span></div>
     </section>
 
-    <section id="workspace-view" class="workspace-view" aria-label="Área do módulo" hidden>
+    <section id="workspace-view" class="workspace-view" aria-label="Área do menu" hidden>
       <div class="workspace-frame">
         <div class="workspace-topline">
           <div class="workspace-heading">
             <span class="eyebrow">AETHERIUS UI <span class="crumb-slash">/</span> MENU</span>
-            <h1 id="workspace-title">MÓDULO</h1>
+            <h1 id="workspace-title">MENU</h1>
           </div>
           <button class="back-button" id="back-to-radial"><span class="back-arrow" aria-hidden="true">‹</span> VOLTAR À NAVEGAÇÃO</button>
         </div>
@@ -51,15 +51,15 @@
             </div>
             <span class="status-badge"><span class="status-dot"></span> INDISPONÍVEL</span>
           </div>
-          <div class="component-showcase" aria-label="Componentes disponíveis para módulos">
+          <div class="component-showcase" aria-label="Componentes disponíveis para menus">
             <div class="showcase-label">COMPONENTES DO WORKSPACE</div>
             <div class="showcase-grid">
               <article class="showcase-panel"><div class="panel-heading"><span>PAINEL</span><span class="panel-kicker">BASE</span></div><div class="skeleton-lines"><i></i><i></i><i></i></div></article>
-              <article class="showcase-panel"><div class="panel-heading"><span>ESTADO</span><span class="status-badge small"><span class="status-dot"></span> AGUARDANDO</span></div><div class="empty-inline"><span class="empty-glyph">—</span><span>Sem dados fornecidos pelo módulo.</span></div></article>
+              <article class="showcase-panel"><div class="panel-heading"><span>ESTADO</span><span class="status-badge small"><span class="status-dot"></span> AGUARDANDO</span></div><div class="empty-inline"><span class="empty-glyph">—</span><span>Sem dados para este menu.</span></div></article>
             </div>
           </div>
         </div>
-        <footer class="workspace-footer"><span id="workspace-route">/</span><span>ESTADO DO MÓDULO FORNECIDO POR ADAPTER</span></footer>
+        <footer class="workspace-footer"><span id="workspace-route">/</span><span>ESTADO DO MENU FORNECIDO PELO ADAPTER</span></footer>
       </div>
     </section>
 

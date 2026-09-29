@@ -15,7 +15,7 @@
       const title = document.createElement('h3');
       title.textContent = 'INFORMAÇÕES DO SERVIDOR';
       const description = document.createElement('p');
-      description.textContent = 'Módulo vazio para conferir a interface.';
+      description.textContent = 'Painel vazio para conferir a interface.';
       emptyState.append(title, description);
       container.appendChild(emptyState);
       return { unmount: function () { emptyState.remove(); } };

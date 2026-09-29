@@ -53,14 +53,22 @@ body {
   letter-spacing: normal;
 }
 
-.wordmark-mark {
-  width: 31px;
-  height: 36px;
-  border: 1px solid #326d4e;
-  clip-path: polygon(50% 0, 100% 17%, 100% 83%, 50% 100%, 0 83%, 0 17%);
-  color: #3ab473;
-  font: bold 25px Georgia, serif;
-  transform: none;
+.wordmark-logo {
+  position: relative;
+  display: block;
+  width: 48px;
+  height: 40px;
+  overflow: hidden;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, .65));
+}
+
+.wordmark-logo img {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 80px;
+  height: 80px;
+  transform: translateX(-50%);
 }
 
 .wordmark-copy {
@@ -171,11 +179,44 @@ body {
 }
 
 .radial-view.is-entering {
-  animation-duration: .38s;
+  animation: radial-elastic-in .78s cubic-bezier(.2, .75, .25, 1) both;
 }
 
 .radial-node-outer {
-  animation-duration: .36s;
+  animation: radial-node-elastic-in .62s cubic-bezier(.2, .75, .25, 1) both;
+}
+
+@keyframes radial-elastic-in {
+  0% { opacity: 0; transform: scale(.62, 1.22); }
+  36% { opacity: 1; transform: scale(1.09, .92); }
+  62% { transform: scale(.96, 1.04); }
+  82% { transform: scale(1.025, .985); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes radial-node-elastic-in {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(.55, 1.2); }
+  48% { opacity: 1; transform: translate(-50%, -50%) scale(1.15, .88); }
+  72% { transform: translate(-50%, -50%) scale(.94, 1.06); }
+  100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+.workspace-view.is-elastic-transition {
+  animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shell.is-preview .radial-view.is-entering {
+    animation-duration: .78s !important;
+  }
+
+  .shell.is-preview .radial-node-outer {
+    animation-duration: .62s !important;
+  }
+
+  .shell.is-preview.is-server-workspace .server-preview-empty {
+    animation-duration: .46s !important;
+  }
 }
 
 .radial-caption {

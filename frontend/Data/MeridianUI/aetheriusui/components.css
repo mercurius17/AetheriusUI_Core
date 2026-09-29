@@ -2,9 +2,6 @@
 @keyframes radial-in{from{opacity:0;transform:scale(1.035)}to{opacity:1;transform:scale(1)}}
 .radial-node-outer{animation:radial-item-in .22s cubic-bezier(.2,.75,.25,1) both}
 @keyframes radial-item-in{from{opacity:0;transform:translate(-50%,-50%) scale(.76)}to{opacity:1;transform:translate(-50%,-50%) scale(1)}}
-.morph-clone{overflow:hidden;box-shadow:0 0 26px rgba(79,199,135,.18)}
-.morph-clone .node-label,.morph-clone .node-status{opacity:0}
-.morph-heading-clone{display:grid;place-items:center;overflow:hidden;margin:0;color:var(--text);font-size:19px;font-weight:400;letter-spacing:.18em;white-space:nowrap}
 .fixture-panel{display:grid;gap:12px;max-width:760px;margin:0 auto;padding:24px}
 .fixture-panel h2{margin:0;color:var(--text);font-size:16px;font-weight:400;letter-spacing:.1em}
 .fixture-panel p{margin:0;color:var(--muted);font-size:12px;line-height:1.65;letter-spacing:.02em}

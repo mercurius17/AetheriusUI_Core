@@ -59,4 +59,4 @@ Os detalhes e limites estão em [`docs/REPOSITORY_AUDIT.md`](docs/REPOSITORY_AUD
 
 ## Licenciamento
 
-Este repositório não declara uma licença de código. Confirme a titularidade e escolha uma licença antes de reutilizar ou redistribuir o conteúdo. A fonte e os materiais originais de referência não são incluídos no commit público; a captura de jogo fornecida para a prévia está em `frontend/Data/MeridianUI/aetheriusui/preview/`.
+Este repositório não declara uma licença de código. Confirme a titularidade e escolha uma licença antes de reutilizar ou redistribuir o conteúdo. A fonte não é incluída no commit público. A captura de jogo fornecida para a prévia e a logo do servidor usada no cabeçalho estão em `frontend/Data/MeridianUI/aetheriusui/preview/` e `frontend/Data/MeridianUI/aetheriusui/brand/`.
