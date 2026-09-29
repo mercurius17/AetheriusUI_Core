@@ -157,8 +157,11 @@ body {
 .radial-node-center .node-icon svg {
   width: clamp(42px, 5.1vh, 49px);
   height: clamp(42px, 5.1vh, 49px);
-  fill: currentColor;
-  stroke: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .radial-node .node-label {
