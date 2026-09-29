@@ -13,10 +13,15 @@ body {
 .world-shade {
   pointer-events: none;
   background: transparent;
+  transition: background-color .34s ease-out;
 }
 
 .shell.is-workspace:not(.is-server-workspace) .world-shade {
   background: #000;
+}
+
+.shell.is-workspace.is-returning-to-radial .world-shade {
+  background: transparent;
 }
 
 /* A captura aparece automaticamente no Live Server e com ?preview. */
@@ -27,10 +32,16 @@ body {
   background: url('./preview/ScreenShot112.png') center / cover no-repeat;
   filter: blur(5px);
   pointer-events: none;
+  opacity: 1;
+  transition: opacity .34s ease-out;
 }
 
 .shell.is-preview.is-workspace:not(.is-server-workspace)::before {
-  display: none;
+  opacity: 0;
+}
+
+.shell.is-preview.is-workspace.is-returning-to-radial::before {
+  opacity: 1;
 }
 
 .shell.is-server-workspace .world-shade {
@@ -217,6 +228,11 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .shell.is-preview .world-shade,
+  .shell.is-preview::before {
+    transition-duration: .34s !important;
+  }
+
   .shell.is-preview .radial-view.is-entering {
     animation-duration: .78s !important;
   }

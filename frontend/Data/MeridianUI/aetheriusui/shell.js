@@ -484,11 +484,16 @@
         if (state.kind !== 'workspace') return;
         const id = state.moduleId;
         const entry = modules.get(id);
-        prepareRadialReturn();
-        await animateWorkspaceElastic(workspaceOrigin || { x: window.innerWidth / 2, y: window.innerHeight / 2 }, false);
-        if (entry) await Promise.resolve(unmountEntry(entry));
-        if (state.kind !== 'workspace') return;
-        setState({ kind: 'radial', selectedId: id || moduleId });
+        shell.classList.add('is-returning-to-radial');
+        try {
+          prepareRadialReturn();
+          await animateWorkspaceElastic(workspaceOrigin || { x: window.innerWidth / 2, y: window.innerHeight / 2 }, false);
+          if (entry) await Promise.resolve(unmountEntry(entry));
+          if (state.kind !== 'workspace') return;
+          setState({ kind: 'radial', selectedId: id || moduleId });
+        } finally {
+          shell.classList.remove('is-returning-to-radial');
+        }
       });
     } else if (state.kind === 'radial') {
       transition = transition.then(async function () {
