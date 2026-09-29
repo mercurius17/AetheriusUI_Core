@@ -187,11 +187,11 @@ body {
 }
 
 .radial-view.is-entering.is-returning {
-  animation-duration: .38s;
+  animation-duration: .32s;
 }
 
 .radial-view.is-returning .radial-node-outer {
-  animation-duration: .3s;
+  animation-duration: .25s;
 }
 
 @keyframes radial-elastic-in {
@@ -223,11 +223,11 @@ body {
   }
 
   .shell.is-preview .radial-view.is-entering.is-returning {
-    animation-duration: .38s !important;
+    animation-duration: .32s !important;
   }
 
   .shell.is-preview .radial-view.is-returning .radial-node-outer {
-    animation-duration: .3s !important;
+    animation-duration: .25s !important;
   }
 
   .shell.is-preview.is-server-workspace .server-preview-empty {

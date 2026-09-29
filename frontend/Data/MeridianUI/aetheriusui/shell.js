@@ -271,6 +271,8 @@
 
   function setState(next) {
     const previous = state;
+    const radialReturnPrepared = previous.kind === 'workspace' && next.kind === 'radial' &&
+      !radial.hidden && radial.classList.contains('is-returning');
     if (radialExitAnimation) {
       radialExitAnimation.cancel();
       radialExitAnimation = null;
@@ -282,6 +284,7 @@
     shell.classList.toggle('is-workspace', next.kind === 'workspace');
     shell.classList.toggle('is-server-workspace', next.kind === 'workspace' && next.moduleId === 'server');
     shell.setAttribute('aria-hidden', String(!open));
+    radial.setAttribute('aria-hidden', String(next.kind !== 'radial'));
     if (next.kind === 'workspace') {
       radial.hidden = false;
       radial.style.pointerEvents = 'none';
@@ -319,11 +322,13 @@
         if (oldEntry) unmountEntry(oldEntry);
       }
       if (next.kind === 'radial') {
-        renderNodes();
-        radial.classList.remove('is-entering');
-        radial.classList.toggle('is-returning', previous.kind === 'workspace');
-        void radial.offsetWidth;
-        radial.classList.add('is-entering');
+        if (!radialReturnPrepared) {
+          renderNodes();
+          radial.classList.remove('is-entering');
+          radial.classList.toggle('is-returning', previous.kind === 'workspace');
+          void radial.offsetWidth;
+          radial.classList.add('is-entering');
+        }
       }
       headerTitle.textContent = 'ESCOLHA UM DESTINO';
     }
@@ -442,7 +447,7 @@
     const offsets = [0, .18, .43, .66, .83, 1];
     const order = opening ? shapes : shapes.slice().reverse();
     const frames = order.map(function (clipPath, index) { return { clipPath: clipPath, offset: offsets[index] }; });
-    const animation = workspaceFrame.animate(frames, { duration: opening ? 940 : 460, easing: 'cubic-bezier(.22,.65,.26,1)', fill: 'both' });
+    const animation = workspaceFrame.animate(frames, { duration: opening ? 940 : 340, easing: 'cubic-bezier(.22,.65,.26,1)', fill: 'both' });
     return animation.finished.catch(function () { /* animação interrompida */ }).then(function () {
       if (!opening) workspace.hidden = true;
       animation.cancel();
@@ -463,6 +468,17 @@
     });
   }
 
+  function prepareRadialReturn() {
+    radial.hidden = false;
+    radial.style.pointerEvents = 'none';
+    radial.setAttribute('aria-hidden', 'true');
+    renderNodes();
+    radial.classList.remove('is-entering');
+    radial.classList.add('is-returning');
+    void radial.offsetWidth;
+    radial.classList.add('is-entering');
+  }
+
   function goBack() {
     if (state.kind === 'workspace') {
       const moduleId = state.moduleId;
@@ -471,6 +487,7 @@
         const id = state.moduleId;
         const entry = modules.get(id);
         workspace.classList.add('is-elastic-transition');
+        prepareRadialReturn();
         await animateWorkspaceElastic(workspaceOrigin || { x: window.innerWidth / 2, y: window.innerHeight / 2 }, false);
         if (entry) await Promise.resolve(unmountEntry(entry));
         if (state.kind !== 'workspace') return;
