@@ -429,10 +429,8 @@
       const source = document.querySelector('.radial-node[data-module-id="' + id + '"]');
       const rect = source ? source.getBoundingClientRect() : null;
       workspaceOrigin = rect ? { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 } : { x: window.innerWidth / 2, y: window.innerHeight / 2 };
-      workspace.classList.add('is-elastic-transition');
       setState({ kind: 'workspace', moduleId: id, route: descriptor.route });
       await animateWorkspaceElastic(workspaceOrigin, true);
-      workspace.classList.remove('is-elastic-transition');
     });
   }
 
@@ -486,13 +484,11 @@
         if (state.kind !== 'workspace') return;
         const id = state.moduleId;
         const entry = modules.get(id);
-        workspace.classList.add('is-elastic-transition');
         prepareRadialReturn();
         await animateWorkspaceElastic(workspaceOrigin || { x: window.innerWidth / 2, y: window.innerHeight / 2 }, false);
         if (entry) await Promise.resolve(unmountEntry(entry));
         if (state.kind !== 'workspace') return;
         setState({ kind: 'radial', selectedId: id || moduleId });
-        workspace.classList.remove('is-elastic-transition');
       });
     } else if (state.kind === 'radial') {
       transition = transition.then(async function () {
