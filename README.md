@@ -13,6 +13,15 @@ Base de interface modular para o Aetherius/SkyMP, com shell persistente, HUD pas
 - `integrations/`: patches para conectar este Core às revisões atuais de `aetherius-client` e `aetherius-server` registradas abaixo.
 - `docs/`: arquitetura, protocolo, módulos, segurança, input, auditorias e decisões técnicas.
 - `tests/`: testes de contrato do Core.
+- `ui-inventory/`: inventário autoritativo, feitiços, favoritos compartilhados/hotkeys e abertura do mapa nativo pelo radial TAB, com UI CEF, persistência, adapters, testes e empacotamento.
+
+## Inventário, feitiços, favoritos e mapa
+
+As implementações 0.3.1 estão em [`ui-inventory/`](ui-inventory/README.md). Incluem destruição de itens com confirmação, controles de equipamento por mão com alternância equipar/desequipar, feitiços nas duas mãos com indicador **L R**, favoritos e hotkeys 1–9, ícones desenhados, destaque verde `#69CF99`, conteúdo a 80% e scroll com inércia. **MAPA**, no slot 6 do TAB, libera o foco CEF e solicita a abertura do mapa nativo pelo cliente.
+
+Para testar, gerar o pacote ou abrir a prévia, prepare os checkouts upstream e dependências descritos abaixo e execute `npm test`, `npm run check`, `npm run package:meridian` ou `npm run preview` em `ui-inventory/`. A prévia fica em `http://127.0.0.1:4177/`. Os overlays são gerados dentro do módulo; os scripts não instalam alterações no jogo automaticamente.
+
+O módulo ainda exige o adapter nativo durável, a integração exclusiva de Q/1–9 durante gameplay, migração e validação MySQL e testes dentro do Skyrim antes de produção. Consulte [integração](ui-inventory/docs/INSTALL.md), [favoritos/hotkeys](ui-inventory/docs/FAVORITES_HOTKEYS.md), [feitiços](ui-inventory/docs/SPELLS.md), [mapa](ui-inventory/docs/MAP.md) e [validação](ui-inventory/docs/VALIDATION.md).
 
 ## Integração com os repositórios Aetherius
 
