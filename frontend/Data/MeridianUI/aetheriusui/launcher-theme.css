@@ -24,26 +24,6 @@ body {
   background: transparent;
 }
 
-/* A captura aparece automaticamente no Live Server e com ?preview. */
-.shell.is-preview::before {
-  content: '';
-  position: absolute;
-  inset: -12px;
-  background: url('./preview/ScreenShot112.png') center / cover no-repeat;
-  filter: blur(5px);
-  pointer-events: none;
-  opacity: 1;
-  transition: opacity .34s ease-out;
-}
-
-.shell.is-preview.is-workspace:not(.is-server-workspace)::before {
-  opacity: 0;
-}
-
-.shell.is-preview.is-workspace.is-returning-to-radial::before {
-  opacity: 1;
-}
-
 .shell.is-server-workspace .world-shade {
   background: rgba(0, 0, 0, .12);
 }
@@ -196,7 +176,7 @@ body {
   animation: radial-elastic-in .78s cubic-bezier(.2, .75, .25, 1) both;
 }
 
-.radial-node-outer {
+.radial-view.is-entering .radial-node-outer {
   animation: radial-node-elastic-in .62s cubic-bezier(.2, .75, .25, 1) both;
 }
 
@@ -228,28 +208,28 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .shell.is-preview .world-shade,
-  .shell.is-preview::before {
+  .shell .world-shade,
+  .shell::before {
     transition-duration: .34s !important;
   }
 
-  .shell.is-preview .radial-view.is-entering {
+  .shell .radial-view.is-entering {
     animation-duration: .78s !important;
   }
 
-  .shell.is-preview .radial-node-outer {
+  .shell .radial-node-outer {
     animation-duration: .62s !important;
   }
 
-  .shell.is-preview .radial-view.is-entering.is-returning {
+  .shell .radial-view.is-entering.is-returning {
     animation-duration: .32s !important;
   }
 
-  .shell.is-preview .radial-view.is-returning .radial-node-outer {
+  .shell .radial-view.is-returning .radial-node-outer {
     animation-duration: .25s !important;
   }
 
-  .shell.is-preview.is-server-workspace .server-preview-empty {
+  .shell.is-server-workspace .server-preview-empty {
     animation-duration: .46s !important;
   }
 }

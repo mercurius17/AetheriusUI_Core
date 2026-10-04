@@ -22,6 +22,7 @@
   const unregistering = new Set();
   const subscriptions = new Map();
   const pending = new Map();
+  const modals = [];
   const shell = document.getElementById('aetherius-shell');
   const radial = document.getElementById('radial-view');
   const radialItems = document.getElementById('radial-items');
@@ -34,6 +35,7 @@
   const serverStatus = document.getElementById('server-status');
   let state = { kind: 'gameplay', selectedId: null };
   let sessionId = null;
+  let serverNavigation = null;
   const revisions = new Map();
   const resyncing = new Set();
   let transition = Promise.resolve();
@@ -45,7 +47,8 @@
   let lastTabAt = 0;
 
   function reducedMotion() {
-    return !shell.classList.contains('is-preview') && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.documentElement.dataset.motion = window.AetheriusUIMotion === 'reduced' ? 'reduced' : 'full';
+    return window.AetheriusUIMotion === 'reduced';
   }
 
   function uid() {
@@ -100,7 +103,8 @@
         pending.delete(correlationId);
         reject(new Error('O servidor não respondeu dentro do prazo.'));
       }, 8000);
-      pending.set(correlationId, { resolve: resolve, reject: reject, timer: timer });
+      if (pending.size >= 32) { clearTimeout(timer); reject(new Error('Há muitas solicitações em andamento.')); return; }
+      pending.set(correlationId, { moduleId: moduleId, resolve: resolve, reject: reject, timer: timer });
       sendEnvelope({ kind: 'request', moduleId: moduleId, action: action, correlationId: correlationId, payload: payload })
         .catch(function (error) { clearTimeout(timer); pending.delete(correlationId); reject(error); });
     });
@@ -139,7 +143,7 @@
     if (!definition || typeof definition.id !== 'string' || !/^[a-z][a-z0-9-]*(?:\.[a-z0-9-]+)?$/.test(definition.id)) throw new Error('ID de menu inválido.');
     if (modules.has(definition.id) || unregistering.has(definition.id)) throw new Error('Menu já registrado ou finalizando unload.');
     const descriptor = NAV.find(function (item) { return item.id === definition.id; });
-    if (!descriptor || (typeof definition.mount !== 'function' && typeof definition.loader !== 'function') || typeof definition.rootRoute !== 'string' || definition.rootRoute !== descriptor.route || definition.radialSlot !== descriptor.slot) throw new Error('Adapter incompatível com o catálogo.');
+    if (!descriptor || (typeof definition.mount !== 'function' && typeof definition.loader !== 'function' && typeof definition.activate !== 'function') || typeof definition.rootRoute !== 'string' || definition.rootRoute !== descriptor.route || definition.radialSlot !== descriptor.slot) throw new Error('Adapter incompatível com o catálogo.');
     if (!isVersion(definition.version || '') || !isVersion(definition.sdkMin || '') || compareVersions('1.0.0', definition.sdkMin) < 0) throw new Error('Versão do adapter/SDK incompatível.');
     if (definition.sdkMaxExclusive && (!isVersion(definition.sdkMaxExclusive) || compareVersions('1.0.0', definition.sdkMaxExclusive) >= 0)) throw new Error('Versão do SDK incompatível.');
     const subroutes = Array.from(new Set(definition.subroutes || []));
@@ -166,6 +170,7 @@
   }
 
   function unmountEntry(entry) {
+    if (entry.activation) { entry.activation.abort(); entry.activation = null; }
     const active = entry.active;
     entry.active = null;
     if (!active) return Promise.resolve();
@@ -186,6 +191,7 @@
   }
 
   function isAvailable(id) {
+    if (!sessionId || !serverNavigation || serverNavigation.get(id)?.available !== true) return false;
     const entry = modules.get(id);
     if (!entry) return false;
     try {
@@ -197,6 +203,9 @@
   }
 
   function availabilityReason(id) {
+    if (!sessionId) return 'Conecte-se ao servidor para acessar este destino.';
+    if (!serverNavigation) return 'Aguardando catálogo do servidor.';
+    if (serverNavigation.get(id)?.available !== true) return String(serverNavigation.get(id)?.reason || 'Sistema indisponível no servidor.').slice(0, 120);
     const entry = modules.get(id);
     if (!entry) return 'Menu indisponível.';
     try {
@@ -224,7 +233,7 @@
     const width = radialItems.clientWidth;
     const height = radialItems.clientHeight;
     if (!width || !height) return;
-    radialItems.replaceChildren();
+    // Reuse nodes: availability updates must not reload icons or restart animations.
     const diameter = Math.max(60, Math.min(116, Math.min(window.innerWidth, window.innerHeight) * 0.105));
     const cardWidth = diameter;
     const cardHeight = diameter;
@@ -246,7 +255,8 @@
       const y = height / 2 + radius * Math.sin(angle);
       const available = isAvailable(item.id);
       const reason = availabilityReason(item.id);
-      const node = document.createElement('button');
+      const existing = radialItems.querySelector('[data-module-id="' + item.id + '"]');
+      const node = existing || document.createElement('button');
       node.type = 'button';
       node.className = 'radial-node radial-node-outer' + (available ? '' : ' is-unavailable') + (hoveredId === item.id ? ' is-selected' : '');
       node.dataset.moduleId = item.id;
@@ -258,19 +268,23 @@
       node.setAttribute('aria-label', item.label + (available ? '' : ', ' + reason));
       node.setAttribute('aria-disabled', String(!available));
       node.title = available ? item.label : reason;
-      node.innerHTML = '<span class="node-icon"><svg aria-hidden="true"><use href="./icons/nav-icons.svg#' + item.icon + '"></use></svg></span><span class="node-label"></span>';
+      if (!existing) node.innerHTML = '<span class="node-icon"><svg aria-hidden="true"><use href="#nav-' + item.icon + '"></use></svg></span><span class="node-label"></span>';
       node.querySelector('.node-label').textContent = item.label;
+      if (!existing) {
       node.addEventListener('mouseenter', function () { hoveredId = item.id; node.classList.add('is-selected'); });
       node.addEventListener('mouseleave', function () { if (hoveredId === item.id) hoveredId = null; node.classList.remove('is-selected'); });
       node.addEventListener('focus', function () { hoveredId = item.id; node.classList.add('is-selected'); });
       node.addEventListener('blur', function () { hoveredId = null; node.classList.remove('is-selected'); });
       node.addEventListener('click', function () { openModule(item.id); });
       radialItems.appendChild(node);
+      }
     });
   }
 
   function setState(next) {
     const previous = state;
+    if (next.kind !== 'radial') modules.forEach(function (entry) { if (entry.activation) entry.activation.abort(); });
+    if (next.kind === 'gameplay') modals.slice().reverse().forEach(function (modal) { modal.close(false); });
     const radialReturnPrepared = previous.kind === 'workspace' && next.kind === 'radial' &&
       !radial.hidden && radial.classList.contains('is-returning');
     if (radialExitAnimation) {
@@ -418,18 +432,40 @@
     });
   }
 
-  function openModule(id) {
+  function openModule(id, requestedRoute) {
     const descriptor = NAV.find(function (item) { return item.id === id; });
     if (!descriptor || !isAvailable(id)) {
       announce(availabilityReason(id));
       return;
     }
+    const route = requestedRoute || descriptor.route;
+    const entry = modules.get(id);
+    if (!routeIsSafe(route, descriptor.route) || (route !== descriptor.route && !entry.definition.subroutes.includes(route))) throw new Error('Rota não registrada.');
     transition = transition.then(async function () {
-      if (state.kind !== 'radial') return;
+      if (typeof entry.definition.activate === 'function') {
+        if (state.kind !== 'radial' || !isAvailable(id) || modules.get(id) !== entry) return;
+        // Native visual destinations have no workspace or intermediate panel.
+        const controller = new AbortController();
+        entry.activation = controller;
+        try {
+          await entry.definition.activate(Object.freeze({ moduleId: id, route: route, signal: controller.signal, request: request, toast: announce, sdkVersion: '1.0.0' }));
+        } catch (error) {
+          if (!controller.signal.aborted) announce(error.message || 'Não foi possível abrir este destino.');
+        } finally {
+          if (entry.activation === controller) entry.activation = null;
+        }
+        return;
+      }
+      if (state.kind === 'workspace' && state.moduleId === id) { navigate(route); return; }
+      if (state.kind === 'workspace') {
+        const previousState = state;
+        await unmountEntry(modules.get(state.moduleId));
+        if (state !== previousState) return;
+      } else if (state.kind !== 'radial') return;
       const source = document.querySelector('.radial-node[data-module-id="' + id + '"]');
       const rect = source ? source.getBoundingClientRect() : null;
       workspaceOrigin = rect ? { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 } : { x: window.innerWidth / 2, y: window.innerHeight / 2 };
-      setState({ kind: 'workspace', moduleId: id, route: descriptor.route });
+      setState({ kind: 'workspace', moduleId: id, route: route });
       await animateWorkspaceElastic(workspaceOrigin, true);
     });
   }
@@ -478,6 +514,7 @@
   }
 
   function goBack() {
+    if (modals.length) { modals[modals.length - 1].close(false); return; }
     if (state.kind === 'workspace') {
       const moduleId = state.moduleId;
       transition = transition.then(async function () {
@@ -550,8 +587,12 @@
       if (sessionId && sessionId !== packet.sessionId) {
         pending.forEach(function (waiter) { clearTimeout(waiter.timer); waiter.reject(new Error('A sessão do servidor foi substituída.')); });
         pending.clear();
+        setState({ kind: 'gameplay', selectedId: null });
+        requestNativeFocus(false);
       }
       sessionId = packet.sessionId;
+      serverNavigation = null;
+      refreshAvailability();
       revisions.clear();
       resyncing.clear();
       serverStatus.textContent = 'SESSÃO SKYMP ATIVA';
@@ -563,7 +604,11 @@
       return;
     }
     if (packet && packet.type === 'disconnect') {
+      setState({ kind: 'gameplay', selectedId: null });
+      requestNativeFocus(false);
       sessionId = null;
+      serverNavigation = null;
+      refreshAvailability();
       revisions.clear();
       resyncing.clear();
       serverStatus.textContent = 'DESCONECTADO';
@@ -576,6 +621,7 @@
     if (!envelope || envelope.protocolVersion !== 1 || typeof envelope.moduleId !== 'string') return;
     if (!sessionId || envelope.sessionId !== sessionId) return;
     const currentRevision = revisions.get(envelope.moduleId) || 0;
+    if (envelope.kind === 'snapshot' && Number.isSafeInteger(envelope.revision) && envelope.revision < currentRevision) return;
     if (envelope.kind === 'snapshot' && Number.isSafeInteger(envelope.revision) && envelope.revision >= currentRevision) revisions.set(envelope.moduleId, envelope.revision);
     if (envelope.kind === 'patch') {
       if (envelope.baseRevision !== currentRevision || !Number.isSafeInteger(envelope.revision) || envelope.revision <= currentRevision) {
@@ -597,7 +643,7 @@
     if (envelope.kind === 'response' || envelope.kind === 'error') {
       diagnostic(envelope.kind + ' received', envelope.moduleId, envelope.correlationId);
       const waiter = pending.get(envelope.correlationId);
-      if (waiter) {
+      if (waiter && waiter.moduleId === envelope.moduleId) {
         clearTimeout(waiter.timer);
         pending.delete(envelope.correlationId);
         if (envelope.kind === 'error') waiter.reject(new Error(envelope.error && envelope.error.message || 'Solicitação recusada.'));
@@ -607,6 +653,10 @@
     (subscriptions.get(envelope.moduleId) || new Set()).forEach(function (listener) { try { listener(envelope); } catch (_) { /* Erro isolado do adapter. */ } });
     if (envelope.kind === 'event' && envelope.moduleId === 'core') {
       if (envelope.action === 'status') announce(String(envelope.payload && envelope.payload.message || 'Estado do servidor atualizado.').slice(0, 120));
+    }
+    if (envelope.kind === 'snapshot' && envelope.moduleId === 'core' && Array.isArray(envelope.payload?.navigation)) {
+      serverNavigation = new Map(envelope.payload.navigation.filter(item => item && typeof item.id === 'string').map(item => [item.id, item]));
+      refreshAvailability();
     }
     if (envelope.kind === 'snapshot' && envelope.moduleId === 'core' && envelope.payload && envelope.payload.demo === true && new URLSearchParams(window.location.search).has('fixtures')) {
       loadDevelopmentFixtures();
@@ -651,6 +701,7 @@
 
   function createModal(title, content, onClose) {
     const previousFocus = document.activeElement;
+    let closed = false;
     const backdrop = makeTextElement('div', 'ui-modal-backdrop');
     const dialog = document.createElement('section');
     dialog.className = 'ui-modal';
@@ -668,6 +719,10 @@
     backdrop.appendChild(dialog);
     document.body.appendChild(backdrop);
     function close(confirmed) {
+      if (closed) return;
+      closed = true;
+      const index = modals.indexOf(instance);
+      if (index >= 0) modals.splice(index, 1);
       backdrop.remove();
       if (previousFocus instanceof HTMLElement && previousFocus.isConnected) previousFocus.focus();
       if (typeof onClose === 'function') onClose(confirmed === true);
@@ -684,8 +739,10 @@
     }
     backdrop.addEventListener('click', function (event) { if (event.target === backdrop) close(); });
     backdrop.addEventListener('keydown', onKey);
+    const instance = { element: backdrop, close: close };
+    modals.push(instance);
     closeButton.focus();
-    return { element: backdrop, close: close };
+    return instance;
   }
 
   const components = Object.freeze({
@@ -812,6 +869,7 @@
   window.AetheriusUI = Object.freeze({
     version: '1.0.0',
     catalog: NAV,
+    openModule: openModule,
     registerModule: registerModule,
     unregisterModule: unregisterModule,
     request: request,
@@ -821,17 +879,23 @@
     nativeFocusChanged: nativeFocusChanged,
     nativeTab: handleTab,
     routeIsSafe: routeIsSafe,
-    getState: function () { return state; }
+    getState: function () { return state; },
+    getRegisteredModuleIds: function () { return Array.from(modules.keys()); }
   });
 
   window.addEventListener('aetherius-ui-message', onBridgeMessage);
-  window.addEventListener('focus', onFocus);
+  // CEF can focus its page during hidden initialization. The native Core owns
+  // visibility and starts the radial animation only after its focus is granted.
+  if (window.location.protocol !== 'mod:') window.addEventListener('focus', onFocus);
   window.addEventListener('blur', onBlur);
   window.addEventListener('resize', renderNodes);
   document.getElementById('character-node').addEventListener('click', function () { openModule('character'); });
   document.getElementById('close-shell').addEventListener('click', function () { if (state.kind === 'workspace') goBack(); else goBack(); });
   document.getElementById('back-to-radial').addEventListener('click', goBack);
   document.addEventListener('keydown', function (event) {
+    const editing = event.target instanceof Element && event.target.closest('input,textarea,[contenteditable=""],[contenteditable="true"]');
+    if (event.key === 'Backspace' && editing) return;
+    if (event.key === 'Tab' && modals.length) return;
     if (event.key === 'Escape' || event.key === 'Backspace') {
       event.preventDefault();
       goBack();

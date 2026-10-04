@@ -1,10 +1,10 @@
 (function(){
   'use strict';
   // Adapter contract is local-only; no model path or mouse motion is sent to server.
-  // The current Core bridge does not implement this extension. Never fake Ready.
+  // Readiness comes from Meridian's renderer, never merely from a queued load.
   class PreviewController {
     constructor(){this.area=null;this.token=null;this.yaw=35;this.pitch=15;this.distance=1;this.clean=[];this.generation=0;}
-    get available(){return typeof window.AetheriusInventoryPreview?.show==='function';}
+    get available(){return typeof window.aetheriusUiVisual==='function'&&typeof window.AetheriusInventoryPreview?.show==='function';}
     hide(){this.generation++;this.clean.splice(0).forEach(f=>f());this.area=null;if(this.available)window.AetheriusInventoryPreview.hide();}
     mount(area,token){
       this.hide();this.area=area;this.token=token;const generation=this.generation;

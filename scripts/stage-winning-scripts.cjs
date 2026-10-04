@@ -1,0 +1,31 @@
+'use strict';
+const fs = require('node:fs'), path = require('node:path'), crypto = require('node:crypto');
+const test = path.resolve(process.argv[2] || 'C:/Code/Aetherius-MP-Teste');
+const mo2 = path.resolve(process.argv[3] || 'C:/modOrganizer');
+const data = 'C:/Games/Steam/steamapps/common/Skyrim Special Edition/Data';
+const vfs = JSON.parse(fs.readFileSync(path.join(test, 'scripts-vfs.json'), 'utf8'));
+const extracted = JSON.parse(fs.readFileSync(path.join(test, 'extraction-sources.json'), 'utf8'));
+if (vfs.warnings.length || vfs.accounting.total !== vfs.accounting.rendered || vfs.accounting.capped || vfs.accounting.truncated) throw new Error('Incomplete VFS script inventory.');
+const archives = new Map(extracted.map(x => [x.name.toLowerCase(), x.out_path]));
+const root = path.join(test, 'runtime', 'data');
+const files = [];
+for (const item of vfs.results) {
+  if (!item.exists || item.error || !item.winner) throw new Error('Unresolved script: ' + item.path);
+  const relative = item.path.replaceAll('\\', '/');
+  if (!/^scripts\/[A-Za-z0-9_ .!()@'\[\]-]+\.pex$/i.test(relative)) throw new Error('Unsafe or unexpected script path: ' + relative);
+  const winner = item.winner;
+  let sourceRoot;
+  if (winner.kind === 'BSA') sourceRoot = archives.get(winner.name.toLowerCase());
+  else if (winner.name === 'Data') sourceRoot = data;
+  else if (winner.name === 'overwrite') sourceRoot = path.join(mo2, 'overwrite');
+  else sourceRoot = path.join(mo2, 'mods', winner.name);
+  if (!sourceRoot) throw new Error('Archive not extracted: ' + winner.name);
+  const source = path.resolve(sourceRoot, relative), destination = path.resolve(root, relative);
+  if (!destination.startsWith(root + path.sep)) throw new Error('Unsafe script destination.');
+  const bytes = fs.readFileSync(source);
+  fs.mkdirSync(path.dirname(destination), { recursive: true });
+  fs.writeFileSync(destination, bytes);
+  files.push({ path: relative, winner, source, size: bytes.length, sha256: crypto.createHash('sha256').update(bytes).digest('hex') });
+}
+fs.writeFileSync(path.join(root, 'aetherius-scripts.json'), JSON.stringify({ schemaVersion: 1, at: new Date().toISOString(), profile: vfs.profile, complete: true, files }, null, 2) + '\n');
+console.log(JSON.stringify({ staged: files.length, root }));

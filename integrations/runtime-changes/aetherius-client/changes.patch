@@ -1,0 +1,4113 @@
+diff --git a/client/src/index.ts b/client/src/index.ts
+index 2b9543f..c0c0f25 100644
+--- a/client/src/index.ts
++++ b/client/src/index.ts
+@@ -1,143 +1,145 @@
+-import {
+-  Game,
+-  Utility,
+-  once
+-} from "skyrimPlatform";
+-import { SkympClient } from "./services/services/skympClient";
+-
+-import * as sp from "skyrimPlatform";
+-import { VoiceRangeService } from "./services/services/Voicerangeservice";
+-import { VoiceSpatialService } from "./services/services/Voicespatialservice";
+-import { AccessRevokedService } from "./services/services/Accessrevokedservice";
+-import { ServerDownService } from "./services/services/Serverdownservice";
+-import { VoipToggleService } from "./services/services/Voiptoggleservice";
++import {
++  Game,
++  Utility,
++  once
++} from "skyrimPlatform";
++import { SkympClient } from "./services/services/skympClient";
++
++import * as sp from "skyrimPlatform";
++import { VoiceRangeService } from "./services/services/Voicerangeservice";
++import { VoiceSpatialService } from "./services/services/Voicespatialservice";
++import { AccessRevokedService } from "./services/services/Accessrevokedservice";
++import { ServerDownService } from "./services/services/Serverdownservice";
++import { VoipToggleService } from "./services/services/Voiptoggleservice";
+ import { BridgeService } from './services/services/BridgeService';
+-import { BlockPapyrusEventsService } from './services/services/blockPapyrusEventsService';
+-import { EnforceLimitationsService } from './services/services/enforceLimitationsService';
+-import { LoadGameService } from './services/services/loadGameService';
+-import { SendInputsService } from './services/services/sendInputsService';
+-import { SinglePlayerService } from './services/services/singlePlayerService';
+-import { SpApiInteractor } from './services/spApiInteractor';
+-import { TimeService } from "./services/services/timeService";
+-import { SpVersionCheckService } from "./services/services/spVersionCheckService";
+-import { ConsoleCommandsService } from "./services/services/consoleCommandsService";
+-import { LastInvService } from "./services/services/lastInvService";
+-import { ActivationService } from "./services/services/activationService";
+-import { CraftService } from "./services/services/craftService";
+-import { DropItemService } from "./services/services/dropItemService";
+-import { HitService } from "./services/services/hitService";
+-import { RagdollService } from "./services/services/ragdollService";
+-import { DeathService } from "./services/services/deathService";
+-import { ContainersService } from "./services/services/containersService";
+-import { NetworkingService } from "./services/services/networkingService";
+-import { RemoteServer } from "./services/services/remoteServer";
+-import { SpSnippetService } from "./services/services/spSnippetService";
+-import { SweetTaffyDynamicPerksService } from "./services/services/sweetTaffyDynamicPerksService";
+-import { SweetTaffySweetCantDropService } from "./services/services/sweetTaffySweetCantDropService";
+-import { SweetTaffyStaticPerksService } from "./services/services/sweetTaffyStaticPerksService";
+-import { DisableSkillAdvanceService } from "./services/services/disableSkillAdvanceService";
+-import { DisableFastTravelService } from "./services/services/disableFastTravelService";
+-import { DisableDifficultySelectionService } from "./services/services/disableDifficultySelectionService";
+-import { SweetTaffyPlayerCombatService } from "./services/services/sweetTaffyPlayerCombatService";
+-import { WorldCleanerService } from "./services/services/worldCleanerService";
+-import { SweetTaffySkillMenuService } from "./services/services/sweetTaffySkillMenuService";
+-import { LoadOrderVerificationService } from "./services/services/loadOrderVerificationService";
+-import { BrowserService } from "./services/services/browserService";
+-import { AuthService } from "./services/services/authService";
+-import { NetInfoService } from "./services/services/netInfoService";
+-import { AnimDebugService } from "./services/services/animDebugService";
+-import { TimersService } from "./services/services/timersService";
+-import { PlayerBowShotService } from "./services/services/playerBowShotService";
+-import { GamemodeEventSourceService } from "./services/services/gamemodeEventSourceService";
+-import { GamemodeUpdateService } from "./services/services/gamemodeUpdateService";
+-import { FrontHotReloadService } from "./services/services/frontHotReloadService";
+-import { BlockedAnimationsService } from "./services/services/blockedAnimationsService";
+-import { WorldView } from "./view/worldView";
+-import { KeyboardEventsService } from "./services/services/keyboardEventsService";
+-import { MagicSyncService } from "./services/services/magicSyncService";
+-import { ProfilingService } from "./services/services/profilingService";
+-import { SettingsService } from "./services/services/settingsService";
+-import { SweetCameraEnforcementService } from "./services/services/sweetCameraEnforcementService";
+-import { SweetTaffyNicknamesService } from "./services/services/sweetTaffyNicknamesService";
+-import { ServerJsVerificationService } from "./services/services/serverJsVerificationService";
+-import { SweetTaffyEvalService } from "./services/services/sweetTaffyEvalService";
+-
+-once("update", () => {
+-  Utility.setINIBool("bAlwaysActive:General", true);
+-  Game.setGameSettingInt("iDeathDropWeaponChance", 0);
+-  Utility.setINIFloat("fAutoVanityModeDelay:Camera", 3600);
+-});
+-
+-const main = () => {
+-  try {
+-    const controller = SpApiInteractor.getControllerInstance();
+-
+-    const listeners = [
+-      new VoiceRangeService(sp, controller),
+-      new VoiceSpatialService(sp, controller),
+-      new AccessRevokedService(sp, controller),
+-      new ServerDownService(sp, controller),
+-      new VoipToggleService(sp, controller),
++import { AetheriusUiService } from './services/services/aetheriusUiService';
++import { BlockPapyrusEventsService } from './services/services/blockPapyrusEventsService';
++import { EnforceLimitationsService } from './services/services/enforceLimitationsService';
++import { LoadGameService } from './services/services/loadGameService';
++import { SendInputsService } from './services/services/sendInputsService';
++import { SinglePlayerService } from './services/services/singlePlayerService';
++import { SpApiInteractor } from './services/spApiInteractor';
++import { TimeService } from "./services/services/timeService";
++import { SpVersionCheckService } from "./services/services/spVersionCheckService";
++import { ConsoleCommandsService } from "./services/services/consoleCommandsService";
++import { LastInvService } from "./services/services/lastInvService";
++import { ActivationService } from "./services/services/activationService";
++import { CraftService } from "./services/services/craftService";
++import { DropItemService } from "./services/services/dropItemService";
++import { HitService } from "./services/services/hitService";
++import { RagdollService } from "./services/services/ragdollService";
++import { DeathService } from "./services/services/deathService";
++import { ContainersService } from "./services/services/containersService";
++import { NetworkingService } from "./services/services/networkingService";
++import { RemoteServer } from "./services/services/remoteServer";
++import { SpSnippetService } from "./services/services/spSnippetService";
++import { SweetTaffyDynamicPerksService } from "./services/services/sweetTaffyDynamicPerksService";
++import { SweetTaffySweetCantDropService } from "./services/services/sweetTaffySweetCantDropService";
++import { SweetTaffyStaticPerksService } from "./services/services/sweetTaffyStaticPerksService";
++import { DisableSkillAdvanceService } from "./services/services/disableSkillAdvanceService";
++import { DisableFastTravelService } from "./services/services/disableFastTravelService";
++import { DisableDifficultySelectionService } from "./services/services/disableDifficultySelectionService";
++import { SweetTaffyPlayerCombatService } from "./services/services/sweetTaffyPlayerCombatService";
++import { WorldCleanerService } from "./services/services/worldCleanerService";
++import { SweetTaffySkillMenuService } from "./services/services/sweetTaffySkillMenuService";
++import { LoadOrderVerificationService } from "./services/services/loadOrderVerificationService";
++import { BrowserService } from "./services/services/browserService";
++import { AuthService } from "./services/services/authService";
++import { NetInfoService } from "./services/services/netInfoService";
++import { AnimDebugService } from "./services/services/animDebugService";
++import { TimersService } from "./services/services/timersService";
++import { PlayerBowShotService } from "./services/services/playerBowShotService";
++import { GamemodeEventSourceService } from "./services/services/gamemodeEventSourceService";
++import { GamemodeUpdateService } from "./services/services/gamemodeUpdateService";
++import { FrontHotReloadService } from "./services/services/frontHotReloadService";
++import { BlockedAnimationsService } from "./services/services/blockedAnimationsService";
++import { WorldView } from "./view/worldView";
++import { KeyboardEventsService } from "./services/services/keyboardEventsService";
++import { MagicSyncService } from "./services/services/magicSyncService";
++import { ProfilingService } from "./services/services/profilingService";
++import { SettingsService } from "./services/services/settingsService";
++import { SweetCameraEnforcementService } from "./services/services/sweetCameraEnforcementService";
++import { SweetTaffyNicknamesService } from "./services/services/sweetTaffyNicknamesService";
++import { ServerJsVerificationService } from "./services/services/serverJsVerificationService";
++import { SweetTaffyEvalService } from "./services/services/sweetTaffyEvalService";
++
++once("update", () => {
++  Utility.setINIBool("bAlwaysActive:General", true);
++  Game.setGameSettingInt("iDeathDropWeaponChance", 0);
++  Utility.setINIFloat("fAutoVanityModeDelay:Camera", 3600);
++});
++
++const main = () => {
++  try {
++    const controller = SpApiInteractor.getControllerInstance();
++
++    const listeners = [
++      new VoiceRangeService(sp, controller),
++      new VoiceSpatialService(sp, controller),
++      new AccessRevokedService(sp, controller),
++      new ServerDownService(sp, controller),
++      new VoipToggleService(sp, controller),
+       new BridgeService(sp, controller),
+-      new BrowserService(sp, controller),
+-      new BlockPapyrusEventsService(sp, controller),
+-      new LoadGameService(sp, controller),
+-      new SinglePlayerService(sp, controller),
+-      new EnforceLimitationsService(sp, controller),
+-      new SendInputsService(sp, controller),
+-      new SkympClient(sp, controller),
+-      new TimeService(sp, controller),
+-      new SpVersionCheckService(sp, controller),
+-      new ConsoleCommandsService(sp, controller),
+-      new LastInvService(sp, controller),
+-      new ActivationService(sp, controller),
+-      new CraftService(sp, controller),
+-      new DropItemService(sp, controller),
+-      new HitService(sp, controller),
+-      new RagdollService(sp, controller),
+-      new DeathService(sp, controller),
+-      new ContainersService(sp, controller),
+-      new NetworkingService(sp, controller),
+-      new RemoteServer(sp, controller),
+-      new SpSnippetService(sp, controller),
+-      new SettingsService(sp, controller),
+-      new SweetTaffyDynamicPerksService(sp, controller),
+-      new SweetTaffyStaticPerksService(sp, controller),
+-      new SweetTaffySweetCantDropService(sp, controller),
+-      new SweetTaffyPlayerCombatService(sp, controller),
+-      new SweetTaffySkillMenuService(sp, controller),
+-      new SweetCameraEnforcementService(sp, controller),
+-      new SweetTaffyEvalService(sp, controller),
+-      new DisableSkillAdvanceService(sp, controller),
+-      new DisableFastTravelService(sp, controller),
+-      new DisableDifficultySelectionService(sp, controller),
+-      new WorldCleanerService(sp, controller),
+-      new LoadOrderVerificationService(sp, controller),
+-      new AuthService(sp, controller),
+-      new NetInfoService(sp, controller),
+-      new AnimDebugService(sp, controller),
+-      new TimersService(sp, controller),
+-      new PlayerBowShotService(sp, controller),
+-      new GamemodeEventSourceService(sp, controller),
+-      new GamemodeUpdateService(sp, controller),
+-      new FrontHotReloadService(sp, controller),
+-      new BlockedAnimationsService(sp, controller),
+-      new WorldView(sp, controller),
+-      new KeyboardEventsService(sp, controller),
+-      new MagicSyncService(sp, controller),
+-      new ProfilingService(sp, controller),
+-      new SweetTaffyNicknamesService(sp, controller),
+-      new ServerJsVerificationService(sp, controller)
+-    ];
+-    SpApiInteractor.setup(listeners);
+-  } catch (e) {
+-    // TODO: handle setup failure. will output to game console by default
+-    throw e;
+-  }
+-};
+-
+-// [18.08.2023]
+-// I saw "attempt to call hooks.add while in hook context" error
+-// I'm not sure if it's a C++ bug in SkyrimPlatform or an artifact of webpack+hotreload
+-// But let's for now ensure that "main" executes inside tick context
+-once("tick", main);
++      new AetheriusUiService(sp, controller),
++      new BrowserService(sp, controller),
++      new BlockPapyrusEventsService(sp, controller),
++      new LoadGameService(sp, controller),
++      new SinglePlayerService(sp, controller),
++      new EnforceLimitationsService(sp, controller),
++      new SendInputsService(sp, controller),
++      new SkympClient(sp, controller),
++      new TimeService(sp, controller),
++      new SpVersionCheckService(sp, controller),
++      new ConsoleCommandsService(sp, controller),
++      new LastInvService(sp, controller),
++      new ActivationService(sp, controller),
++      new CraftService(sp, controller),
++      new DropItemService(sp, controller),
++      new HitService(sp, controller),
++      new RagdollService(sp, controller),
++      new DeathService(sp, controller),
++      new ContainersService(sp, controller),
++      new NetworkingService(sp, controller),
++      new RemoteServer(sp, controller),
++      new SpSnippetService(sp, controller),
++      new SettingsService(sp, controller),
++      new SweetTaffyDynamicPerksService(sp, controller),
++      new SweetTaffyStaticPerksService(sp, controller),
++      new SweetTaffySweetCantDropService(sp, controller),
++      new SweetTaffyPlayerCombatService(sp, controller),
++      new SweetTaffySkillMenuService(sp, controller),
++      new SweetCameraEnforcementService(sp, controller),
++      new SweetTaffyEvalService(sp, controller),
++      new DisableSkillAdvanceService(sp, controller),
++      new DisableFastTravelService(sp, controller),
++      new DisableDifficultySelectionService(sp, controller),
++      new WorldCleanerService(sp, controller),
++      new LoadOrderVerificationService(sp, controller),
++      new AuthService(sp, controller),
++      new NetInfoService(sp, controller),
++      new AnimDebugService(sp, controller),
++      new TimersService(sp, controller),
++      new PlayerBowShotService(sp, controller),
++      new GamemodeEventSourceService(sp, controller),
++      new GamemodeUpdateService(sp, controller),
++      new FrontHotReloadService(sp, controller),
++      new BlockedAnimationsService(sp, controller),
++      new WorldView(sp, controller),
++      new KeyboardEventsService(sp, controller),
++      new MagicSyncService(sp, controller),
++      new ProfilingService(sp, controller),
++      new SweetTaffyNicknamesService(sp, controller),
++      new ServerJsVerificationService(sp, controller)
++    ];
++    SpApiInteractor.setup(listeners);
++  } catch (e) {
++    // TODO: handle setup failure. will output to game console by default
++    throw e;
++  }
++};
++
++// [18.08.2023]
++// I saw "attempt to call hooks.add while in hook context" error
++// I'm not sure if it's a C++ bug in SkyrimPlatform or an artifact of webpack+hotreload
++// But let's for now ensure that "main" executes inside tick context
++once("tick", main);
+diff --git a/client/src/services/events/events.ts b/client/src/services/events/events.ts
+index c7cc046..7f707e2 100644
+--- a/client/src/services/events/events.ts
++++ b/client/src/services/events/events.ts
+@@ -1,117 +1,118 @@
+-import { EventEmitter } from "eventemitter3";
+-import { GameLoadEvent } from "./gameLoadEvent";
+-import { SendMessageEvent } from "./sendMessageEvent";
+-import { SendRawMessageEvent } from "./sendRawMessageEvent";
+-import { AnyMessage } from "../messages/anyMessage";
+-import { SendMessageWithRefrIdEvent } from "./sendMessageWithRefrIdEvent";
+-import { ApplyDeathStateEvent } from "./applyDeathStateEvent";
+-import { ConnectionFailed } from "./connectionFailed";
+-import { ConnectionDenied } from "./connectionDenied";
+-import { ConnectionAccepted } from "./connectionAccepted";
+-import { ConnectionDisconnect } from "./connectionDisconnect";
+-import { ConnectionMessage } from "./connectionMessage";
+-import { HostStartMessage } from "../messages/hostStartMessage";
+-import { HostStopMessage } from "../messages/hostStopMessage";
+-import { SetInventoryMessage } from "../messages/setInventoryMessage";
+-import { OpenContainerMessage } from "../messages/openContainerMessage";
+-import { ChangeValuesMessage } from "../messages/changeValuesMessage";
+-import { CreateActorMessage } from "../messages/createActorMessage";
+-import { DestroyActorMessage } from "../messages/destroyActorMessage";
+-import { SetRaceMenuOpenMessage } from "../messages/setRaceMenuOpenMessage";
+-import { SpSnippetMessage } from "../messages/spSnippetMessage";
+-import { TeleportMessage } from "../messages/teleportMessage";
+-import { UpdateAnimationMessage } from "../messages/updateAnimationMessage";
+-import { UpdateAppearanceMessage } from "../messages/updateAppearanceMessage";
+-import { UpdateEquipmentMessage } from "../messages/updateEquipmentMessage";
+-import { UpdateGamemodeDataMessage } from "../messages/updateGameModeDataMessage";
+-import { UpdateMovementMessage } from "../messages/updateMovementMessage";
+-import { UpdatePropertyMessage } from "../messages/updatePropertyMessage";
+-import { DeathStateContainerMessage } from "../messages/deathStateContainerMessage";
+-import { TeleportMessage2 } from "../messages/teleportMessage2";
+-import { BrowserWindowLoadedEvent } from "./browserWindowLoadedEvent";
+-import { AuthAttemptEvent } from "./authAttemptEvent";
+-import { NewLocalLagValueCalculatedEvent } from "./newLocalLagValueCalculatedEvent";
+-import { AuthNeededEvent } from "./authNeededEvent";
+-import { QueryBlockSetInventoryEvent } from "./queryBlockSetInventoryEvent";
+-import { QueryKeyCodeBindings } from "./queryKeyCodeBindings";
+-import { SpellCastMessage } from "../messages/spellCastMessage";
+-import { UpdateAnimVariablesMessage } from "../messages/updateAnimVariablesMessage";
+-import { CustomPacketMessage } from "../messages/customPacketMessage";
+-
+-import { AnyRawMessageEvent } from "./anyRawMessageEvent";
+-import { NicknameCreateEvent } from "./nicknameCreateEvent";
+-import { NicknameDestroyEvent } from "./nicknameDestroyEvent";
+-
+-type EventTypes = {
+-    'gameLoad': [GameLoadEvent],
+-
+-    'sendMessage': [SendMessageEvent<AnyMessage>],
+-    'sendRawMessage': [SendRawMessageEvent],
+-    'sendMessageWithRefrId': [SendMessageWithRefrIdEvent<AnyMessage>],
+-
+-    'applyDeathStateEvent': [ApplyDeathStateEvent],
+-
+-    'connectionFailed': [ConnectionFailed],
+-    'connectionDenied': [ConnectionDenied],
+-    'connectionAccepted': [ConnectionAccepted],
+-    'connectionDisconnect': [ConnectionDisconnect],
+-
+-    'updateMovementMessage': [ConnectionMessage<UpdateMovementMessage>],
+-    'updateAnimationMessage': [ConnectionMessage<UpdateAnimationMessage>],
+-    'updateEquipmentMessage': [ConnectionMessage<UpdateEquipmentMessage>],
+-    'changeValuesMessage': [ConnectionMessage<ChangeValuesMessage>],
+-    'spellCastMessage': [ConnectionMessage<SpellCastMessage>],
+-    'updateAnimVariablesMessage': [ConnectionMessage<UpdateAnimVariablesMessage>],
+-    'updateAppearanceMessage': [ConnectionMessage<UpdateAppearanceMessage>],
+-    'teleportMessage': [ConnectionMessage<TeleportMessage>],
+-    'openContainerMessage': [ConnectionMessage<OpenContainerMessage>],
+-    'hostStartMessage': [ConnectionMessage<HostStartMessage>],
+-    'hostStopMessage': [ConnectionMessage<HostStopMessage>],
+-    'setInventoryMessage': [ConnectionMessage<SetInventoryMessage>],
+-    'createActorMessage': [ConnectionMessage<CreateActorMessage>],
+-    'destroyActorMessage': [ConnectionMessage<DestroyActorMessage>],
+-    'setRaceMenuOpenMessage': [ConnectionMessage<SetRaceMenuOpenMessage>],
+-    'spSnippetMessage': [ConnectionMessage<SpSnippetMessage>],
+-    'updateGamemodeDataMessage': [ConnectionMessage<UpdateGamemodeDataMessage>],
+-    'updatePropertyMessage': [ConnectionMessage<UpdatePropertyMessage>],
+-    'deathStateContainerMessage': [ConnectionMessage<DeathStateContainerMessage>],
+-    'teleportMessage2': [ConnectionMessage<TeleportMessage2>],
+-    'customPacketMessage': [ConnectionMessage<CustomPacketMessage>]
+-
+-    'browserWindowLoaded': [BrowserWindowLoadedEvent],
+-    'authAttempt': [AuthAttemptEvent],
+-    'authNeeded': [AuthNeededEvent],
+-    'anyMessage': [ConnectionMessage<AnyMessage>],
+-    'anyRawMessage': [AnyRawMessageEvent],
+-    'newLocalLagValueCalculated': [NewLocalLagValueCalculatedEvent],
+-    'queryBlockSetInventoryEvent': [QueryBlockSetInventoryEvent],
+-    'queryKeyCodeBindings': [QueryKeyCodeBindings],
+-    'nicknameCreate': [NicknameCreateEvent],
+-    'nicknameDestroy': [NicknameDestroyEvent]
+-}
+-
+-// https://blog.makerx.com.au/a-type-safe-event-emitter-in-node-js/
+-interface TypedEventEmitter<TEvents extends Record<string, any>> {
+-    emit<TEventName extends keyof TEvents & string>(
+-        eventName: TEventName,
+-        ...eventArg: TEvents[TEventName]
+-    ): void;
+-
+-    on<TEventName extends keyof TEvents & string>(
+-        eventName: TEventName,
+-        handler: (...eventArg: TEvents[TEventName]) => void
+-    ): void;
+-
+-    off<TEventName extends keyof TEvents & string>(
+-        eventName: TEventName,
+-        handler: (...eventArg: TEvents[TEventName]) => void
+-    ): void;
+-}
+-
+-export type EventEmitterType = TypedEventEmitter<EventTypes>;
+-
+-export class EventEmitterFactory {
+-    static makeEventEmitter(): EventEmitterType {
+-        return (new EventEmitter()) as EventEmitterType;
+-    }
+-}
++import { EventEmitter } from "eventemitter3";
++import { GameLoadEvent } from "./gameLoadEvent";
++import { SendMessageEvent } from "./sendMessageEvent";
++import { SendRawMessageEvent } from "./sendRawMessageEvent";
++import { AnyMessage } from "../messages/anyMessage";
++import { SendMessageWithRefrIdEvent } from "./sendMessageWithRefrIdEvent";
++import { ApplyDeathStateEvent } from "./applyDeathStateEvent";
++import { ConnectionFailed } from "./connectionFailed";
++import { ConnectionDenied } from "./connectionDenied";
++import { ConnectionAccepted } from "./connectionAccepted";
++import { ConnectionDisconnect } from "./connectionDisconnect";
++import { ConnectionMessage } from "./connectionMessage";
++import { HostStartMessage } from "../messages/hostStartMessage";
++import { HostStopMessage } from "../messages/hostStopMessage";
++import { SetInventoryMessage } from "../messages/setInventoryMessage";
++import { OpenContainerMessage } from "../messages/openContainerMessage";
++import { ChangeValuesMessage } from "../messages/changeValuesMessage";
++import { CreateActorMessage } from "../messages/createActorMessage";
++import { DestroyActorMessage } from "../messages/destroyActorMessage";
++import { SetRaceMenuOpenMessage } from "../messages/setRaceMenuOpenMessage";
++import { SpSnippetMessage } from "../messages/spSnippetMessage";
++import { TeleportMessage } from "../messages/teleportMessage";
++import { UpdateAnimationMessage } from "../messages/updateAnimationMessage";
++import { UpdateAppearanceMessage } from "../messages/updateAppearanceMessage";
++import { UpdateEquipmentMessage } from "../messages/updateEquipmentMessage";
++import { UpdateGamemodeDataMessage } from "../messages/updateGameModeDataMessage";
++import { UpdateMovementMessage } from "../messages/updateMovementMessage";
++import { UpdatePropertyMessage } from "../messages/updatePropertyMessage";
++import { DeathStateContainerMessage } from "../messages/deathStateContainerMessage";
++import { TeleportMessage2 } from "../messages/teleportMessage2";
++import { BrowserWindowLoadedEvent } from "./browserWindowLoadedEvent";
++import { AuthAttemptEvent } from "./authAttemptEvent";
++import { NewLocalLagValueCalculatedEvent } from "./newLocalLagValueCalculatedEvent";
++import { AuthNeededEvent } from "./authNeededEvent";
++import { QueryBlockSetInventoryEvent } from "./queryBlockSetInventoryEvent";
++import { QueryKeyCodeBindings } from "./queryKeyCodeBindings";
++import { SpellCastMessage } from "../messages/spellCastMessage";
++import { UpdateAnimVariablesMessage } from "../messages/updateAnimVariablesMessage";
++import { CustomPacketMessage } from "../messages/customPacketMessage";
++
++import { AnyRawMessageEvent } from "./anyRawMessageEvent";
++import { NicknameCreateEvent } from "./nicknameCreateEvent";
++import { NicknameDestroyEvent } from "./nicknameDestroyEvent";
++
++type EventTypes = {
++    'gameLoad': [GameLoadEvent],
++
++    'sendMessage': [SendMessageEvent<AnyMessage>],
++    'sendRawMessage': [SendRawMessageEvent],
++    'sendMessageWithRefrId': [SendMessageWithRefrIdEvent<AnyMessage>],
++
++    'applyDeathStateEvent': [ApplyDeathStateEvent],
++
++    'connectionFailed': [ConnectionFailed],
++    'connectionDenied': [ConnectionDenied],
++    'connectionAccepted': [ConnectionAccepted],
++    'connectionDisconnect': [ConnectionDisconnect],
++
++    'updateMovementMessage': [ConnectionMessage<UpdateMovementMessage>],
++    'updateAnimationMessage': [ConnectionMessage<UpdateAnimationMessage>],
++    'updateEquipmentMessage': [ConnectionMessage<UpdateEquipmentMessage>],
++    'changeValuesMessage': [ConnectionMessage<ChangeValuesMessage>],
++    'spellCastMessage': [ConnectionMessage<SpellCastMessage>],
++    'updateAnimVariablesMessage': [ConnectionMessage<UpdateAnimVariablesMessage>],
++    'updateAppearanceMessage': [ConnectionMessage<UpdateAppearanceMessage>],
++    'teleportMessage': [ConnectionMessage<TeleportMessage>],
++    'openContainerMessage': [ConnectionMessage<OpenContainerMessage>],
++    'hostStartMessage': [ConnectionMessage<HostStartMessage>],
++    'hostStopMessage': [ConnectionMessage<HostStopMessage>],
++    'setInventoryMessage': [ConnectionMessage<SetInventoryMessage>],
++    'createActorMessage': [ConnectionMessage<CreateActorMessage>],
++    'destroyActorMessage': [ConnectionMessage<DestroyActorMessage>],
++    'setRaceMenuOpenMessage': [ConnectionMessage<SetRaceMenuOpenMessage>],
++    'spSnippetMessage': [ConnectionMessage<SpSnippetMessage>],
++    'updateGamemodeDataMessage': [ConnectionMessage<UpdateGamemodeDataMessage>],
++    'updatePropertyMessage': [ConnectionMessage<UpdatePropertyMessage>],
++    'deathStateContainerMessage': [ConnectionMessage<DeathStateContainerMessage>],
++    'teleportMessage2': [ConnectionMessage<TeleportMessage2>],
++    'customPacketMessage': [ConnectionMessage<CustomPacketMessage>],
++    'aetheriusUiFocusChanged': [boolean],
++
++    'browserWindowLoaded': [BrowserWindowLoadedEvent],
++    'authAttempt': [AuthAttemptEvent],
++    'authNeeded': [AuthNeededEvent],
++    'anyMessage': [ConnectionMessage<AnyMessage>],
++    'anyRawMessage': [AnyRawMessageEvent],
++    'newLocalLagValueCalculated': [NewLocalLagValueCalculatedEvent],
++    'queryBlockSetInventoryEvent': [QueryBlockSetInventoryEvent],
++    'queryKeyCodeBindings': [QueryKeyCodeBindings],
++    'nicknameCreate': [NicknameCreateEvent],
++    'nicknameDestroy': [NicknameDestroyEvent]
++}
++
++// https://blog.makerx.com.au/a-type-safe-event-emitter-in-node-js/
++interface TypedEventEmitter<TEvents extends Record<string, any>> {
++    emit<TEventName extends keyof TEvents & string>(
++        eventName: TEventName,
++        ...eventArg: TEvents[TEventName]
++    ): void;
++
++    on<TEventName extends keyof TEvents & string>(
++        eventName: TEventName,
++        handler: (...eventArg: TEvents[TEventName]) => void
++    ): void;
++
++    off<TEventName extends keyof TEvents & string>(
++        eventName: TEventName,
++        handler: (...eventArg: TEvents[TEventName]) => void
++    ): void;
++}
++
++export type EventEmitterType = TypedEventEmitter<EventTypes>;
++
++export class EventEmitterFactory {
++    static makeEventEmitter(): EventEmitterType {
++        return (new EventEmitter()) as EventEmitterType;
++    }
++}
+diff --git a/client/src/services/services/authService.ts b/client/src/services/services/authService.ts
+index 2a05921..2c11bca 100644
+--- a/client/src/services/services/authService.ts
++++ b/client/src/services/services/authService.ts
+@@ -1,894 +1,903 @@
+-import * as crypto from "crypto";
+-import * as fs from "fs";
+-import { AuthGameData, RemoteAuthGameData, authGameDataStorageKey } from "../../features/authModel";
+-import { FunctionInfo } from "../../lib/functionInfo";
+-import { ClientListener, CombinedController, Sp } from "./clientListener";
+-import { BrowserMessageEvent, Menu, browser } from "skyrimPlatform";
+-import { AuthNeededEvent } from "../events/authNeededEvent";
+-import { BrowserWindowLoadedEvent } from "../events/browserWindowLoadedEvent";
+-import { TimersService } from "./timersService";
+-import { MasterApiAuthStatus } from "../messages_http/masterApiAuthStatus";
+-import { logTrace, logError } from "../../logging";
+-import { ConnectionMessage } from "../events/connectionMessage";
+-import { CreateActorMessage } from "../messages/createActorMessage";
+-import { CustomPacketMessage } from "../messages/customPacketMessage";
+-import { NetworkingService } from "./networkingService";
+-import { MsgType } from "../../messages";
+-import { ConnectionDenied } from "../events/connectionDenied";
+-import { SettingsService } from "./settingsService";
+-
+-// for browsersideWidgetSetter
+-declare const window: any;
+-
+-// Constants used on both client and browser side (see browsersideWidgetSetter)
+-const events = {
+-  openDiscordOauth: 'openDiscordOauth',
+-  authAttempt: 'authAttemptEvent',
+-  openGithub: 'openGithub',
+-  openPatreon: 'openPatreon',
+-  clearAuthData: 'clearAuthData',
+-  updateRequired: 'updateRequired',
+-  backToLogin: 'backToLogin',
+-  joinDiscord: 'joinDiscord'
+-};
+-
+-// Vaiables used on both client and browser side (see browsersideWidgetSetter)
+-let browserState = {
+-  comment: '',
+-  failCount: 9000,
+-  loginFailedReason: '',
+-};
+-let authData: RemoteAuthGameData | null = null;
+-
+-const translations = {
+-  "ru": {
+-    loginViaDiscord: 'войдите через discord',
+-    joinDiscordServer: 'вступите в discord сервер',
+-    banned: 'вы забанены',
+-    whatWasThat: 'что это было?',
+-    openingBrowser: 'открываем браузер...',
+-    loginFirst: 'сначала войдите',
+-    linkedSuccessfully: 'привязан успешно',
+-    connecting: 'подключение',
+-    technicalIssues: 'технические шоколадки\nпопробуйте еще раз\nпожалуйста\nили напишите нам в discord',
+-    authorization: 'Авторизация',
+-    notAuthorized: 'не авторизирован',
+-    changeAccount: 'сменить аккаунт',
+-    loginViaSkymp: 'войти через skymp',
+-    play: 'Играть',
+-    loginOrChangeHint: 'Вы можете войти или поменять аккаунт',
+-    connectToServer: 'Подключиться к игровому серверу',
+-    updateCaption: 'новинка',
+-    updateAvailable: 'ура! вышло обновление',
+-    downloadAt: 'спешите скачать на',
+-    openSkympNet: 'открыть skymp.net',
+-    updateDownloadHint: 'Перейти на страницу скачивания обновления',
+-    oops: 'упс',
+-    join: 'вступить',
+-    back: 'назад',
+-  },
+-  "en": {
+-    loginViaDiscord: 'log in via Discord',
+-    joinDiscordServer: 'join the Discord server',
+-    banned: 'you are banned',
+-    whatWasThat: 'what was that?',
+-    openingBrowser: 'opening browser...',
+-    loginFirst: 'log in first',
+-    linkedSuccessfully: 'linked successfully',
+-    connecting: 'connecting',
+-    technicalIssues: 'technical difficulties\nplease try again\nor contact us on Discord',
+-    authorization: 'Authorization',
+-    notAuthorized: 'not authorized',
+-    changeAccount: 'change account',
+-    loginViaSkymp: 'log in via skymp',
+-    play: 'Play',
+-    loginOrChangeHint: 'You can log in or change your account',
+-    connectToServer: 'Connect to game server',
+-    updateCaption: 'Update',
+-    updateAvailable: 'a new update is available!',
+-    downloadAt: 'download it at',
+-    openSkympNet: 'open skymp.net',
+-    updateDownloadHint: 'Go to the update download page',
+-    oops: 'oops',
+-    join: 'join',
+-    back: 'back',
+-  },
+-} as const;
+-
+-type TranslationStrings = { [K in keyof typeof translations['ru']]: string };
+-
+-let strings: TranslationStrings = translations['en'];
+-
+-try {
+-  const lang = fs.readFileSync('./Data/Platform/Distribution/locale', 'utf8').trim();
+-  if (lang in translations) {
+-    strings = translations[lang as keyof typeof translations];
+-    const src = `window.setLanguage(${lang})`;
+-    browser.executeJavaScript(src);
+-  }
+-} catch {
+-  // locale file not found or unreadable, default to 'en'
+-}
+-
+-export class AuthService extends ClientListener {
+-  constructor(private sp: Sp, private controller: CombinedController) {
+-    super();
+-    this.controller.emitter.on("authNeeded", (e) => this.onAuthNeeded(e));
+-    this.controller.emitter.on("browserWindowLoaded", (e) => this.onBrowserWindowLoaded(e));
+-    this.controller.emitter.on("createActorMessage", (e) => this.onCreateActorMessage(e));
+-    this.controller.emitter.on("connectionAccepted", () => this.handleConnectionAccepted());
+-    this.controller.emitter.on("connectionDenied", (e) => this.handleConnectionDenied(e));
+-    this.controller.emitter.on("customPacketMessage", (e) => this.onCustomPacketMessage(e));
+-    this.controller.on("browserMessage", (e) => this.onBrowserMessage(e));
+-    this.controller.on("tick", () => this.onTick());
+-    this.controller.once("update", () => this.onceUpdate());
+-  }
+-
++import * as crypto from "crypto";
++import * as fs from "fs";
++import { AuthGameData, RemoteAuthGameData, authGameDataStorageKey } from "../../features/authModel";
++import { FunctionInfo } from "../../lib/functionInfo";
++import { ClientListener, CombinedController, Sp } from "./clientListener";
++import { BrowserMessageEvent, Menu, browser } from "skyrimPlatform";
++import { AuthNeededEvent } from "../events/authNeededEvent";
++import { BrowserWindowLoadedEvent } from "../events/browserWindowLoadedEvent";
++import { TimersService } from "./timersService";
++import { MasterApiAuthStatus } from "../messages_http/masterApiAuthStatus";
++import { logTrace, logError } from "../../logging";
++import { ConnectionMessage } from "../events/connectionMessage";
++import { CreateActorMessage } from "../messages/createActorMessage";
++import { CustomPacketMessage } from "../messages/customPacketMessage";
++import { NetworkingService } from "./networkingService";
++import { MsgType } from "../../messages";
++import { ConnectionDenied } from "../events/connectionDenied";
++import { SettingsService } from "./settingsService";
++
++// for browsersideWidgetSetter
++declare const window: any;
++
++// Constants used on both client and browser side (see browsersideWidgetSetter)
++const events = {
++  openDiscordOauth: 'openDiscordOauth',
++  authAttempt: 'authAttemptEvent',
++  openGithub: 'openGithub',
++  openPatreon: 'openPatreon',
++  clearAuthData: 'clearAuthData',
++  updateRequired: 'updateRequired',
++  backToLogin: 'backToLogin',
++  joinDiscord: 'joinDiscord'
++};
++
++// Vaiables used on both client and browser side (see browsersideWidgetSetter)
++let browserState = {
++  comment: '',
++  failCount: 9000,
++  loginFailedReason: '',
++};
++let authData: RemoteAuthGameData | null = null;
++
++const translations = {
++  "ru": {
++    loginViaDiscord: 'войдите через discord',
++    joinDiscordServer: 'вступите в discord сервер',
++    banned: 'вы забанены',
++    whatWasThat: 'что это было?',
++    openingBrowser: 'открываем браузер...',
++    loginFirst: 'сначала войдите',
++    linkedSuccessfully: 'привязан успешно',
++    connecting: 'подключение',
++    technicalIssues: 'технические шоколадки\nпопробуйте еще раз\nпожалуйста\nили напишите нам в discord',
++    authorization: 'Авторизация',
++    notAuthorized: 'не авторизирован',
++    changeAccount: 'сменить аккаунт',
++    loginViaSkymp: 'войти через skymp',
++    play: 'Играть',
++    loginOrChangeHint: 'Вы можете войти или поменять аккаунт',
++    connectToServer: 'Подключиться к игровому серверу',
++    updateCaption: 'новинка',
++    updateAvailable: 'ура! вышло обновление',
++    downloadAt: 'спешите скачать на',
++    openSkympNet: 'открыть skymp.net',
++    updateDownloadHint: 'Перейти на страницу скачивания обновления',
++    oops: 'упс',
++    join: 'вступить',
++    back: 'назад',
++  },
++  "en": {
++    loginViaDiscord: 'log in via Discord',
++    joinDiscordServer: 'join the Discord server',
++    banned: 'you are banned',
++    whatWasThat: 'what was that?',
++    openingBrowser: 'opening browser...',
++    loginFirst: 'log in first',
++    linkedSuccessfully: 'linked successfully',
++    connecting: 'connecting',
++    technicalIssues: 'technical difficulties\nplease try again\nor contact us on Discord',
++    authorization: 'Authorization',
++    notAuthorized: 'not authorized',
++    changeAccount: 'change account',
++    loginViaSkymp: 'log in via skymp',
++    play: 'Play',
++    loginOrChangeHint: 'You can log in or change your account',
++    connectToServer: 'Connect to game server',
++    updateCaption: 'Update',
++    updateAvailable: 'a new update is available!',
++    downloadAt: 'download it at',
++    openSkympNet: 'open skymp.net',
++    updateDownloadHint: 'Go to the update download page',
++    oops: 'oops',
++    join: 'join',
++    back: 'back',
++  },
++} as const;
++
++type TranslationStrings = { [K in keyof typeof translations['ru']]: string };
++
++let strings: TranslationStrings = translations['en'];
++
++try {
++  const lang = fs.readFileSync('./Data/Platform/Distribution/locale', 'utf8').trim();
++  if (lang in translations) {
++    strings = translations[lang as keyof typeof translations];
++    const src = `window.setLanguage(${lang})`;
++    browser.executeJavaScript(src);
++  }
++} catch {
++  // locale file not found or unreadable, default to 'en'
++}
++
++export class AuthService extends ClientListener {
++  constructor(private sp: Sp, private controller: CombinedController) {
++    super();
++    this.controller.emitter.on("authNeeded", (e) => this.onAuthNeeded(e));
++    this.controller.emitter.on("browserWindowLoaded", (e) => this.onBrowserWindowLoaded(e));
++    this.controller.emitter.on("createActorMessage", (e) => this.onCreateActorMessage(e));
++    this.controller.emitter.on("connectionAccepted", () => this.handleConnectionAccepted());
++    this.controller.emitter.on("connectionDenied", (e) => this.handleConnectionDenied(e));
++    this.controller.emitter.on("customPacketMessage", (e) => this.onCustomPacketMessage(e));
++    this.controller.on("browserMessage", (e) => this.onBrowserMessage(e));
++    this.controller.on("tick", () => this.onTick());
++    this.controller.once("update", () => this.onceUpdate());
++  }
++
+   private onAuthNeeded(e: AuthNeededEvent) {
+-    logTrace(this, `Received authNeeded event`);
+-    const proc = (globalThis as any).process;
+-    const tokenFromEnv = (typeof proc !== 'undefined' && proc.env)
+-      ? proc.env['AETHERIUS_TOKEN']
+-      : undefined;
+-
+-    if (tokenFromEnv) {
+-      logTrace(this, `Token found via env var, skipping login widget`);
+-      this.controller.emitter.emit("authAttempt", {
+-        authGameData: { token: tokenFromEnv },
+-      });
+-      return;
+-    }
+-
+-    logTrace(this, `No launcher token found, will show block widget once browser is ready`);
+-    this.launcherRequired = true;
+-    this.setListenBrowserMessage(true, 'authNeeded event received (no launcher token)');
+-  
+-    this.trigger.authNeededFired = true;
+-    if (this.trigger.conditionMet) {
+-      this.onBrowserWindowLoadedAndOnlineAuthNeeded();
+-    }
+-    
+-    const settingsGameData = this.sp.settings["skymp5-client"]["gameData"] as any;
+-    const isOfflineMode = false;
+-    if (isOfflineMode) {
+-      logTrace(this, `Offline mode detected in settings, emitting auth event with authGameData.local`);
+-      this.controller.emitter.emit("authAttempt", { authGameData: { local: { profileId: settingsGameData.profileId } } });
+-    } else {
+-      logTrace(this, `No offline mode detectted in settings, regular auth needed`);
+-      this.setListenBrowserMessage(true, 'authNeeded event received');
+-
+-      this.trigger.authNeededFired = true;
+-      if (this.trigger.conditionMet) {
+-        this.onBrowserWindowLoadedAndOnlineAuthNeeded();
+-      }
+-    }
+-  }
+-
+-  private launcherRequiredWidgetSetter = () => {
+-    window.skyrimPlatform.widgets.set([{
+-      type: "form",
+-      id: 1,
+-      caption: strings.authorization,
+-      elements: [
+-        {
+-          type: "text",
+-          text: "Este servidor só pode ser acessado",
+-          tags: [],
+-        },
+-        {
+-          type: "text",
+-          text: "através do launcher oficial.",
+-          tags: [],
+-        },
+-        {
+-          type: "text",
+-          text: "Feche o jogo e abra pelo launcher.",
+-          tags: [],
+-        }
+-      ]
+-    }]);
+-  };
+-
+-  private onBrowserWindowLoaded(e: BrowserWindowLoadedEvent) {
+-    logTrace(this, `Received browserWindowLoaded event`);
+-
+-    this.trigger.browserWindowLoadedFired = true;
+-    if (this.trigger.conditionMet) {
+-      this.onBrowserWindowLoadedAndOnlineAuthNeeded();
+-    }
+-  }
+-
+-  private onCreateActorMessage(e: ConnectionMessage<CreateActorMessage>) {
+-    if (e.message.isMe) {
+-      if (this.authDialogOpen) {
+-        logTrace(this, `Received createActorMessage for self, resetting widgets`);
+-        this.sp.browser.executeJavaScript('window.skyrimPlatform.widgets.set([]);');
+-        this.authDialogOpen = false;
+-      } else {
+-        logTrace(this, `Received createActorMessage for self, but auth dialog was not open so not resetting widgets`);
+-      }
+-    }
+-
+-    this.loggingStartMoment = 0;
+-    this.authAttemptProgressIndicator = false;
+-  }
+-
+-  private onCustomPacketMessage(event: ConnectionMessage<CustomPacketMessage>): void {
+-    const msg = event.message;
+-
+-    let msgContent: Record<string, unknown> = {};
+-
+-    try {
+-      msgContent = JSON.parse(msg.contentJsonDump);
+-    } catch (e) {
+-      if (e instanceof SyntaxError) {
+-        logError(this, "onCustomPacketMessage failed to parse JSON", e.message, "json:", msg.contentJsonDump);
++    const localSettings = this.sp.settings["skymp5-client"];
++    if (localSettings?.["aetherius-local-test"] === true && localSettings["server-ip"] === "127.0.0.1" && localSettings["server-port"] === 7777) {
++      const profileId = (localSettings.gameData as { profileId?: number } | undefined)?.profileId;
++      if (Number.isSafeInteger(profileId) && profileId! > 0) {
++        this.launcherRequired = false;
++        this.controller.emitter.emit("authAttempt", { authGameData: { local: { profileId: profileId! } } });
+         return;
+-      } else {
+-        throw e;
+-      }
+-    }
+-
+-    switch (msgContent["customPacketType"]) {
+-      case 'loginFailedNotLoggedViaDiscord':
+-        this.authAttemptProgressIndicator = false;
+-        this.controller.lookupListener(NetworkingService).close();
+-        logTrace(this, 'loginFailedNotLoggedViaDiscord received');
+-        browserState.loginFailedReason = strings.loginViaDiscord;
+-        browserState.comment = '';
+-        this.setListenBrowserMessage(true, 'loginFailedNotLoggedViaDiscord received');
+-        this.loggingStartMoment = 0;
+-        this.sp.browser.executeJavaScript(new FunctionInfo(this.loginFailedWidgetSetter).getText({ events, browserState, authData: authData, strings }));
+-        break;
+-      case 'loginFailedNotInTheDiscordServer':
+-        this.authAttemptProgressIndicator = false;
+-        this.controller.lookupListener(NetworkingService).close();
+-        logTrace(this, 'loginFailedNotInTheDiscordServer received');
+-        browserState.loginFailedReason = strings.joinDiscordServer;
+-        browserState.comment = '';
+-        this.setListenBrowserMessage(true, 'loginFailedNotInTheDiscordServer received');
+-        this.loggingStartMoment = 0;
+-        this.sp.browser.executeJavaScript(new FunctionInfo(this.loginFailedWidgetSetter).getText({ events, browserState, authData: authData, strings }));
+-        break;
+-      case 'loginFailedBanned':
+-        this.authAttemptProgressIndicator = false;
+-        this.controller.lookupListener(NetworkingService).close();
+-        logTrace(this, 'loginFailedBanned received');
+-        // O controle de acesso da alpha manda o motivo (bloqueio, fora da
+-        // whitelist, outra máquina); servidores antigos não mandam nada.
+-        browserState.loginFailedReason = typeof msgContent["reason"] === "string" && msgContent["reason"]
+-          ? msgContent["reason"] as string
+-          : strings.banned;
+-        browserState.comment = '';
+-        this.setListenBrowserMessage(true, 'loginFailedBanned received');
+-        this.loggingStartMoment = 0;
+-        this.sp.browser.executeJavaScript(new FunctionInfo(this.loginFailedWidgetSetter).getText({ events, browserState, authData: authData, strings }));
+-        break;
+-      case 'loginFailedIpMismatch':
+-        this.authAttemptProgressIndicator = false;
+-        this.controller.lookupListener(NetworkingService).close();
+-        logTrace(this, 'loginFailedIpMismatch received');
+-        browserState.loginFailedReason = strings.whatWasThat;
+-        browserState.comment = '';
+-        this.setListenBrowserMessage(true, 'loginFailedIpMismatch received');
+-        this.loggingStartMoment = 0;
+-        this.sp.browser.executeJavaScript(new FunctionInfo(this.loginFailedWidgetSetter).getText({ events, browserState, authData: authData, strings }));
+-        break;
+-    }
+-  }
+-
+-  private onBrowserWindowLoadedAndOnlineAuthNeeded() {
+-    if (!this.isListenBrowserMessage) {
+-      logError(this, `isListenBrowserMessage was false for some reason, aborting auth`);
+-      return;
+-    }
+-  
+-    if (this.launcherRequired) {
+-      logTrace(this, `Showing launcher-required widget`);
+-      this.sp.browser.executeJavaScript(
+-        new FunctionInfo(this.launcherRequiredWidgetSetter).getText({ strings })
+-      );
+-      this.sp.browser.setVisible(true);
+-      this.sp.browser.setFocused(true);
+-      return;
+-    }
+-    // ---------------------------------------------------------------------
+-  
+-    logTrace(this, `Showing widgets and starting loop`);
+-  
+-    authData = this.readAuthDataFromDisk();
+-    this.refreshWidgets();
+-    this.sp.browser.setVisible(true);
+-    this.sp.browser.setFocused(true);
+-  
+-    const timersService = this.controller.lookupListener(TimersService);
+-  
+-    logTrace(this, "Calling setTimeout for testing");
+-    try {
+-      timersService.setTimeout(() => {
+-        logTrace(this, "Test timeout fired");
+-      }, 1);
+-    } catch (e) {
+-      logError(this, "Failed to call setTimeout");
+-    }
+-  }
+-
+-  private onBrowserMessage(e: BrowserMessageEvent) {
+-    if (!this.isListenBrowserMessage) {
+-      logTrace(this, `onBrowserMessage: isListenBrowserMessage was false, ignoring message`, JSON.stringify(e.arguments));
+-      return;
+-    }
+-
+-    const settingsService = this.controller.lookupListener(SettingsService);
+-
+-    logTrace(this, `onBrowserMessage:`, JSON.stringify(e.arguments));
+-
+-    const eventKey = e.arguments[0];
+-    switch (eventKey) {
+-      case events.openDiscordOauth:
+-        browserState.comment = strings.openingBrowser;
+-        this.refreshWidgets();
+-        this.sp.win32.loadUrl(`${settingsService.getMasterUrl()}/api/users/login-discord?state=${this.discordAuthState}`);
+-
+-        // Launch checkLoginState loop
+-        this.checkLoginState();
+-        break;
+-      case 'debugLog':
+-        logTrace('[DEBUG]', ...e.arguments.slice(1));
+-      break;
+-      case events.authAttempt:
+-        const username = e.arguments[1] as string | undefined;
+-        const password = e.arguments[2] as string | undefined;
+-      
+-        if (!username || !password) {
+-          browserState.comment = strings.loginFirst;
+-          this.refreshWidgets();
+-          break;
+-        }
+-      
+-        logTrace(this, `authAttempt via credentials, username =`, username);
+-      
+-        // NOTE: authGameData precisa ganhar uma nova variante "credentials"
+-        // (hoje só existe "local" e "remote" em AuthGameData, no authModel.ts).
+-        this.controller.emitter.emit("authAttempt", {
+-          authGameData: { credentials: { username, password } },
+-        });
+-      
+-        this.authAttemptProgressIndicator = true;
+-      
+-        break;
+-      case events.clearAuthData:
+-        // Doesn't seem to be used
+-        this.writeAuthDataToDisk(null);
+-        break;
+-      case events.openGithub:
+-        this.sp.win32.loadUrl(this.githubUrl);
+-        break;
+-      case events.openPatreon:
+-        this.sp.win32.loadUrl(this.patreonUrl);
+-        break;
+-      case events.updateRequired:
+-        this.sp.win32.loadUrl("https://skymp.net/UpdInstall");
+-        break;
+-      case events.backToLogin:
+-        this.sp.browser.executeJavaScript(new FunctionInfo(this.browsersideWidgetSetter).getText({ events, browserState, authData: authData, strings }));
+-        break;
+-      case events.joinDiscord:
+-        this.sp.win32.loadUrl("https://discord.gg/9KhSZ6zjGT");
+-        break;
+-      default:
+-        break;
+-    }
+-  }
+-
+-  private createPlaySession(token: string, callback: (res: string, err: string) => void) {
+-    const settingsService = this.controller.lookupListener(SettingsService);
+-    const client = new this.sp.HttpClient(settingsService.getMasterUrl());
+-
+-    const route = `/api/users/me/play/${settingsService.getServerMasterKey()}`;
+-    logTrace(this, `Creating play session ${route}`);
+-
+-    client.post(route, {
+-      body: '{}',
+-      contentType: 'application/json',
+-      headers: {
+-        'authorization': token,
+-      },
+-      // @ts-ignore
+-    }, (res) => {
+-      if (res.status != 200) {
+-        callback('', 'status code ' + res.status);
+-      } else {
+-        // TODO: handle JSON.parse failure?
+-        callback(JSON.parse(res.body).session, '');
+-      }
+-    });
+-  }
+-
+-  private checkLoginState() {
+-    if (!this.isListenBrowserMessage) {
+-      logTrace(this, `checkLoginState: isListenBrowserMessage was false, aborting check`);
+-      return;
+-    }
+-
+-    const settingsService = this.controller.lookupListener(SettingsService);
+-    const timersService = this.controller.lookupListener(TimersService);
+-
+-    // Social engineering protection, don't show the full state
+-    const halfDiscordAuthState = this.discordAuthState.slice(0, 16);
+-
+-    logTrace(this, `Checking login state`, halfDiscordAuthState, '...');
+-
+-    new this.sp.HttpClient(settingsService.getMasterUrl())
+-      .get("/api/users/login-discord/status?state=" + this.discordAuthState, undefined,
+-        // @ts-ignore
+-        (response) => {
+-          switch (response.status) {
+-            case 200:
+-              const {
+-                token,
+-                masterApiId,
+-                discordUsername,
+-                discordDiscriminator,
+-                discordAvatar,
+-              } = JSON.parse(response.body) as MasterApiAuthStatus;
+-              browserState.failCount = 0;
+-              this.createPlaySession(token, (playSession, error) => {
+-                if (error) {
+-                  browserState.failCount = 0;
+-                  browserState.comment = (error);
+-                  timersService.setTimeout(() => this.checkLoginState(), Math.floor((1.5 + Math.random() * 2) * 1000));
+-                  this.refreshWidgets();
+-                  return;
+-                }
+-                authData = {
+-                  session: playSession,
+-                  masterApiId,
+-                  discordUsername,
+-                  discordDiscriminator,
+-                  discordAvatar,
+-                };
+-                browserState.comment = strings.linkedSuccessfully;
+-                this.refreshWidgets();
+-              });
+-              break;
+-            case 401: // Unauthorized
+-              browserState.failCount = 0;
+-              browserState.comment = '';//(`Still waiting...`);
+-              timersService.setTimeout(() => this.checkLoginState(), Math.floor((1.5 + Math.random() * 2) * 1000));
+-              break;
+-            case 403: // Forbidden
+-            case 404: // Not found
+-              browserState.failCount = 9000;
+-              browserState.comment = (`Fail: ${response.body}`);
+-              break;
+-            default:
+-              ++browserState.failCount;
+-              browserState.comment = `Server returned ${response.status.toString() || "???"} "${response.body || response.error}"`;
+-              timersService.setTimeout(() => this.checkLoginState(), Math.floor((1.5 + Math.random() * 2) * 1000));
+-          }
+-        });
+-  };
+-
+-  private refreshWidgets() {
+-    this.sp.browser.executeJavaScript(new FunctionInfo(this.browsersideWidgetSetter).getText({ events, browserState, authData: authData, strings }));
+-    this.authDialogOpen = true;
+-  };
+-
+-  public readAuthDataFromDisk(): RemoteAuthGameData | null {
+-    logTrace(this, `Reading`, this.pluginAuthDataName, `from disk`);
+-
+-    try {
+-      // @ts-expect-error (TODO: Remove in 2.10.0)
+-      const data = this.sp.getPluginSourceCode(this.pluginAuthDataName, "PluginsNoLoad");
+-
+-      if (!data) {
+-        logTrace(this, `Read empty`, this.pluginAuthDataName, `returning null`);
+-        return null;
+-      }
+-
+-      return JSON.parse(data.slice(2)) || null;
+-    } catch (e) {
+-      logError(this, `Error reading`, this.pluginAuthDataName, `from disk:`, e, `, falling back to null`);
+-      return null;
+-    }
+-  }
+-
+-  private writeAuthDataToDisk(data: RemoteAuthGameData | null) {
+-    const content = "//" + (data ? JSON.stringify(data) : "null");
+-
+-    logTrace(this, `Writing`, this.pluginAuthDataName, `to disk:`, content);
+-
+-    try {
+-      this.sp.writePlugin(
+-        this.pluginAuthDataName,
+-        content,
+-        // @ts-expect-error (TODO: Remove in 2.10.0)
+-        "PluginsNoLoad"
+-      );
+-    } catch (e) {
+-      logError(this, `Error writing`, this.pluginAuthDataName, `to disk:`, e, `, will not remember user`);
+-    }
+-  };
+-
+-  private deniedWidgetSetter = () => {
+-    const widget = {
+-      type: "form",
+-      id: 2,
+-      caption: strings.updateCaption,
+-      elements: [
+-        {
+-          type: "text",
+-          text: strings.updateAvailable,
+-          tags: []
+-        },
+-        {
+-          type: "text",
+-          text: strings.downloadAt,
+-          tags: []
+-        },
+-        {
+-          type: "text",
+-          text: "skymp.net",
+-          tags: []
+-        },
+-        {
+-          type: "button",
+-          text: strings.openSkympNet,
+-          tags: ["ELEMENT_STYLE_MARGIN_EXTENDED"],
+-          click: () => window.skyrimPlatform.sendMessage(events.updateRequired),
+-          hint: strings.updateDownloadHint,
+-        }
+-      ]
+-    }
+-    window.skyrimPlatform.widgets.set([widget]);
+-
+-    // Make sure gamemode will not be able to update widgets anymore
+-    window.skyrimPlatform.widgets = null;
+-  }
+-
+-  private loginFailedWidgetSetter = () => {
+-    const splitParts = browserState.loginFailedReason.split('\n');
+-
+-    const textElements = splitParts.map((part) => ({
+-      type: "text",
+-      text: part,
+-      tags: [],
+-    }));
+-
+-    const widget = {
+-      type: "form",
+-      id: 2,
+-      caption: strings.oops,
+-      elements: new Array<any>()
+-    }
+-
+-    textElements.forEach((element) => widget.elements.push(element));
+-
+-    if (browserState.loginFailedReason === strings.joinDiscordServer) {
+-      widget.elements.push({
+-        type: "button",
+-        text: strings.join,
+-        tags: ["ELEMENT_STYLE_MARGIN_EXTENDED"],
+-        click: () => window.skyrimPlatform.sendMessage(events.joinDiscord),
+-        hint: null
+-      });
+-    }
+-
+-    widget.elements.push({
+-      type: "button",
+-      text: strings.back,
+-      tags: ["ELEMENT_STYLE_MARGIN_EXTENDED"],
+-      click: () => window.skyrimPlatform.sendMessage(events.backToLogin),
+-      hint: undefined
+-    });
+-
+-    window.skyrimPlatform.widgets.set([widget]);
+-  }
+-
+-  // Estado do formulário de login/senha, mesmo padrão de "browserState" já usado no arquivo.
+-// Precisa ser declarado no escopo do módulo (junto com "browserState" e "authData"),
+-// já que o FunctionInfo serializa essas variáveis pra injetar no contexto do browser.
+-
+-private browsersideWidgetSetter = () => {
+-  let loginForm = {
+-    username: '',
+-    password: '',
+-  };
+-
+-  const loginWidget = {
+-    type: "form",
+-    id: 1,
+-    caption: strings.authorization,
+-    elements: [
+-      {
+-        type: "text",
+-        text: (
+-          authData ? (
+-            authData.discordUsername
+-              ? `${authData.discordUsername}`
+-              : `id: ${authData.masterApiId}`
+-          ) : strings.notAuthorized
+-        ),
+-        tags: [],
+-      },
+-
+-      {
+-        type: "icon",
+-        text: "usuário",
+-        tags: ["ICON_STYLE_MAIL"],
+-      },
+-      {
+-        type: "inputText",
+-        tags: ["ELEMENT_SAME_LINE"],
+-        placeholder: "seu usuário",
+-        change: (v: string) => {
+-          loginForm.username = v;
+-        },
+-      },
+-      {
+-        type: "icon",
+-        text: "senha",
+-        tags: ["ICON_STYLE_KEY"],
+-      },
+-      {
+-        type: "inputPass",
+-        tags: ["ELEMENT_SAME_LINE"],
+-        placeholder: "sua senha",
+-        change: (v: string) => {
+-          loginForm.password = v;
+-        },
+-      },
+-
+-      {
+-        type: "button",
+-        text: strings.play,
+-        tags: ["BUTTON_STYLE_FRAME", "ELEMENT_STYLE_MARGIN_EXTENDED"],
+-        click: () => {
+-          window.skyrimPlatform.sendMessage(
+-            events.authAttempt,
+-            loginForm.username,
+-            loginForm.password,
+-          );
+-        },
+-        hint: strings.connectToServer,
+-      },
+-      {
+-        type: "text",
+-        text: browserState.comment,
+-        tags: [],
+-      },
+-    ]
+-  };
+-  window.skyrimPlatform.widgets.set([loginWidget]);
+-};
+-
+-  private handleConnectionDenied(e: ConnectionDenied) {
+-  this.authAttemptProgressIndicator = false;
+-
+-  if (e.error.toLowerCase().includes("invalid password")) {
+-    this.controller.once("tick", () => {
+-      this.controller.lookupListener(NetworkingService).close();
+-    });
+-    this.sp.browser.executeJavaScript(new FunctionInfo(this.deniedWidgetSetter).getText({ events, strings }));
+-    this.sp.browser.setVisible(true);
+-    this.sp.browser.setFocused(true);
+-    this.controller.once("update", () => {
+-      this.sp.Game.disablePlayerControls(true, true, true, true, true, true, true, true, 0);
+-    });
+-    this.setListenBrowserMessage(true, 'connectionDenied event received');
+-  }
+-}
+-
+-  private handleConnectionAccepted() {
+-  this.setListenBrowserMessage(false, 'connectionAccepted event received');
+-  this.loggingStartMoment = Date.now();
+-
+-  const authData = this.sp.storage[authGameDataStorageKey] as AuthGameData | undefined;
+-
+-  // --- NOVO: token vindo do launcher ---
+-  if (authData?.token) {
+-    logTrace(this, 'Logging in via launcher-provided token');
+-    const message: CustomPacketMessage = {
+-      t: MsgType.CustomPacket,
+-      contentJsonDump: JSON.stringify({
+-        customPacketType: 'loginWithSkympIo',
+-        gameData: {
+-          token: authData.token,
+-        },
+-      }),
+-    };
+-    this.controller.emitter.emit("sendMessage", {
+-      message: message,
+-      reliability: "reliable"
+-    });
+-    return;
+-  }
+-  // --------------------------------------
+-
+-  if (authData?.local) {
+-    logTrace(this,
+-      `Logging in offline mode, profileId =`, authData.local.profileId
+-    );
+-    const message: CustomPacketMessage = {
+-      t: MsgType.CustomPacket,
+-      contentJsonDump: JSON.stringify({
+-        customPacketType: 'loginWithSkympIo',
+-        gameData: {
+-          profileId: authData.local.profileId,
+-        },
+-      }),
+-    };
+-    this.controller.emitter.emit("sendMessage", {
+-      message: message,
+-      reliability: "reliable"
+-    });
+-    return;
+-  }
+-
+-  if (authData?.remote) {
+-    logTrace(this, 'Logging in as a master API user');
+-    const message: CustomPacketMessage = {
+-      t: MsgType.CustomPacket,
+-      contentJsonDump: JSON.stringify({
+-        customPacketType: 'loginWithSkympIo',
+-        gameData: {
+-          session: authData.remote.session,
+-        },
+-      }),
+-    };
+-    this.controller.emitter.emit("sendMessage", {
+-      message: message,
+-      reliability: "reliable"
+-    });
+-    return;
+-  }
+-
+-  if (authData?.credentials) {
+-    logTrace(this, 'Logging in with own credentials, username =', authData.credentials.username);
+-
+-    this.authenticateWithOwnApi(
+-      authData.credentials.username,
+-      authData.credentials.password,
+-      (token, error) => {
+-        if (error) {
+-          logError(this, 'Own API auth failed:', error);
+-          browserState.comment = '';
+-          browserState.loginFailedReason = strings.technicalIssues;
+-          this.setListenBrowserMessage(true, 'own API auth failed');
+-          this.sp.browser.executeJavaScript(new FunctionInfo(this.loginFailedWidgetSetter).getText({ events, browserState, authData: authData, strings }));
+-          this.sp.browser.setVisible(true);
+-          this.sp.browser.setFocused(true);
+-          return;
+-        }
+-
+-        const message: CustomPacketMessage = {
+-          t: MsgType.CustomPacket,
+-          contentJsonDump: JSON.stringify({
+-            customPacketType: 'loginWithSkympIo',
+-            gameData: {
+-              token: token,
+-            },
+-          }),
+-        };
+-        this.controller.emitter.emit("sendMessage", {
+-          message: message,
+-          reliability: "reliable"
+-        });
+-      }
+-    );
+-    return;
+-  }
+-
+-  logError(this, 'Not found authentication method');
+-};
+-
+-  // NOTE: ajuste "getOwnApiUrl()" e o formato de request/response conforme
+-  // o contrato real do seu site/API. Segui o mesmo padrão do createPlaySession
+-  // já existente no arquivo (usa this.sp.HttpClient).
+-  private authenticateWithOwnApi(
+-    username: string,
+-    password: string,
+-    callback: (token: string, error: string) => void
+-  ) {
+-    const settingsService = this.controller.lookupListener(SettingsService);
+-
+-    // TODO: trocar por um getter real, ex: settingsService.getOwnApiUrl()
+-    const ownApiUrl = "https://SEU-SITE-AQUI";
+-
+-    const client = new this.sp.HttpClient(ownApiUrl);
+-
+-    client.post('/api/auth/login', {
+-      body: JSON.stringify({ username, password }),
+-      contentType: 'application/json',
+-      // @ts-ignore
+-    }, (res) => {
+-      if (res.status !== 200) {
+-        callback('', 'status code ' + res.status);
+-      } else {
+-        try {
+-          const parsed = JSON.parse(res.body);
+-          callback(parsed.token, '');
+-        } catch (e) {
+-          callback('', 'failed to parse response');
+-        }
+-      }
+-    });
+-  }
+-
+-  private onTick() {
+-    // TODO: Should be no hardcoded/magic-number limit
+-    // TODO: Busy waiting is bad. Should be replaced with some kind of event
+-    const maxLoggingDelay = 15000;
+-    if (this.loggingStartMoment && Date.now() - this.loggingStartMoment > maxLoggingDelay) {
+-      logTrace(this, 'Max logging delay reached received');
+-
+-      if (this.playerEverSawActualGameplay) {
+-        logTrace(this, 'Player saw actual gameplay, reconnecting');
+-        this.loggingStartMoment = 0;
+-        this.controller.lookupListener(NetworkingService).reconnect();
+-        // TODO: should we prompt user to relogin?
+-      } else {
+-        logTrace(this, 'Player never saw actual gameplay, showing login dialog');
+-        this.loggingStartMoment = 0;
+-        this.authAttemptProgressIndicator = false;
+-        this.controller.lookupListener(NetworkingService).close();
+-        browserState.comment = "";
+-        browserState.loginFailedReason = strings.technicalIssues;
+-        this.sp.browser.executeJavaScript(new FunctionInfo(this.loginFailedWidgetSetter).getText({ events, browserState, authData: authData, strings }));
+-
+-        authData = null;
+-        this.writeAuthDataToDisk(null);
+       }
+     }
+-
+-    if (this.authAttemptProgressIndicator) {
+-      this.authAttemptProgressIndicatorCounter++;
+-
+-      if (this.authAttemptProgressIndicatorCounter === 1000000) {
+-        this.authAttemptProgressIndicatorCounter = 0;
+-      }
+-
+-      const slowCounter = Math.floor(this.authAttemptProgressIndicatorCounter / 15);
+-
+-      const dot = slowCounter % 3 === 0 ? '.' : slowCounter % 3 === 1 ? '..' : '...';
+-
+-      browserState.comment = strings.connecting + dot;
+-      this.refreshWidgets();
+-    }
+-  }
+-
+-  private onceUpdate() {
+-    this.playerEverSawActualGameplay = true;
+-  }
+-
+-  private isListenBrowserMessage() {
+-    return this._isListenBrowserMessage;
+-  }
+-
+-  private setListenBrowserMessage(value: boolean, reason: string) {
+-    logTrace(this, `setListenBrowserMessage:`, value, `reason:`, reason);
+-    this._isListenBrowserMessage = value;
+-  }
+-
+-  private _isListenBrowserMessage = false;
+-
+-  private trigger = {
+-    authNeededFired: false,
+-    browserWindowLoadedFired: false,
+-
+-    get conditionMet() {
+-      return this.authNeededFired && this.browserWindowLoadedFired
+-    }
+-  };
+-  private discordAuthState = crypto.randomBytes(32).toString('hex');
+-  private authDialogOpen = false;
+-  private launcherRequired = false;
+-  private loggingStartMoment = 0;
+-  private authAttemptProgressIndicator = false;
+-  private authAttemptProgressIndicatorCounter = 0;
+-  private playerEverSawActualGameplay = false;
+-  private readonly githubUrl = "https://github.com/skyrim-multiplayer/skymp";
+-  private readonly patreonUrl = "https://www.patreon.com/skymp";
+-  private readonly pluginAuthDataName = `auth-data-no-load`;
+-}
++    logTrace(this, `Received authNeeded event`);
++    const proc = (globalThis as any).process;
++    const tokenFromEnv = (typeof proc !== 'undefined' && proc.env)
++      ? proc.env['AETHERIUS_TOKEN']
++      : undefined;
++
++    if (tokenFromEnv) {
++      logTrace(this, `Token found via env var, skipping login widget`);
++      this.controller.emitter.emit("authAttempt", {
++        authGameData: { token: tokenFromEnv },
++      });
++      return;
++    }
++
++    logTrace(this, `No launcher token found, will show block widget once browser is ready`);
++    this.launcherRequired = true;
++    this.setListenBrowserMessage(true, 'authNeeded event received (no launcher token)');
++  
++    this.trigger.authNeededFired = true;
++    if (this.trigger.conditionMet) {
++      this.onBrowserWindowLoadedAndOnlineAuthNeeded();
++    }
++    
++    const settingsGameData = this.sp.settings["skymp5-client"]["gameData"] as any;
++    const isOfflineMode = false;
++    if (isOfflineMode) {
++      logTrace(this, `Offline mode detected in settings, emitting auth event with authGameData.local`);
++      this.controller.emitter.emit("authAttempt", { authGameData: { local: { profileId: settingsGameData.profileId } } });
++    } else {
++      logTrace(this, `No offline mode detectted in settings, regular auth needed`);
++      this.setListenBrowserMessage(true, 'authNeeded event received');
++
++      this.trigger.authNeededFired = true;
++      if (this.trigger.conditionMet) {
++        this.onBrowserWindowLoadedAndOnlineAuthNeeded();
++      }
++    }
++  }
++
++  private launcherRequiredWidgetSetter = () => {
++    window.skyrimPlatform.widgets.set([{
++      type: "form",
++      id: 1,
++      caption: strings.authorization,
++      elements: [
++        {
++          type: "text",
++          text: "Este servidor só pode ser acessado",
++          tags: [],
++        },
++        {
++          type: "text",
++          text: "através do launcher oficial.",
++          tags: [],
++        },
++        {
++          type: "text",
++          text: "Feche o jogo e abra pelo launcher.",
++          tags: [],
++        }
++      ]
++    }]);
++  };
++
++  private onBrowserWindowLoaded(e: BrowserWindowLoadedEvent) {
++    logTrace(this, `Received browserWindowLoaded event`);
++
++    this.trigger.browserWindowLoadedFired = true;
++    if (this.trigger.conditionMet) {
++      this.onBrowserWindowLoadedAndOnlineAuthNeeded();
++    }
++  }
++
++  private onCreateActorMessage(e: ConnectionMessage<CreateActorMessage>) {
++    if (e.message.isMe) {
++      if (this.authDialogOpen) {
++        logTrace(this, `Received createActorMessage for self, resetting widgets`);
++        this.sp.browser.executeJavaScript('window.skyrimPlatform.widgets.set([]);');
++        this.authDialogOpen = false;
++      } else {
++        logTrace(this, `Received createActorMessage for self, but auth dialog was not open so not resetting widgets`);
++      }
++    }
++
++    this.loggingStartMoment = 0;
++    this.authAttemptProgressIndicator = false;
++  }
++
++  private onCustomPacketMessage(event: ConnectionMessage<CustomPacketMessage>): void {
++    const msg = event.message;
++
++    let msgContent: Record<string, unknown> = {};
++
++    try {
++      msgContent = JSON.parse(msg.contentJsonDump);
++    } catch (e) {
++      if (e instanceof SyntaxError) {
++        logError(this, "onCustomPacketMessage failed to parse JSON", e.message, "json:", msg.contentJsonDump);
++        return;
++      } else {
++        throw e;
++      }
++    }
++
++    switch (msgContent["customPacketType"]) {
++      case 'loginFailedNotLoggedViaDiscord':
++        this.authAttemptProgressIndicator = false;
++        this.controller.lookupListener(NetworkingService).close();
++        logTrace(this, 'loginFailedNotLoggedViaDiscord received');
++        browserState.loginFailedReason = strings.loginViaDiscord;
++        browserState.comment = '';
++        this.setListenBrowserMessage(true, 'loginFailedNotLoggedViaDiscord received');
++        this.loggingStartMoment = 0;
++        this.sp.browser.executeJavaScript(new FunctionInfo(this.loginFailedWidgetSetter).getText({ events, browserState, authData: authData, strings }));
++        break;
++      case 'loginFailedNotInTheDiscordServer':
++        this.authAttemptProgressIndicator = false;
++        this.controller.lookupListener(NetworkingService).close();
++        logTrace(this, 'loginFailedNotInTheDiscordServer received');
++        browserState.loginFailedReason = strings.joinDiscordServer;
++        browserState.comment = '';
++        this.setListenBrowserMessage(true, 'loginFailedNotInTheDiscordServer received');
++        this.loggingStartMoment = 0;
++        this.sp.browser.executeJavaScript(new FunctionInfo(this.loginFailedWidgetSetter).getText({ events, browserState, authData: authData, strings }));
++        break;
++      case 'loginFailedBanned':
++        this.authAttemptProgressIndicator = false;
++        this.controller.lookupListener(NetworkingService).close();
++        logTrace(this, 'loginFailedBanned received');
++        // O controle de acesso da alpha manda o motivo (bloqueio, fora da
++        // whitelist, outra máquina); servidores antigos não mandam nada.
++        browserState.loginFailedReason = typeof msgContent["reason"] === "string" && msgContent["reason"]
++          ? msgContent["reason"] as string
++          : strings.banned;
++        browserState.comment = '';
++        this.setListenBrowserMessage(true, 'loginFailedBanned received');
++        this.loggingStartMoment = 0;
++        this.sp.browser.executeJavaScript(new FunctionInfo(this.loginFailedWidgetSetter).getText({ events, browserState, authData: authData, strings }));
++        break;
++      case 'loginFailedIpMismatch':
++        this.authAttemptProgressIndicator = false;
++        this.controller.lookupListener(NetworkingService).close();
++        logTrace(this, 'loginFailedIpMismatch received');
++        browserState.loginFailedReason = strings.whatWasThat;
++        browserState.comment = '';
++        this.setListenBrowserMessage(true, 'loginFailedIpMismatch received');
++        this.loggingStartMoment = 0;
++        this.sp.browser.executeJavaScript(new FunctionInfo(this.loginFailedWidgetSetter).getText({ events, browserState, authData: authData, strings }));
++        break;
++    }
++  }
++
++  private onBrowserWindowLoadedAndOnlineAuthNeeded() {
++    if (!this.isListenBrowserMessage) {
++      logError(this, `isListenBrowserMessage was false for some reason, aborting auth`);
++      return;
++    }
++  
++    if (this.launcherRequired) {
++      logTrace(this, `Showing launcher-required widget`);
++      this.sp.browser.executeJavaScript(
++        new FunctionInfo(this.launcherRequiredWidgetSetter).getText({ strings })
++      );
++      this.sp.browser.setVisible(true);
++      this.sp.browser.setFocused(true);
++      return;
++    }
++    // ---------------------------------------------------------------------
++  
++    logTrace(this, `Showing widgets and starting loop`);
++  
++    authData = this.readAuthDataFromDisk();
++    this.refreshWidgets();
++    this.sp.browser.setVisible(true);
++    this.sp.browser.setFocused(true);
++  
++    const timersService = this.controller.lookupListener(TimersService);
++  
++    logTrace(this, "Calling setTimeout for testing");
++    try {
++      timersService.setTimeout(() => {
++        logTrace(this, "Test timeout fired");
++      }, 1);
++    } catch (e) {
++      logError(this, "Failed to call setTimeout");
++    }
++  }
++
++  private onBrowserMessage(e: BrowserMessageEvent) {
++    if (!this.isListenBrowserMessage) {
++      logTrace(this, `onBrowserMessage: isListenBrowserMessage was false, ignoring message`, JSON.stringify(e.arguments));
++      return;
++    }
++
++    const settingsService = this.controller.lookupListener(SettingsService);
++
++    logTrace(this, `onBrowserMessage:`, JSON.stringify(e.arguments));
++
++    const eventKey = e.arguments[0];
++    switch (eventKey) {
++      case events.openDiscordOauth:
++        browserState.comment = strings.openingBrowser;
++        this.refreshWidgets();
++        this.sp.win32.loadUrl(`${settingsService.getMasterUrl()}/api/users/login-discord?state=${this.discordAuthState}`);
++
++        // Launch checkLoginState loop
++        this.checkLoginState();
++        break;
++      case 'debugLog':
++        logTrace('[DEBUG]', ...e.arguments.slice(1));
++      break;
++      case events.authAttempt:
++        const username = e.arguments[1] as string | undefined;
++        const password = e.arguments[2] as string | undefined;
++      
++        if (!username || !password) {
++          browserState.comment = strings.loginFirst;
++          this.refreshWidgets();
++          break;
++        }
++      
++        logTrace(this, `authAttempt via credentials, username =`, username);
++      
++        // NOTE: authGameData precisa ganhar uma nova variante "credentials"
++        // (hoje só existe "local" e "remote" em AuthGameData, no authModel.ts).
++        this.controller.emitter.emit("authAttempt", {
++          authGameData: { credentials: { username, password } },
++        });
++      
++        this.authAttemptProgressIndicator = true;
++      
++        break;
++      case events.clearAuthData:
++        // Doesn't seem to be used
++        this.writeAuthDataToDisk(null);
++        break;
++      case events.openGithub:
++        this.sp.win32.loadUrl(this.githubUrl);
++        break;
++      case events.openPatreon:
++        this.sp.win32.loadUrl(this.patreonUrl);
++        break;
++      case events.updateRequired:
++        this.sp.win32.loadUrl("https://skymp.net/UpdInstall");
++        break;
++      case events.backToLogin:
++        this.sp.browser.executeJavaScript(new FunctionInfo(this.browsersideWidgetSetter).getText({ events, browserState, authData: authData, strings }));
++        break;
++      case events.joinDiscord:
++        this.sp.win32.loadUrl("https://discord.gg/9KhSZ6zjGT");
++        break;
++      default:
++        break;
++    }
++  }
++
++  private createPlaySession(token: string, callback: (res: string, err: string) => void) {
++    const settingsService = this.controller.lookupListener(SettingsService);
++    const client = new this.sp.HttpClient(settingsService.getMasterUrl());
++
++    const route = `/api/users/me/play/${settingsService.getServerMasterKey()}`;
++    logTrace(this, `Creating play session ${route}`);
++
++    client.post(route, {
++      body: '{}',
++      contentType: 'application/json',
++      headers: {
++        'authorization': token,
++      },
++      // @ts-ignore
++    }, (res) => {
++      if (res.status != 200) {
++        callback('', 'status code ' + res.status);
++      } else {
++        // TODO: handle JSON.parse failure?
++        callback(JSON.parse(res.body).session, '');
++      }
++    });
++  }
++
++  private checkLoginState() {
++    if (!this.isListenBrowserMessage) {
++      logTrace(this, `checkLoginState: isListenBrowserMessage was false, aborting check`);
++      return;
++    }
++
++    const settingsService = this.controller.lookupListener(SettingsService);
++    const timersService = this.controller.lookupListener(TimersService);
++
++    // Social engineering protection, don't show the full state
++    const halfDiscordAuthState = this.discordAuthState.slice(0, 16);
++
++    logTrace(this, `Checking login state`, halfDiscordAuthState, '...');
++
++    new this.sp.HttpClient(settingsService.getMasterUrl())
++      .get("/api/users/login-discord/status?state=" + this.discordAuthState, undefined,
++        // @ts-ignore
++        (response) => {
++          switch (response.status) {
++            case 200:
++              const {
++                token,
++                masterApiId,
++                discordUsername,
++                discordDiscriminator,
++                discordAvatar,
++              } = JSON.parse(response.body) as MasterApiAuthStatus;
++              browserState.failCount = 0;
++              this.createPlaySession(token, (playSession, error) => {
++                if (error) {
++                  browserState.failCount = 0;
++                  browserState.comment = (error);
++                  timersService.setTimeout(() => this.checkLoginState(), Math.floor((1.5 + Math.random() * 2) * 1000));
++                  this.refreshWidgets();
++                  return;
++                }
++                authData = {
++                  session: playSession,
++                  masterApiId,
++                  discordUsername,
++                  discordDiscriminator,
++                  discordAvatar,
++                };
++                browserState.comment = strings.linkedSuccessfully;
++                this.refreshWidgets();
++              });
++              break;
++            case 401: // Unauthorized
++              browserState.failCount = 0;
++              browserState.comment = '';//(`Still waiting...`);
++              timersService.setTimeout(() => this.checkLoginState(), Math.floor((1.5 + Math.random() * 2) * 1000));
++              break;
++            case 403: // Forbidden
++            case 404: // Not found
++              browserState.failCount = 9000;
++              browserState.comment = (`Fail: ${response.body}`);
++              break;
++            default:
++              ++browserState.failCount;
++              browserState.comment = `Server returned ${response.status.toString() || "???"} "${response.body || response.error}"`;
++              timersService.setTimeout(() => this.checkLoginState(), Math.floor((1.5 + Math.random() * 2) * 1000));
++          }
++        });
++  };
++
++  private refreshWidgets() {
++    this.sp.browser.executeJavaScript(new FunctionInfo(this.browsersideWidgetSetter).getText({ events, browserState, authData: authData, strings }));
++    this.authDialogOpen = true;
++  };
++
++  public readAuthDataFromDisk(): RemoteAuthGameData | null {
++    logTrace(this, `Reading`, this.pluginAuthDataName, `from disk`);
++
++    try {
++      // @ts-expect-error (TODO: Remove in 2.10.0)
++      const data = this.sp.getPluginSourceCode(this.pluginAuthDataName, "PluginsNoLoad");
++
++      if (!data) {
++        logTrace(this, `Read empty`, this.pluginAuthDataName, `returning null`);
++        return null;
++      }
++
++      return JSON.parse(data.slice(2)) || null;
++    } catch (e) {
++      logError(this, `Error reading`, this.pluginAuthDataName, `from disk:`, e, `, falling back to null`);
++      return null;
++    }
++  }
++
++  private writeAuthDataToDisk(data: RemoteAuthGameData | null) {
++    const content = "//" + (data ? JSON.stringify(data) : "null");
++
++    logTrace(this, `Writing`, this.pluginAuthDataName, `to disk:`, content);
++
++    try {
++      this.sp.writePlugin(
++        this.pluginAuthDataName,
++        content,
++        // @ts-expect-error (TODO: Remove in 2.10.0)
++        "PluginsNoLoad"
++      );
++    } catch (e) {
++      logError(this, `Error writing`, this.pluginAuthDataName, `to disk:`, e, `, will not remember user`);
++    }
++  };
++
++  private deniedWidgetSetter = () => {
++    const widget = {
++      type: "form",
++      id: 2,
++      caption: strings.updateCaption,
++      elements: [
++        {
++          type: "text",
++          text: strings.updateAvailable,
++          tags: []
++        },
++        {
++          type: "text",
++          text: strings.downloadAt,
++          tags: []
++        },
++        {
++          type: "text",
++          text: "skymp.net",
++          tags: []
++        },
++        {
++          type: "button",
++          text: strings.openSkympNet,
++          tags: ["ELEMENT_STYLE_MARGIN_EXTENDED"],
++          click: () => window.skyrimPlatform.sendMessage(events.updateRequired),
++          hint: strings.updateDownloadHint,
++        }
++      ]
++    }
++    window.skyrimPlatform.widgets.set([widget]);
++
++    // Make sure gamemode will not be able to update widgets anymore
++    window.skyrimPlatform.widgets = null;
++  }
++
++  private loginFailedWidgetSetter = () => {
++    const splitParts = browserState.loginFailedReason.split('\n');
++
++    const textElements = splitParts.map((part) => ({
++      type: "text",
++      text: part,
++      tags: [],
++    }));
++
++    const widget = {
++      type: "form",
++      id: 2,
++      caption: strings.oops,
++      elements: new Array<any>()
++    }
++
++    textElements.forEach((element) => widget.elements.push(element));
++
++    if (browserState.loginFailedReason === strings.joinDiscordServer) {
++      widget.elements.push({
++        type: "button",
++        text: strings.join,
++        tags: ["ELEMENT_STYLE_MARGIN_EXTENDED"],
++        click: () => window.skyrimPlatform.sendMessage(events.joinDiscord),
++        hint: null
++      });
++    }
++
++    widget.elements.push({
++      type: "button",
++      text: strings.back,
++      tags: ["ELEMENT_STYLE_MARGIN_EXTENDED"],
++      click: () => window.skyrimPlatform.sendMessage(events.backToLogin),
++      hint: undefined
++    });
++
++    window.skyrimPlatform.widgets.set([widget]);
++  }
++
++  // Estado do formulário de login/senha, mesmo padrão de "browserState" já usado no arquivo.
++// Precisa ser declarado no escopo do módulo (junto com "browserState" e "authData"),
++// já que o FunctionInfo serializa essas variáveis pra injetar no contexto do browser.
++
++private browsersideWidgetSetter = () => {
++  let loginForm = {
++    username: '',
++    password: '',
++  };
++
++  const loginWidget = {
++    type: "form",
++    id: 1,
++    caption: strings.authorization,
++    elements: [
++      {
++        type: "text",
++        text: (
++          authData ? (
++            authData.discordUsername
++              ? `${authData.discordUsername}`
++              : `id: ${authData.masterApiId}`
++          ) : strings.notAuthorized
++        ),
++        tags: [],
++      },
++
++      {
++        type: "icon",
++        text: "usuário",
++        tags: ["ICON_STYLE_MAIL"],
++      },
++      {
++        type: "inputText",
++        tags: ["ELEMENT_SAME_LINE"],
++        placeholder: "seu usuário",
++        change: (v: string) => {
++          loginForm.username = v;
++        },
++      },
++      {
++        type: "icon",
++        text: "senha",
++        tags: ["ICON_STYLE_KEY"],
++      },
++      {
++        type: "inputPass",
++        tags: ["ELEMENT_SAME_LINE"],
++        placeholder: "sua senha",
++        change: (v: string) => {
++          loginForm.password = v;
++        },
++      },
++
++      {
++        type: "button",
++        text: strings.play,
++        tags: ["BUTTON_STYLE_FRAME", "ELEMENT_STYLE_MARGIN_EXTENDED"],
++        click: () => {
++          window.skyrimPlatform.sendMessage(
++            events.authAttempt,
++            loginForm.username,
++            loginForm.password,
++          );
++        },
++        hint: strings.connectToServer,
++      },
++      {
++        type: "text",
++        text: browserState.comment,
++        tags: [],
++      },
++    ]
++  };
++  window.skyrimPlatform.widgets.set([loginWidget]);
++};
++
++  private handleConnectionDenied(e: ConnectionDenied) {
++  this.authAttemptProgressIndicator = false;
++
++  if (e.error.toLowerCase().includes("invalid password")) {
++    this.controller.once("tick", () => {
++      this.controller.lookupListener(NetworkingService).close();
++    });
++    this.sp.browser.executeJavaScript(new FunctionInfo(this.deniedWidgetSetter).getText({ events, strings }));
++    this.sp.browser.setVisible(true);
++    this.sp.browser.setFocused(true);
++    this.controller.once("update", () => {
++      this.sp.Game.disablePlayerControls(true, true, true, true, true, true, true, true, 0);
++    });
++    this.setListenBrowserMessage(true, 'connectionDenied event received');
++  }
++}
++
++  private handleConnectionAccepted() {
++  this.setListenBrowserMessage(false, 'connectionAccepted event received');
++  this.loggingStartMoment = Date.now();
++
++  const authData = this.sp.storage[authGameDataStorageKey] as AuthGameData | undefined;
++
++  // --- NOVO: token vindo do launcher ---
++  if (authData?.token) {
++    logTrace(this, 'Logging in via launcher-provided token');
++    const message: CustomPacketMessage = {
++      t: MsgType.CustomPacket,
++      contentJsonDump: JSON.stringify({
++        customPacketType: 'loginWithSkympIo',
++        gameData: {
++          token: authData.token,
++        },
++      }),
++    };
++    this.controller.emitter.emit("sendMessage", {
++      message: message,
++      reliability: "reliable"
++    });
++    return;
++  }
++  // --------------------------------------
++
++  if (authData?.local) {
++    logTrace(this,
++      `Logging in offline mode, profileId =`, authData.local.profileId
++    );
++    const message: CustomPacketMessage = {
++      t: MsgType.CustomPacket,
++      contentJsonDump: JSON.stringify({
++        customPacketType: 'loginWithSkympIo',
++        gameData: {
++          profileId: authData.local.profileId,
++        },
++      }),
++    };
++    this.controller.emitter.emit("sendMessage", {
++      message: message,
++      reliability: "reliable"
++    });
++    return;
++  }
++
++  if (authData?.remote) {
++    logTrace(this, 'Logging in as a master API user');
++    const message: CustomPacketMessage = {
++      t: MsgType.CustomPacket,
++      contentJsonDump: JSON.stringify({
++        customPacketType: 'loginWithSkympIo',
++        gameData: {
++          session: authData.remote.session,
++        },
++      }),
++    };
++    this.controller.emitter.emit("sendMessage", {
++      message: message,
++      reliability: "reliable"
++    });
++    return;
++  }
++
++  if (authData?.credentials) {
++    logTrace(this, 'Logging in with own credentials, username =', authData.credentials.username);
++
++    this.authenticateWithOwnApi(
++      authData.credentials.username,
++      authData.credentials.password,
++      (token, error) => {
++        if (error) {
++          logError(this, 'Own API auth failed:', error);
++          browserState.comment = '';
++          browserState.loginFailedReason = strings.technicalIssues;
++          this.setListenBrowserMessage(true, 'own API auth failed');
++          this.sp.browser.executeJavaScript(new FunctionInfo(this.loginFailedWidgetSetter).getText({ events, browserState, authData: authData, strings }));
++          this.sp.browser.setVisible(true);
++          this.sp.browser.setFocused(true);
++          return;
++        }
++
++        const message: CustomPacketMessage = {
++          t: MsgType.CustomPacket,
++          contentJsonDump: JSON.stringify({
++            customPacketType: 'loginWithSkympIo',
++            gameData: {
++              token: token,
++            },
++          }),
++        };
++        this.controller.emitter.emit("sendMessage", {
++          message: message,
++          reliability: "reliable"
++        });
++      }
++    );
++    return;
++  }
++
++  logError(this, 'Not found authentication method');
++};
++
++  // NOTE: ajuste "getOwnApiUrl()" e o formato de request/response conforme
++  // o contrato real do seu site/API. Segui o mesmo padrão do createPlaySession
++  // já existente no arquivo (usa this.sp.HttpClient).
++  private authenticateWithOwnApi(
++    username: string,
++    password: string,
++    callback: (token: string, error: string) => void
++  ) {
++    const settingsService = this.controller.lookupListener(SettingsService);
++
++    // TODO: trocar por um getter real, ex: settingsService.getOwnApiUrl()
++    const ownApiUrl = "https://SEU-SITE-AQUI";
++
++    const client = new this.sp.HttpClient(ownApiUrl);
++
++    client.post('/api/auth/login', {
++      body: JSON.stringify({ username, password }),
++      contentType: 'application/json',
++      // @ts-ignore
++    }, (res) => {
++      if (res.status !== 200) {
++        callback('', 'status code ' + res.status);
++      } else {
++        try {
++          const parsed = JSON.parse(res.body);
++          callback(parsed.token, '');
++        } catch (e) {
++          callback('', 'failed to parse response');
++        }
++      }
++    });
++  }
++
++  private onTick() {
++    // TODO: Should be no hardcoded/magic-number limit
++    // TODO: Busy waiting is bad. Should be replaced with some kind of event
++    const maxLoggingDelay = 15000;
++    if (this.loggingStartMoment && Date.now() - this.loggingStartMoment > maxLoggingDelay) {
++      logTrace(this, 'Max logging delay reached received');
++
++      if (this.playerEverSawActualGameplay) {
++        logTrace(this, 'Player saw actual gameplay, reconnecting');
++        this.loggingStartMoment = 0;
++        this.controller.lookupListener(NetworkingService).reconnect();
++        // TODO: should we prompt user to relogin?
++      } else {
++        logTrace(this, 'Player never saw actual gameplay, showing login dialog');
++        this.loggingStartMoment = 0;
++        this.authAttemptProgressIndicator = false;
++        this.controller.lookupListener(NetworkingService).close();
++        browserState.comment = "";
++        browserState.loginFailedReason = strings.technicalIssues;
++        this.sp.browser.executeJavaScript(new FunctionInfo(this.loginFailedWidgetSetter).getText({ events, browserState, authData: authData, strings }));
++
++        authData = null;
++        this.writeAuthDataToDisk(null);
++      }
++    }
++
++    if (this.authAttemptProgressIndicator) {
++      this.authAttemptProgressIndicatorCounter++;
++
++      if (this.authAttemptProgressIndicatorCounter === 1000000) {
++        this.authAttemptProgressIndicatorCounter = 0;
++      }
++
++      const slowCounter = Math.floor(this.authAttemptProgressIndicatorCounter / 15);
++
++      const dot = slowCounter % 3 === 0 ? '.' : slowCounter % 3 === 1 ? '..' : '...';
++
++      browserState.comment = strings.connecting + dot;
++      this.refreshWidgets();
++    }
++  }
++
++  private onceUpdate() {
++    this.playerEverSawActualGameplay = true;
++  }
++
++  private isListenBrowserMessage() {
++    return this._isListenBrowserMessage;
++  }
++
++  private setListenBrowserMessage(value: boolean, reason: string) {
++    logTrace(this, `setListenBrowserMessage:`, value, `reason:`, reason);
++    this._isListenBrowserMessage = value;
++  }
++
++  private _isListenBrowserMessage = false;
++
++  private trigger = {
++    authNeededFired: false,
++    browserWindowLoadedFired: false,
++
++    get conditionMet() {
++      return this.authNeededFired && this.browserWindowLoadedFired
++    }
++  };
++  private discordAuthState = crypto.randomBytes(32).toString('hex');
++  private authDialogOpen = false;
++  private launcherRequired = false;
++  private loggingStartMoment = 0;
++  private authAttemptProgressIndicator = false;
++  private authAttemptProgressIndicatorCounter = 0;
++  private playerEverSawActualGameplay = false;
++  private readonly githubUrl = "https://github.com/skyrim-multiplayer/skymp";
++  private readonly patreonUrl = "https://www.patreon.com/skymp";
++  private readonly pluginAuthDataName = `auth-data-no-load`;
++}
+diff --git a/client/src/services/services/browserService.ts b/client/src/services/services/browserService.ts
+index dd9c9db..eeb8998 100644
+--- a/client/src/services/services/browserService.ts
++++ b/client/src/services/services/browserService.ts
+@@ -1,141 +1,154 @@
+-
+-// TODO: send event instead of direct dependency on FormView class
+-import { FormView } from "../../view/formView";
+-import { QueryKeyCodeBindings } from "../events/queryKeyCodeBindings";
+-
+-import { ClientListener, CombinedController, Sp } from "./clientListener";
+-import { BrowserMessageEvent, DxScanCode, Menu, MenuCloseEvent, MenuOpenEvent } from "skyrimPlatform";
+-
+-const unfocusEventString = `window.dispatchEvent(new CustomEvent('skymp5-client:browserUnfocused', {}))`;
+-const focusEventString = `window.dispatchEvent(new CustomEvent('skymp5-client:browserFocused', {}))`;
+-
++
++// TODO: send event instead of direct dependency on FormView class
++import { FormView } from "../../view/formView";
++import { QueryKeyCodeBindings } from "../events/queryKeyCodeBindings";
++
++import { ClientListener, CombinedController, Sp } from "./clientListener";
++import { BrowserMessageEvent, DxScanCode, Menu, MenuCloseEvent, MenuOpenEvent } from "skyrimPlatform";
++
++const unfocusEventString = `window.dispatchEvent(new CustomEvent('skymp5-client:browserUnfocused', {}))`;
++const focusEventString = `window.dispatchEvent(new CustomEvent('skymp5-client:browserFocused', {}))`;
++
+ export class BrowserService extends ClientListener {
+-  constructor(private sp: Sp, private controller: CombinedController) {
+-    super();
+-
+-    this.sp.browser.setVisible(false);
+-
++  private aetheriusUiFocused = false;
++  private restoreBrowserVisible = false;
++  constructor(private sp: Sp, private controller: CombinedController) {
++    super();
++
++    this.sp.browser.setVisible(false);
++
+     this.controller.emitter.on("queryKeyCodeBindings", (e) => this.onQueryKeyCodeBindings(e));
+-    this.controller.once("update", () => this.onceUpdate());
+-    this.controller.on("browserMessage", (e) => this.onBrowserMessage(e));
+-    this.controller.on("menuOpen", (e) => this.onMenuOpen(e));
+-    this.controller.on("menuClose", (e) => this.onMenuClose(e));
+-    // Native browser state remains available while menus suppress update.
+-    this.controller.on("tick", () => this.syncFocus());
+-  }
+-
+-  // TODO: keycodes should be configurable
+-  private onQueryKeyCodeBindings(e: QueryKeyCodeBindings) {
+-    // Focused Meridian shortcuts arrive via the DOM bridge. Do not toggle
+-    // them a second time via the game's physical keyboard query.
+-    const backend = (this.sp.browser as any).getBackend?.();
+-    this.domOwnedKeys.forEach(key => {
+-      if (!e.isDown([key])) this.domOwnedKeys.delete(key);
+-    });
+-    if (backend?.name === "meridian" && this.sp.browser.isFocused()) return;
+-    const isDown = (key: DxScanCode) => !this.domOwnedKeys.has(key) && e.isDown([key]);
+-    if (isDown(DxScanCode.F1)) {
+-      FormView.isDisplayingNicknames = !FormView.isDisplayingNicknames;
+-    }
+-    if (isDown(DxScanCode.F2)) {
+-      this.sp.browser.setVisible(!this.sp.browser.isVisible());
+-    }
+-    if (this.badMenusOpen.size === 0 && isDown(DxScanCode.F6)) {
+-      const newState = !this.sp.browser.isFocused();
+-      this.sp.browser.setFocused(newState);
+-    }
+-    if (this.badMenusOpen.size === 0 && isDown(DxScanCode.Enter)) {
+-      this.sp.browser.setFocused(true);
+-    }
+-    if (isDown(DxScanCode.Escape)) {
+-      if (this.sp.browser.isFocused()) {
++    this.controller.emitter.on("aetheriusUiFocusChanged", focused => {
++      if (focused === this.aetheriusUiFocused) return;
++      this.aetheriusUiFocused = focused;
++      if (focused) {
++        this.restoreBrowserVisible = this.sp.browser.isVisible();
+         this.sp.browser.setFocused(false);
+-      }
+-    }
+-  }
+-
++        this.sp.browser.setVisible(false);
++      } else if (this.badMenusOpen.size === 0) this.sp.browser.setVisible(this.restoreBrowserVisible);
++    });
++    this.controller.once("update", () => this.onceUpdate());
++    this.controller.on("browserMessage", (e) => this.onBrowserMessage(e));
++    this.controller.on("menuOpen", (e) => this.onMenuOpen(e));
++    this.controller.on("menuClose", (e) => this.onMenuClose(e));
++    // Native browser state remains available while menus suppress update.
++    this.controller.on("tick", () => this.syncFocus());
++  }
++
++  // TODO: keycodes should be configurable
++  private onQueryKeyCodeBindings(e: QueryKeyCodeBindings) {
++    if (this.aetheriusUiFocused) return;
++    // Focused Meridian shortcuts arrive via the DOM bridge. Do not toggle
++    // them a second time via the game's physical keyboard query.
++    const backend = (this.sp.browser as any).getBackend?.();
++    this.domOwnedKeys.forEach(key => {
++      if (!e.isDown([key])) this.domOwnedKeys.delete(key);
++    });
++    if (backend?.name === "meridian" && this.sp.browser.isFocused()) return;
++    const isDown = (key: DxScanCode) => !this.domOwnedKeys.has(key) && e.isDown([key]);
++    if (isDown(DxScanCode.F1)) {
++      FormView.isDisplayingNicknames = !FormView.isDisplayingNicknames;
++    }
++    if (isDown(DxScanCode.F2)) {
++      this.sp.browser.setVisible(!this.sp.browser.isVisible());
++    }
++    if (this.badMenusOpen.size === 0 && isDown(DxScanCode.F6)) {
++      const newState = !this.sp.browser.isFocused();
++      this.sp.browser.setFocused(newState);
++    }
++    if (this.badMenusOpen.size === 0 && isDown(DxScanCode.Enter)) {
++      this.sp.browser.setFocused(true);
++    }
++    if (isDown(DxScanCode.Escape)) {
++      if (this.sp.browser.isFocused()) {
++        this.sp.browser.setFocused(false);
++      }
++    }
++  }
++
+   private onceUpdate() {
+-    this.sp.browser.setVisible(true);
+-  }
+-
++    if (!this.aetheriusUiFocused) this.sp.browser.setVisible(true);
++  }
++
+   private onBrowserMessage(e: BrowserMessageEvent) {
+-    const onFrontLoadedEventKey = "front-loaded";
+-
+-    if (e.arguments[0] === onFrontLoadedEventKey) {
+-      this.controller.emitter.emit("browserWindowLoaded", {});
+-    }
+-    if (e.arguments[0] === "aetherius::browser-shortcut") {
+-      const key = ({ F1: DxScanCode.F1, F2: DxScanCode.F2, F6: DxScanCode.F6, Escape: DxScanCode.Escape } as Record<string, DxScanCode>)[e.arguments[1] as string];
+-      if (key !== undefined) this.domOwnedKeys.add(key);
+-      switch (e.arguments[1]) {
+-        case "F1": FormView.isDisplayingNicknames = !FormView.isDisplayingNicknames; break;
+-        case "F2": this.sp.browser.setVisible(false); break;
+-        case "F6": case "Escape": this.sp.browser.setFocused(false); break;
+-      }
+-    }
+-  }
+-
+-  private syncFocus() {
+-    const focused = this.sp.browser.isFocused();
+-    if (focused !== this.lastActualFocus) {
+-      this.lastActualFocus = focused;
+-      this.sp.browser.executeJavaScript(focused ? focusEventString : unfocusEventString);
+-    }
+-    const backend = (this.sp.browser as any).getBackend?.();
+-    const blocked = backend?.name === "meridian" && backend.focusRequested && !focused;
+-    if (!!blocked !== this.lastFocusBlocked) {
+-      this.lastFocusBlocked = !!blocked;
+-      this.sp.browser.executeJavaScript(`window.__aetheriusFocusUnavailable?.(${!!blocked});`);
+-    }
+-  }
+-  private lastActualFocus = false;
+-  private lastFocusBlocked = false;
+-  // Keep ownership until a keyboard query observes release, including when
+-  // the DOM shortcut relinquishes focus before the physical query arrives.
+-  private domOwnedKeys = new Set<DxScanCode>();
+-
+-  private onMenuOpen(e: MenuOpenEvent) {
+-    if (this.isBadMenu(e.name)) {
+-      this.sp.browser.setVisible(false);
+-      this.badMenusOpen.add(e.name);
++    if (this.aetheriusUiFocused && e.arguments[0] === "aetherius::browser-shortcut") return;
++    const onFrontLoadedEventKey = "front-loaded";
++
++    if (e.arguments[0] === onFrontLoadedEventKey) {
++      this.controller.emitter.emit("browserWindowLoaded", {});
++    }
++    if (e.arguments[0] === "aetherius::browser-shortcut") {
++      const key = ({ F1: DxScanCode.F1, F2: DxScanCode.F2, F6: DxScanCode.F6, Escape: DxScanCode.Escape } as Record<string, DxScanCode>)[e.arguments[1] as string];
++      if (key !== undefined) this.domOwnedKeys.add(key);
++      switch (e.arguments[1]) {
++        case "F1": FormView.isDisplayingNicknames = !FormView.isDisplayingNicknames; break;
++        case "F2": this.sp.browser.setVisible(false); break;
++        case "F6": case "Escape": this.sp.browser.setFocused(false); break;
++      }
++    }
++  }
++
++  private syncFocus() {
++    const focused = this.sp.browser.isFocused();
++    if (focused !== this.lastActualFocus) {
++      this.lastActualFocus = focused;
++      this.sp.browser.executeJavaScript(focused ? focusEventString : unfocusEventString);
++    }
++    const backend = (this.sp.browser as any).getBackend?.();
++    const blocked = backend?.name === "meridian" && backend.focusRequested && !focused;
++    if (!!blocked !== this.lastFocusBlocked) {
++      this.lastFocusBlocked = !!blocked;
++      this.sp.browser.executeJavaScript(`window.__aetheriusFocusUnavailable?.(${!!blocked});`);
++    }
++  }
++  private lastActualFocus = false;
++  private lastFocusBlocked = false;
++  // Keep ownership until a keyboard query observes release, including when
++  // the DOM shortcut relinquishes focus before the physical query arrives.
++  private domOwnedKeys = new Set<DxScanCode>();
++
++  private onMenuOpen(e: MenuOpenEvent) {
++    if (this.isBadMenu(e.name)) {
++      this.sp.browser.setVisible(false);
++      this.badMenusOpen.add(e.name);
+     } else if (e.name === Menu.HUD) {
+-      this.sp.browser.setVisible(true);
+-    }
+-  }
+-
+-  private onMenuClose(e: MenuCloseEvent) {
+-    if (this.badMenusOpen.delete(e.name)) {
+-      if (this.badMenusOpen.size === 0) {
+-        this.sp.browser.setVisible(true);
+-      }
+-    }
+-
+-    if (e.name === Menu.HUD) {
+-      this.sp.browser.setVisible(false);
+-    }
+-  }
+-
+-  private isBadMenu(menu: string) {
+-    return this.badMenus.includes(menu as Menu);
+-  }
+-
+-  private badMenusOpen = new Set<string>();
+-
+-  private readonly badMenus: Menu[] = [
+-    Menu.Barter,
+-    Menu.Book,
+-    Menu.Container,
+-    Menu.Crafting,
+-    Menu.Gift,
+-    Menu.Inventory,
+-    Menu.Journal,
+-    Menu.Lockpicking,
+-    Menu.Loading,
+-    Menu.Map,
+-    Menu.RaceSex,
+-    Menu.Stats,
+-    Menu.Tween,
+-    Menu.Console,
+-    Menu.Main,
+-  ];
+-}
++      if (!this.aetheriusUiFocused) this.sp.browser.setVisible(true);
++    }
++  }
++
++  private onMenuClose(e: MenuCloseEvent) {
++    if (this.badMenusOpen.delete(e.name)) {
++      if (this.badMenusOpen.size === 0) {
++        if (!this.aetheriusUiFocused) this.sp.browser.setVisible(true);
++      }
++    }
++
++    if (e.name === Menu.HUD) {
++      this.sp.browser.setVisible(false);
++    }
++  }
++
++  private isBadMenu(menu: string) {
++    return this.badMenus.includes(menu as Menu);
++  }
++
++  private badMenusOpen = new Set<string>();
++
++  private readonly badMenus: Menu[] = [
++    Menu.Barter,
++    Menu.Book,
++    Menu.Container,
++    Menu.Crafting,
++    Menu.Gift,
++    Menu.Inventory,
++    Menu.Journal,
++    Menu.Lockpicking,
++    Menu.Loading,
++    Menu.Map,
++    Menu.RaceSex,
++    Menu.Stats,
++    Menu.Tween,
++    Menu.Console,
++    Menu.Main,
++  ];
++}
+diff --git a/client/tsconfig.json b/client/tsconfig.json
+index ad63dfc..364246a 100644
+--- a/client/tsconfig.json
++++ b/client/tsconfig.json
+@@ -1,23 +1,23 @@
+-{
+-  "verbose": true,
+-  "compilerOptions": {
+-    "target": "es5",
+-    "ignoreDeprecations": "6.0",
+-    "module": "es2015",
+-    "strict": true,
+-    "alwaysStrict": true,
+-    "noImplicitAny": true,
+-    "noImplicitThis": true,
+-    "moduleResolution": "node",
+-    "esModuleInterop": true,
+-    "allowSyntheticDefaultImports": true,
+-    "baseUrl": ".",
+-    "lib": ["esnext"],
+-    "paths": { "skyrimPlatform": ["node_modules/@skyrim-platform/skyrim-platform"] },
+-    "rootDir": "./src",
+-    "types": ["node"],
+-    "skipLibCheck": true,
+-    "outDir": "dist"
+-  },
+-  "include": ["src/**/*.ts"]
+-}
++{
++  "verbose": true,
++  "compilerOptions": {
++    "target": "es5",
++    "ignoreDeprecations": "6.0",
++    "module": "es2015",
++    "strict": true,
++    "alwaysStrict": true,
++    "noImplicitAny": true,
++    "noImplicitThis": true,
++    "moduleResolution": "node",
++    "esModuleInterop": true,
++    "allowSyntheticDefaultImports": true,
++    "baseUrl": ".",
++    "lib": ["esnext"],
++    "paths": { "skyrimPlatform": ["node_modules/@skyrim-platform/skyrim-platform"] },
++    "rootDir": ".",
++    "types": ["node"],
++    "skipLibCheck": true,
++    "outDir": "dist"
++  },
++  "include": ["src/**/*.ts"]
++}
+diff --git a/client/meridian/aetherius-ui.test.cjs b/client/meridian/aetherius-ui.test.cjs
+new file mode 100644
+index 0000000..fefcd41
+--- /dev/null
++++ b/client/meridian/aetherius-ui.test.cjs
+@@ -0,0 +1,83 @@
++const { test } = require('node:test');
++const assert = require('node:assert/strict');
++const vm = require('node:vm');
++const fs = require('node:fs');
++const path = require('node:path');
++const ts = require('typescript');
++
++function create() {
++  const sent = [], forwarded = [], events = new Map(), nativeEvents = new Map(), taps = [];
++  class ClientListener {}
++  class NetworkingService {}
++  const platform = {
++    Game: { getPlayer: () => ({ sendModEvent: (name, json) => sent.push([name, JSON.parse(json)]), is3DLoaded: () => true }), isMenuControlsEnabled: () => true },
++    Ui: { isMenuOpen: () => false }, Input: { getMappedKey: name => name === 'Quick Map' ? 50 : 15, tapKey: key => taps.push(key) }, settings: {},
++  };
++  const context = vm.createContext({ TextEncoder: undefined, Date });
++  const cache = new Map();
++  function load(file) {
++    if (cache.has(file)) return cache.get(file);
++    const exports = {}; cache.set(file, exports);
++    const js = ts.transpileModule(fs.readFileSync(file, 'utf8'), { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020 } }).outputText;
++    const fn = vm.runInContext('(function(exports,require){' + js + '\n})', context);
++    fn(exports, name => {
++      if (name === 'skyrimPlatform') return platform;
++      if (name === 'node:fs') return {};
++      if (name === './clientListener') return { ClientListener };
++      if (name === './networkingService') return { NetworkingService };
++      if (name === '../../logging') return { logTrace: () => {} };
++      return load(path.resolve(path.dirname(file), name + '.ts'));
++    });
++    return exports;
++  }
++  const controller = { on: (name, fn) => { const previous = nativeEvents.get(name); nativeEvents.set(name, previous ? event => { previous(event); fn(event); } : fn); }, emitter: { on: (name, fn) => events.set(name, fn), emit: (name, data) => forwarded.push([name, data]) }, lookupListener: () => ({ isConnected: () => true }) };
++  const { AetheriusUiService } = load(path.resolve(__dirname, '../src/services/services/aetheriusUiService.ts'));
++  new AetheriusUiService(platform, controller);
++  const deliver = content => events.get('customPacketMessage')({ message: { t: 1, contentJsonDump: JSON.stringify(content) } });
++  return { sent, forwarded, events, nativeEvents, deliver, taps };
++}
++
++test('server session and navigation reach the native bridge without TextEncoder; ready replays them', () => {
++  const c = create();
++  c.deliver({ customPacketType: 'aetherius-ui:v1:session', protocolVersion: 1, sessionId: 'session-1' });
++  const envelope = { protocolVersion: 1, kind: 'snapshot', messageId: 'm1', correlationId: 'c1', sessionId: 'session-1', moduleId: 'core', revision: 0, payload: { navigation: [{ id: 'map', available: true }] } };
++  c.deliver({ customPacketType: 'aetherius-ui:v1:message', envelope });
++  assert.equal(c.sent.length, 0, 'network tick must not call Papyrus');
++  c.nativeEvents.get('update')();
++  assert.equal(c.sent[0][1].type, 'session');
++  assert.equal(c.sent[1][1].envelope.payload.navigation[0].id, 'map');
++  c.nativeEvents.get('modEvent')({ eventName: 'AetheriusUI.Ready', strArg: '1', numArg: 0 });
++  c.nativeEvents.get('update')();
++  assert.equal(c.sent.length, 4);
++  assert.deepEqual(c.sent[2], c.sent[0]);
++  assert.deepEqual(c.sent[3], c.sent[1]);
++});
++
++test('late native focus refresh permits map and repeated refresh does not cancel committed opening', () => {
++  const c = create();
++  c.deliver({ customPacketType: 'aetherius-ui:v1:session', protocolVersion: 1, sessionId: 'session-1' });
++  const focus = value => c.nativeEvents.get('modEvent')({ eventName: 'AetheriusUI.FocusState', strArg: String(value) });
++  const request = (action, payload) => c.nativeEvents.get('modEvent')({ eventName: 'AetheriusUI.FromView', strArg: JSON.stringify({ protocolVersion: 1, kind: 'request', messageId: action, correlationId: action, sessionId: 'session-1', moduleId: 'map', action, payload }) });
++  focus(true); request('prepareNative', {}); c.nativeEvents.get('update')();
++  assert.equal(c.sent.at(-1)[1].envelope.payload.status, 'prepared');
++  focus(true); request('openNative', { ticket: 'prepareNative' }); c.nativeEvents.get('update')();
++  assert.equal(c.sent.at(-1)[1].envelope.payload.status, 'releaseFocus');
++  focus(true); c.nativeEvents.get('update')(); assert.equal(c.taps.length, 0);
++  focus(false); c.nativeEvents.get('update')(); assert.deepEqual(c.taps, [50]);
++  c.nativeEvents.get('update')(); assert.equal(c.taps.length, 1);
++  assert.equal(c.forwarded.filter(([name]) => name === 'sendMessage').length, 0);
++});
++
++test('stale sessions and oversized packets are dropped; disconnect clears bootstrap', () => {
++  const c = create();
++  c.deliver({ customPacketType: 'aetherius-ui:v1:session', protocolVersion: 1, sessionId: 'session-1' });
++  c.nativeEvents.get('update')();
++  c.deliver({ customPacketType: 'aetherius-ui:v1:message', envelope: { protocolVersion: 1, kind: 'event', moduleId: 'core', messageId: 'm1', correlationId: 'c1', sessionId: 'old', payload: {} } });
++  c.deliver({ junk: '😀'.repeat(20_000) });
++  assert.equal(c.sent.length, 1);
++  c.events.get('connectionDisconnect')();
++  c.nativeEvents.get('modEvent')({ eventName: 'AetheriusUI.Ready', strArg: '1', numArg: 0 });
++  c.nativeEvents.get('update')();
++  assert.equal(c.sent.length, 2);
++  assert.equal(c.sent[1][1].type, 'disconnect');
++});
+diff --git a/client/src/services/services/aetheriusUiService.ts b/client/src/services/services/aetheriusUiService.ts
+new file mode 100644
+index 0000000..b4cb3a4
+--- /dev/null
++++ b/client/src/services/services/aetheriusUiService.ts
+@@ -0,0 +1,162 @@
++import { Game } from "skyrimPlatform";
++import { NativeMapControl } from "./nativeMapControl";
++import { MsgType } from "../../messages";
++import { decodeEnvelope, utf8ByteLength, MAX_ENVELOPE_BYTES, type UiEnvelope } from "../../../vendor/aetherius-ui-core/shared/protocol";
++import { logTrace } from "../../logging";
++import { CustomPacketMessage } from "../messages/customPacketMessage";
++import { ClientListener, CombinedController, Sp } from "./clientListener";
++import { NetworkingService } from "./networkingService";
++import * as fs from "node:fs";
++
++const PACKET_SESSION = "aetherius-ui:v1:session";
++const PACKET_REQUEST = "aetherius-ui:v1:request";
++const PACKET_MESSAGE = "aetherius-ui:v1:message";
++const FROM_VIEW = "AetheriusUI.FromView";
++const TO_VIEW = "AetheriusUI.ToView";
++const FOCUS_STATE = "AetheriusUI.FocusState";
++
++export class AetheriusUiService extends ClientListener {
++  private sessionId: string | null = null;
++  private coreSnapshot: UiEnvelope | null = null;
++  private readonly nativeMap: NativeMapControl;
++  private diagnosticsLeft = 64;
++  private bridgeQueue: string[] = [];
++  private bridgeQueueBytes = 0;
++
++  private diagnose(status: string): void {
++    // Explicit local-test opt-in. Never store sessions, actors or UI payloads.
++    const settings = this.sp.settings["skymp5-client"];
++    if (settings?.["aetherius-local-test"] !== true || settings?.["server-ip"] !== "127.0.0.1" || this.diagnosticsLeft-- <= 0) return;
++    const file = settings["aetherius-ui-diagnostics"];
++    if (typeof file !== "string") return;
++    try { fs.appendFileSync(file, `${new Date().toISOString()} ${status}\n`); } catch { /* optional test diagnostics */ }
++  }
++
++  constructor(private sp: Sp, private controller: CombinedController) {
++    super();
++    this.nativeMap = new NativeMapControl(this.sp, this.controller, packet => this.sendToView(packet), () => this.sessionId, () => this.controller.lookupListener(NetworkingService).isConnected());
++    this.controller.on("modEvent", (event) => this.onModEvent(event));
++    this.controller.on("update", () => this.flushBridge());
++    this.controller.emitter.on("customPacketMessage", (event) => this.onCustomPacket(event.message));
++    this.controller.emitter.on("connectionDisconnect", () => this.resetSession());
++    this.controller.emitter.on("connectionFailed", () => this.resetSession());
++    this.controller.emitter.on("connectionDenied", () => this.resetSession());
++    logTrace(this, "adapter inicializado para eventos locais e customPacket");
++    this.diagnose("initialized");
++  }
++
++  private onModEvent(event: { eventName: string; strArg: string; numArg: number }) {
++    if (event.eventName === "AetheriusUI.Ready") {
++      this.diagnose("native-ready");
++      if (this.sessionId) {
++        this.sendToView({ type: "session", sessionId: this.sessionId });
++        if (this.coreSnapshot) this.sendToView({ type: "envelope", envelope: this.coreSnapshot });
++      }
++      return;
++    }
++    if (event.eventName === FOCUS_STATE) {
++      const focused = event.strArg === "true";
++      this.diagnose(focused ? "native-focus-acquired" : "native-focus-released");
++      this.nativeMap.onFocusChanged(focused);
++      this.controller.emitter.emit("aetheriusUiFocusChanged", focused);
++      return;
++    }
++    if (event.eventName !== FROM_VIEW || !this.sessionId) return;
++    if (typeof event.strArg !== "string" || utf8ByteLength(event.strArg) > MAX_ENVELOPE_BYTES) return;
++
++    let envelope: UiEnvelope;
++    try {
++      envelope = decodeEnvelope(event.strArg, { requireSession: true });
++    } catch {
++      return;
++    }
++    if (envelope.kind !== "request" || envelope.sessionId !== this.sessionId) return;
++    if (!this.controller.lookupListener(NetworkingService).isConnected()) return;
++    if (this.nativeMap.handle(envelope)) return;
++
++    const message: CustomPacketMessage = {
++      t: MsgType.CustomPacket,
++      contentJsonDump: JSON.stringify({ customPacketType: PACKET_REQUEST, envelope }),
++    };
++    this.controller.emitter.emit("sendMessage", { message, reliability: "reliable" });
++    logTrace(this, "request encaminhado", envelope.moduleId, envelope.action, envelope.correlationId);
++  }
++
++  private onCustomPacket(message: CustomPacketMessage) {
++    this.diagnose("custom-packet-received");
++    if (typeof message.contentJsonDump !== "string" || utf8ByteLength(message.contentJsonDump) > MAX_ENVELOPE_BYTES + 1024) return;
++    let content: Record<string, unknown>;
++    try {
++      content = JSON.parse(message.contentJsonDump);
++    } catch {
++      return;
++    }
++    if (!content || typeof content !== "object" || Array.isArray(content)) return;
++    if (content.customPacketType === PACKET_MESSAGE && content.uiDisconnect === true) { this.resetSession(); return; }
++    if (content.customPacketType === PACKET_SESSION) {
++      if (content.protocolVersion !== 1 || typeof content.sessionId !== "string" || !/^[A-Za-z0-9][A-Za-z0-9._:-]{0,63}$/.test(content.sessionId)) return;
++      this.nativeMap.reset();
++      this.sessionId = content.sessionId;
++      this.coreSnapshot = null;
++      logTrace(this, "sessão de UI recebida do servidor");
++      this.diagnose("server-session-accepted");
++      this.sendToView({ type: "session", sessionId: this.sessionId });
++      return;
++    }
++    if (content.customPacketType !== PACKET_MESSAGE || !this.sessionId || typeof content.envelope !== "object" || content.envelope === null) return;
++
++    let envelope: UiEnvelope;
++    try {
++      envelope = decodeEnvelope(JSON.stringify(content.envelope), { requireSession: true });
++    } catch {
++      return;
++    }
++    if (envelope.sessionId !== this.sessionId) return;
++    if (envelope.kind === "snapshot" && envelope.moduleId === "core") this.coreSnapshot = envelope;
++    this.sendToView({ type: "envelope", envelope });
++    if (envelope.kind === "response" || envelope.kind === "error") {
++      logTrace(this, "resposta de UI recebida", envelope.moduleId, envelope.correlationId, envelope.kind);
++    }
++  }
++
++  private resetSession() {
++    this.nativeMap.reset();
++    this.sessionId = null;
++    this.coreSnapshot = null;
++    this.sendToView({ type: "disconnect" });
++  }
++
++  private sendToView(packet: unknown) {
++    try {
++      const serialized = JSON.stringify(packet);
++      const size = utf8ByteLength(serialized);
++      if (size > MAX_ENVELOPE_BYTES + 1024) return;
++      const type = (packet as { type?: string })?.type;
++      if (type === "session" || type === "disconnect") { this.bridgeQueue = []; this.bridgeQueueBytes = 0; }
++      if (this.bridgeQueue.length >= 128 || this.bridgeQueueBytes + size > 512 * 1024) { this.diagnose("bridge-queue-limit"); return; }
++      this.bridgeQueue.push(serialized);
++      this.bridgeQueueBytes += size;
++    } catch { /* malformed local packet */ }
++  }
++
++  private flushBridge(): void {
++    if (!this.bridgeQueue.length) return;
++    // Network customPacket is emitted from tick (render thread). Papyrus/native
++    // calls are legal in update only. Retain packets until a player is available.
++    try {
++      const player = Game.getPlayer();
++      if (!player) { this.diagnose("bridge-player-unavailable"); return; }
++      for (let count = 0; count < 16 && this.bridgeQueue.length; count++) {
++        const serialized = this.bridgeQueue[0];
++        player.sendModEvent(TO_VIEW, serialized, 0);
++        this.bridgeQueue.shift();
++        this.bridgeQueueBytes -= utf8ByteLength(serialized);
++        this.diagnose("bridge-event-sent");
++      }
++    } catch (error) {
++      this.diagnose(`bridge-event-failed:${error instanceof Error ? error.message.slice(0, 240).replace(/[\r\n]/g, " ") : "unknown"}`);
++      // O carregamento da página/personagem pode ainda não ter terminado.
++    }
++  }
++}
++
+diff --git a/client/src/services/services/nativeMapControl.ts b/client/src/services/services/nativeMapControl.ts
+new file mode 100644
+index 0000000..bca5088
+--- /dev/null
++++ b/client/src/services/services/nativeMapControl.ts
+@@ -0,0 +1,92 @@
++import type * as Platform from "skyrimPlatform";
++import type { UiEnvelope } from "../../../vendor/aetherius-ui-core/shared/protocol";
++
++type MapPlatform = Pick<typeof Platform, "Game" | "Ui" | "Input">;
++type Controller = { on: typeof Platform.on };
++type PendingMap = { ticket: string; session: string; expiresAt: number; phase: "prepared" | "committed" | "opening" };
++const BLOCKED = ["Console", "Main Menu", "Loading Menu", "Dialogue Menu", "RaceSex Menu", "Fader Menu", "InventoryMenu", "MagicMenu", "FavoritesMenu", "ContainerMenu", "BarterMenu", "Crafting Menu", "Book Menu", "Journal Menu", "Sleep/Wait Menu", "TweenMenu"];
++
++/** Local visual command using existing SKSE/Skyrim Platform APIs, not a server mutation. */
++export class NativeMapControl {
++  private focused = false;
++  private pending: PendingMap | null = null;
++  private recent = new Map<string, UiEnvelope>();
++
++  constructor(private sp: MapPlatform, controller: Controller, private send: (packet: unknown) => void, private session: () => string | null, private connected: () => boolean) {
++    controller.on("update", () => this.update());
++    controller.on("menuOpen", event => { if (event.name === "MapMenu" && this.pending?.phase === "opening") this.finish("opened"); });
++  }
++
++  onFocusChanged(focused: boolean): void {
++    // A newly focused browser must not inherit an old committed map command.
++    if (focused && !this.focused && this.pending?.phase !== "prepared") this.pending = null;
++    this.focused = focused;
++  }
++
++  reset(): void { this.pending = null; this.recent.clear(); }
++
++  private guard(): number {
++    if (typeof this.sp.Input?.getMappedKey !== "function" || typeof this.sp.Input?.tapKey !== "function" || typeof this.sp.Ui?.isMenuOpen !== "function") throw new Error("API nativa do mapa indisponível.");
++    if (!this.connected() || !this.session() || !this.sp.Game.getPlayer()?.is3DLoaded() || !this.sp.Game.isMenuControlsEnabled() || BLOCKED.some(menu => this.sp.Ui.isMenuOpen(menu))) throw new Error("O mapa não pode ser aberto no estado atual do jogo.");
++    // Quick Map is the engine's existing map action; never assume the M key.
++    const key = this.sp.Input.getMappedKey("Quick Map", 0);
++    if (!Number.isInteger(key) || key < 1 || key >= 255) throw new Error("Configure uma tecla de teclado para Mapa nos controles do jogo.");
++    // The current Core also owns the physical TAB scancode (0x0f).
++    if (key === 0x0f || key === this.sp.Input.getMappedKey("Tween Menu", 0)) throw new Error("Mapa e TAB estão associados à mesma tecla. Ajuste os controles do jogo.");
++    return key;
++  }
++
++  handle(request: UiEnvelope): boolean {
++    if (request.moduleId !== "map") return false;
++    if (request.kind !== "request" || request.sessionId !== this.session() || !this.connected()) return true;
++    const old = this.recent.get(request.correlationId);
++    if (old) { this.send({ type: "envelope", envelope: old }); return true; }
++    try {
++      const payload = request.payload;
++      if (!payload || typeof payload !== "object" || Array.isArray(payload)) throw new Error("Solicitação de mapa inválida.");
++      const fields = Object.keys(payload),ticket = (payload as { ticket?: unknown }).ticket;
++      if (request.action === "prepareNative") {
++        if (fields.length || !this.focused) throw new Error("Abra MAPA pelo radial do TAB.");
++        this.guard();
++        if (this.pending && this.pending.expiresAt > Date.now()) throw new Error("A abertura do mapa já está em andamento.");
++        this.pending = { ticket: request.correlationId, session: request.sessionId!, expiresAt: Date.now() + 5000, phase: "prepared" };
++        this.reply(request, { ok: true, status: "prepared", ticket: request.correlationId });
++      } else if (request.action === "openNative") {
++        if (fields.length !== 1 || fields[0] !== "ticket" || !this.pending || this.pending.ticket !== ticket || this.pending.session !== request.sessionId || this.pending.phase !== "prepared" || this.pending.expiresAt <= Date.now() || !this.focused) throw new Error("Solicitação de mapa expirada. Abra MAPA novamente.");
++        this.guard();this.pending.phase = "committed";
++        this.reply(request, { ok: true, status: "releaseFocus" });
++      } else if (request.action === "cancelNative") {
++        if (fields.length !== 1 || fields[0] !== "ticket" || typeof ticket !== "string") throw new Error("Cancelamento inválido.");
++        if (this.pending?.ticket === ticket && this.pending.phase !== "opening") this.pending = null;
++        this.reply(request, { ok: true, status: "cancelled" });
++      } else throw new Error("Ação de mapa não permitida.");
++    } catch (error) { this.reply(request, { ok: false, error: { code: "MAP_UNAVAILABLE", message: error instanceof Error ? error.message : "Mapa indisponível." } }); }
++    return true;
++  }
++
++  private reply(request: UiEnvelope, payload: unknown): void {
++    const response: UiEnvelope = { protocolVersion: 1, kind: "response", moduleId: "map", action: request.action, sessionId: request.sessionId, messageId: request.messageId, correlationId: request.correlationId, payload };
++    this.recent.set(request.correlationId, response);
++    while (this.recent.size > 32) this.recent.delete(this.recent.keys().next().value!);
++    this.send({ type: "envelope", envelope: response });
++  }
++
++  private update(): void {
++    const pending = this.pending;if (!pending) return;
++    if (pending.session !== this.session() || !this.connected()) { this.pending = null; return; }
++    if (pending.expiresAt <= Date.now()) { this.finish("failed", "O jogo não confirmou a abertura do mapa."); return; }
++    if (pending.phase === "prepared" || this.focused) return;
++    if (this.sp.Ui.isMenuOpen("MapMenu")) { this.finish("opened"); return; }
++    if (pending.phase === "opening") return; // Never tap twice: the second tap would close MapMenu.
++    // Meridian queues its focus-menu close separately from the focus callback.
++    if (this.sp.Ui.isMenuOpen("MeridianUI_FocusMenu")) return;
++    try { const key = this.guard();pending.phase = "opening";this.sp.Input.tapKey(key); }
++    catch (error) { this.finish("failed", error instanceof Error ? error.message : "Mapa indisponível."); }
++  }
++
++  private finish(status: "opened" | "failed", message?: string): void {
++    const pending = this.pending;if (!pending) return;this.pending = null;
++    this.send({ type: "envelope", envelope: { protocolVersion: 1, kind: "event", moduleId: "map", action: "nativeMapState", sessionId: pending.session, messageId: pending.ticket, correlationId: pending.ticket, payload: { status, ...(message ? { message } : {}) } } });
++  }
++}
++
+diff --git a/client/vendor/aetherius-ui-core/PROVENANCE.json b/client/vendor/aetherius-ui-core/PROVENANCE.json
+new file mode 100644
+index 0000000..500e9e0
+--- /dev/null
++++ b/client/vendor/aetherius-ui-core/PROVENANCE.json
+@@ -0,0 +1,43 @@
++{
++  "source": "https://github.com/mercurius17/AetheriusUI_Core",
++  "baseline": "065c7468b4e439289d55f9c4c03b8b0b8e293778",
++  "localChanges": true,
++  "files": [
++    {
++      "path": "shared/catalog.ts",
++      "sha256": "800d0e18ce7116eb2c2246c0d5d6b7735df65b2971f29f06e7505235b8d83c9b"
++    },
++    {
++      "path": "shared/moduleRegistry.ts",
++      "sha256": "829c3bbd3e78d213d474ff10437674ed673687aa018f638a6d893f614344b592"
++    },
++    {
++      "path": "shared/navigation.ts",
++      "sha256": "e7047c067881d823aa22a03b097d2c3ada7ea1388bb178528389395e4f978991"
++    },
++    {
++      "path": "shared/protocol.ts",
++      "sha256": "a6ef3cdb9dc6424458b7f77eaa9f3c1eb856fcd36d494e93f15d6debd21fa760"
++    },
++    {
++      "path": "shared/revisionStore.ts",
++      "sha256": "732b675e8e63d1967ec8a5a4378aadb5e66a8663760979b1a15a92530f437655"
++    },
++    {
++      "path": "sdk/client/localBridge.ts",
++      "sha256": "472586f714bb0679673ea3c1207bb7e6acd777a6086d759fb243c36644cae6f2"
++    },
++    {
++      "path": "sdk/frontend/client.ts",
++      "sha256": "51de449fbe4e481654602f691c7a50b6dc2b03cc4224960fe52586996ccc4c68"
++    },
++    {
++      "path": "sdk/server/envelopes.ts",
++      "sha256": "c6dc2e69196b276a9b083c6d6ed9d0ea12f5ceca4fed58739db137f0d249e1e4"
++    },
++    {
++      "path": "sdk/server/router.ts",
++      "sha256": "d96ec80cc72df4703b0f4150580ffaacc80c2d6d7ccca0724e3da84749e59e57"
++    }
++  ]
++}
+diff --git a/client/vendor/aetherius-ui-core/sdk/client/localBridge.ts b/client/vendor/aetherius-ui-core/sdk/client/localBridge.ts
+new file mode 100644
+index 0000000..a97173d
+--- /dev/null
++++ b/client/vendor/aetherius-ui-core/sdk/client/localBridge.ts
+@@ -0,0 +1,39 @@
++import { MAX_ENVELOPE_BYTES, UiProtocolError } from "../../shared/protocol";
++
++const BASE64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
++const MAX_BASE64_CHARS = Math.ceil(MAX_ENVELOPE_BYTES / 3) * 4;
++
++export function encodeLocalBridgeMessage(json: string): string {
++  const bytes = new TextEncoder().encode(json);
++  if (bytes.byteLength > MAX_ENVELOPE_BYTES) throw new UiProtocolError("PAYLOAD_TOO_LARGE", "Local bridge message exceeds 16 KiB.");
++  let output = "";
++  for (let index = 0; index < bytes.length; index += 3) {
++    const a = bytes[index];
++    const b = index + 1 < bytes.length ? bytes[index + 1] : 0;
++    const c = index + 2 < bytes.length ? bytes[index + 2] : 0;
++    output += BASE64[a >> 2];
++    output += BASE64[((a & 3) << 4) | (b >> 4)];
++    output += index + 1 < bytes.length ? BASE64[((b & 15) << 2) | (c >> 6)] : "=";
++    output += index + 2 < bytes.length ? BASE64[c & 63] : "=";
++  }
++  return output;
++}
++
++export function decodeLocalBridgeMessage(encoded: string): string {
++  if (encoded.length > MAX_BASE64_CHARS || encoded.length % 4 !== 0 || !/^[A-Za-z0-9+/]*={0,2}$/.test(encoded)) {
++    throw new UiProtocolError("INVALID_ENVELOPE", "Local bridge encoding is invalid.");
++  }
++  const bytes: number[] = [];
++  for (let index = 0; index < encoded.length; index += 4) {
++    const a = BASE64.indexOf(encoded[index]);
++    const b = BASE64.indexOf(encoded[index + 1]);
++    const c = encoded[index + 2] === "=" ? 0 : BASE64.indexOf(encoded[index + 2]);
++    const d = encoded[index + 3] === "=" ? 0 : BASE64.indexOf(encoded[index + 3]);
++    if (a < 0 || b < 0 || c < 0 || d < 0) throw new UiProtocolError("INVALID_ENVELOPE", "Local bridge encoding is invalid.");
++    bytes.push((a << 2) | (b >> 4));
++    if (encoded[index + 2] !== "=") bytes.push(((b & 15) << 4) | (c >> 2));
++    if (encoded[index + 3] !== "=") bytes.push(((c & 3) << 6) | d);
++  }
++  if (bytes.length > MAX_ENVELOPE_BYTES) throw new UiProtocolError("PAYLOAD_TOO_LARGE", "Local bridge message exceeds 16 KiB.");
++  return new TextDecoder("utf-8", { fatal: true }).decode(new Uint8Array(bytes));
++}
+diff --git a/client/vendor/aetherius-ui-core/sdk/frontend/client.ts b/client/vendor/aetherius-ui-core/sdk/frontend/client.ts
+new file mode 100644
+index 0000000..fdb1e2d
+--- /dev/null
++++ b/client/vendor/aetherius-ui-core/sdk/frontend/client.ts
+@@ -0,0 +1,153 @@
++import { createMessageId, decodeEnvelope, encodeEnvelope, UiProtocolError, type UiEnvelope } from "../../shared/protocol";
++
++export interface FrontendBridge {
++  send(encoded: string): void;
++  subscribe(listener: (encoded: string) => void): () => void;
++}
++
++export interface UiClientOptions {
++  bridge: FrontendBridge;
++  sessionId: () => string | null;
++  timeoutMs?: number;
++  onDiagnostic?: (event: { event: string; moduleId?: string; correlationId?: string; durationMs?: number }) => void;
++}
++
++export class UiRequestError extends Error {
++  readonly code: string;
++  constructor(code: string, message: string) {
++    super(message);
++    this.name = "UiRequestError";
++    this.code = code;
++  }
++}
++
++export class AetheriusUiClient {
++  private readonly pending = new Map<string, {
++    moduleId: string;
++    sessionId: string;
++    startedAt: number;
++    timer: ReturnType<typeof setTimeout>;
++    resolve: (value: unknown) => void;
++    reject: (error: Error) => void;
++  }>();
++  private readonly listeners = new Map<string, Set<(message: UiEnvelope) => void>>();
++  private readonly unsubscribeBridge: () => void;
++  private readonly timeoutMs: number;
++
++  constructor(private readonly options: UiClientOptions) {
++    this.timeoutMs = Math.min(Math.max(options.timeoutMs ?? 8000, 250), 30_000);
++    this.unsubscribeBridge = options.bridge.subscribe((encoded) => this.receive(encoded));
++  }
++
++  request<T>(moduleId: string, action: string, payload?: unknown): Promise<T> {
++    this.rejectStalePending();
++    const sessionId = this.options.sessionId();
++    if (!sessionId) return Promise.reject(new UiRequestError("SESSION_MISMATCH", "A conexão ainda não recebeu uma sessão do servidor."));
++    const messageId = createMessageId();
++    const correlationId = createMessageId();
++    const encoded = encodeEnvelope({
++      protocolVersion: 1,
++      kind: "request",
++      messageId,
++      correlationId,
++      sessionId,
++      moduleId,
++      action,
++      payload,
++    }, { requireSession: true });
++    return new Promise<T>((resolve, reject) => {
++      const startedAt = Date.now();
++      const timer = setTimeout(() => {
++        this.pending.delete(correlationId);
++        reject(new UiRequestError("TIMEOUT", "O servidor não respondeu dentro do prazo."));
++        this.options.onDiagnostic?.({ event: "request-timeout", moduleId, correlationId, durationMs: Date.now() - startedAt });
++      }, this.timeoutMs);
++      this.pending.set(correlationId, {
++        moduleId,
++        sessionId,
++        startedAt,
++        timer,
++        resolve: (value) => resolve(value as T),
++        reject,
++      });
++      try {
++        this.options.bridge.send(encoded);
++        this.options.onDiagnostic?.({ event: "request-sent", moduleId, correlationId });
++      } catch (error) {
++        clearTimeout(timer);
++        this.pending.delete(correlationId);
++        reject(error instanceof Error ? error : new UiRequestError("BRIDGE_UNAVAILABLE", "Bridge indisponível."));
++      }
++    });
++  }
++
++  subscribe(moduleId: string, listener: (message: UiEnvelope) => void): () => void {
++    const set = this.listeners.get(moduleId) ?? new Set<(message: UiEnvelope) => void>();
++    set.add(listener);
++    this.listeners.set(moduleId, set);
++    return () => {
++      set.delete(listener);
++      if (set.size === 0) this.listeners.delete(moduleId);
++    };
++  }
++
++  close(): void {
++    this.unsubscribeBridge();
++    for (const entry of this.pending.values()) {
++      clearTimeout(entry.timer);
++      entry.reject(new UiRequestError("UNAVAILABLE", "A interface foi fechada."));
++    }
++    this.pending.clear();
++    this.listeners.clear();
++  }
++
++  private receive(encoded: string): void {
++    let message: UiEnvelope;
++    try {
++      message = decodeEnvelope(encoded, { requireSession: true });
++    } catch {
++      this.options.onDiagnostic?.({ event: "invalid-bridge-message" });
++      return;
++    }
++    this.rejectStalePending();
++    const currentSession = this.options.sessionId();
++    if (message.sessionId !== currentSession) {
++      this.options.onDiagnostic?.({ event: "stale-session-message", moduleId: message.moduleId, correlationId: message.correlationId });
++      return;
++    }
++    if (message.kind === "response" || message.kind === "error") {
++      const pending = this.pending.get(message.correlationId);
++      if (pending) {
++        clearTimeout(pending.timer);
++        this.pending.delete(message.correlationId);
++        this.options.onDiagnostic?.({
++          event: "response-received",
++          moduleId: pending.moduleId,
++          correlationId: message.correlationId,
++          durationMs: Date.now() - pending.startedAt,
++        });
++        if (message.kind === "error") pending.reject(new UiRequestError(message.error?.code ?? "REQUEST_FAILED", message.error?.message ?? "A solicitação falhou."));
++        else pending.resolve(message.payload);
++      }
++    }
++    for (const listener of this.listeners.get(message.moduleId) ?? []) {
++      try { listener(message); } catch { /* Falha de consumer não atravessa o shell. */ }
++    }
++  }
++
++  private rejectStalePending(): void {
++    const currentSession = this.options.sessionId();
++    for (const [correlationId, entry] of this.pending) {
++      if (entry.sessionId === currentSession) continue;
++      clearTimeout(entry.timer);
++      this.pending.delete(correlationId);
++      entry.reject(new UiRequestError("SESSION_MISMATCH", "A sessão do servidor mudou durante a solicitação."));
++      this.options.onDiagnostic?.({ event: "request-session-reset", moduleId: entry.moduleId, correlationId, durationMs: Date.now() - entry.startedAt });
++    }
++  }
++}
++
++export function bridgeProtocolError(error: unknown): UiRequestError {
++  if (error instanceof UiProtocolError) return new UiRequestError(error.code, error.message);
++  return new UiRequestError("INVALID_ENVELOPE", "Mensagem de UI inválida.");
++}
+diff --git a/client/vendor/aetherius-ui-core/sdk/server/envelopes.ts b/client/vendor/aetherius-ui-core/sdk/server/envelopes.ts
+new file mode 100644
+index 0000000..9ec6c44
+--- /dev/null
++++ b/client/vendor/aetherius-ui-core/sdk/server/envelopes.ts
+@@ -0,0 +1,16 @@
++import { createMessageId, validateEnvelope, type UiEnvelope } from "../../shared/protocol";
++
++export function createUiEvent(sessionId: string, moduleId: string, action: string, payload: unknown): UiEnvelope {
++  const messageId = createMessageId();
++  return validateEnvelope({ protocolVersion: 1, kind: "event", messageId, correlationId: messageId, sessionId, moduleId, action, payload }, { requireSession: true });
++}
++
++export function createUiSnapshot(sessionId: string, moduleId: string, revision: number, payload: unknown): UiEnvelope {
++  const messageId = createMessageId();
++  return validateEnvelope({ protocolVersion: 1, kind: "snapshot", messageId, correlationId: messageId, sessionId, moduleId, revision, payload }, { requireSession: true });
++}
++
++export function createUiPatch(sessionId: string, moduleId: string, baseRevision: number, revision: number, payload: unknown): UiEnvelope {
++  const messageId = createMessageId();
++  return validateEnvelope({ protocolVersion: 1, kind: "patch", messageId, correlationId: messageId, sessionId, moduleId, baseRevision, revision, payload }, { requireSession: true });
++}
+diff --git a/client/vendor/aetherius-ui-core/sdk/server/router.ts b/client/vendor/aetherius-ui-core/sdk/server/router.ts
+new file mode 100644
+index 0000000..9bb568c
+--- /dev/null
++++ b/client/vendor/aetherius-ui-core/sdk/server/router.ts
+@@ -0,0 +1,180 @@
++import { createMessageId, encodeEnvelope, UiProtocolError, validateEnvelope, type UiEnvelope } from "../../shared/protocol";
++import { RequestDeduplicator } from "../../shared/revisionStore";
++
++export interface UiServerRequestContext {
++  readonly userId: number;
++  readonly actorId: number;
++  readonly sessionId: string;
++  readonly correlationId: string;
++  readonly signal?: AbortSignal;
++}
++
++export type UiActionHandler = (context: UiServerRequestContext, payload: unknown) => unknown | Promise<unknown>;
++
++export interface UiActionOptions {
++  readonly requiredCapabilities?: readonly string[];
++  readonly authorize?: (context: UiServerRequestContext, capability: string) => boolean;
++}
++
++interface RegisteredHandler {
++  moduleId: string;
++  action: string;
++  handler: UiActionHandler;
++  options: UiActionOptions;
++}
++
++interface RequestResult { fingerprint: string; response: UiEnvelope }
++interface SessionState {
++  userId: number;
++  actorId: number;
++  controller: AbortController;
++  completed: RequestDeduplicator<RequestResult>;
++  pending: Map<string, { fingerprint: string; response: Promise<UiEnvelope> }>;
++}
++
++export class UiServerRouter {
++  private readonly handlers = new Map<string, RegisteredHandler>();
++  private readonly sessions = new Map<string, SessionState>();
++
++  register(moduleId: string, action: string, handler: UiActionHandler, options: UiActionOptions = {}): () => void {
++    if (!/^[a-z][a-z0-9-]*(?:\.[a-z0-9-]+)?$/.test(moduleId)) throw new Error("Invalid UI module id.");
++    if (!/^[A-Za-z0-9][A-Za-z0-9._:-]{0,63}$/.test(action)) throw new Error("Invalid UI action id.");
++    const requiredCapabilities = [...new Set(options.requiredCapabilities ?? [])];
++    if (requiredCapabilities.some((capability) => !/^[a-z][a-z0-9.-]{0,63}$/.test(capability))) throw new Error("Invalid UI capability id.");
++    if (requiredCapabilities.length > 0 && typeof options.authorize !== "function") throw new Error("Protected UI actions require a server authorization policy.");
++    const key = routeKey(moduleId, action);
++    if (this.handlers.has(key)) throw new Error(`UI action is already registered: ${key}`);
++    this.handlers.set(key, { moduleId, action, handler, options: { ...options, requiredCapabilities } });
++    const registration = this.handlers.get(key);
++    return () => { if (this.handlers.get(key) === registration) this.handlers.delete(key); };
++  }
++
++  has(moduleId: string, action: string): boolean {
++    return this.handlers.has(routeKey(moduleId, action));
++  }
++
++  async dispatch(
++    raw: unknown,
++    context: Omit<UiServerRequestContext, "correlationId" | "sessionId"> & { expectedSessionId: string },
++  ): Promise<UiEnvelope> {
++    let request: UiEnvelope;
++    try {
++      request = validateEnvelope(raw, { requireSession: true });
++    } catch (error) {
++      return this.errorResponse(raw, asProtocolError(error));
++    }
++    if (request.kind !== "request" || request.sessionId !== context.expectedSessionId) {
++      return this.errorFor(request, "SESSION_MISMATCH", "A sessão da solicitação não corresponde à conexão.");
++    }
++    if (!Number.isSafeInteger(context.userId) || context.userId < 0 || !Number.isSafeInteger(context.actorId) || context.actorId <= 0) {
++      return this.errorFor(request, "FORBIDDEN", "Contexto autenticado inválido.");
++    }
++    let state = this.sessions.get(request.sessionId);
++    if (!state) {
++      if (this.sessions.size >= 4096) return this.errorFor(request, "RATE_LIMITED", "Limite de sessões de interface atingido.");
++      state = { userId: context.userId, actorId: context.actorId, controller: new AbortController(), completed: new RequestDeduplicator<RequestResult>(), pending: new Map() };
++      this.sessions.set(request.sessionId, state);
++    }
++    if (state.userId !== context.userId || state.actorId !== context.actorId) {
++      return this.errorFor(request, "SESSION_MISMATCH", "A sessão pertence a outro contexto autenticado.");
++    }
++    const fingerprint = canonicalJson(request);
++    const cached = state.completed.read(request.messageId);
++    const pending = state.pending.get(request.messageId);
++    if (cached || pending) {
++      if ((cached ?? pending)!.fingerprint !== fingerprint) return this.errorFor(request, "REQUEST_ID_REUSED", "Identificador reutilizado com outra solicitação.");
++      return cached ? cached.response : pending!.response;
++    }
++    if (state.pending.size >= 32) return this.errorFor(request, "RATE_LIMITED", "Muitas solicitações em andamento.");
++    const registered = this.handlers.get(routeKey(request.moduleId, request.action ?? ""));
++    if (!registered) return this.errorFor(request, "ACTION_UNAVAILABLE", "A ação não está disponível.");
++    const handlerContext: UiServerRequestContext = {
++      userId: context.userId,
++      actorId: context.actorId,
++      sessionId: request.sessionId,
++      correlationId: request.correlationId,
++      signal: state.controller.signal,
++    };
++    const activeState = state;
++    const response = Promise.resolve().then(async () => {
++      try {
++        if (activeState.controller.signal.aborted) return this.errorFor(request, "SESSION_MISMATCH", "Sessão encerrada.");
++        if (registered.options.requiredCapabilities?.some((capability) => !registered.options.authorize?.(handlerContext, capability))) {
++          return this.errorFor(request, "FORBIDDEN", "A conexão não tem autorização para esta ação.");
++        }
++        const result = await registered.handler(handlerContext, request.payload);
++        const envelope = createResponse(request, result);
++        encodeEnvelope(envelope, { requireSession: true });
++        return envelope;
++      } catch (error) {
++        if (error instanceof UiProtocolError && error.code === "PAYLOAD_TOO_LARGE") return this.errorFor(request, error.code, "Resposta excede o limite do protocolo.");
++        return this.errorFor(request, "REQUEST_FAILED", "O servidor não conseguiu concluir a solicitação.");
++      }
++    }).then(envelope => {
++      if (this.sessions.get(request.sessionId!) === activeState) activeState.completed.remember(request.messageId, { fingerprint, response: envelope });
++      return envelope;
++    }).finally(() => activeState.pending.delete(request.messageId));
++    state.pending.set(request.messageId, { fingerprint, response });
++    return response;
++  }
++
++  forgetSession(sessionId: string): void {
++    this.sessions.get(sessionId)?.controller.abort();
++    this.sessions.delete(sessionId);
++  }
++
++  private errorResponse(raw: unknown, error: UiProtocolError): UiEnvelope {
++    const base = raw && typeof raw === "object" ? raw as Partial<UiEnvelope> : {};
++    const moduleId = typeof base.moduleId === "string" && /^[a-z][a-z0-9-]*(?:\.[a-z0-9-]+)?$/.test(base.moduleId) ? base.moduleId : "core";
++    return {
++      protocolVersion: 1,
++      kind: "error",
++      messageId: createMessageId(),
++      correlationId: typeof base.correlationId === "string" ? base.correlationId.slice(0, 64) : createMessageId(),
++      moduleId,
++      error: { code: error.code, message: error.message.slice(0, 512) },
++    };
++  }
++
++  private errorFor(request: UiEnvelope, code: string, message: string): UiEnvelope {
++    return {
++      protocolVersion: 1,
++      kind: "error",
++      messageId: createMessageId(),
++      correlationId: request.correlationId,
++      sessionId: request.sessionId,
++      moduleId: request.moduleId,
++      error: { code, message },
++    };
++  }
++}
++
++function createResponse(request: UiEnvelope, payload: unknown): UiEnvelope {
++  return {
++    protocolVersion: 1,
++    kind: "response",
++    messageId: createMessageId(),
++    correlationId: request.correlationId,
++    sessionId: request.sessionId,
++    moduleId: request.moduleId,
++    payload,
++  };
++}
++
++function asProtocolError(error: unknown): UiProtocolError {
++  if (error instanceof UiProtocolError) return error;
++  return new UiProtocolError("INVALID_ENVELOPE", "Envelope inválido.");
++}
++
++function routeKey(moduleId: string, action: string): string {
++  return `${moduleId}\u0000${action}`;
++}
++
++function canonicalJson(value: unknown): string {
++  if (Array.isArray(value)) return `[${value.map(canonicalJson).join(",")}]`;
++  if (value !== null && typeof value === "object") {
++    const object = value as Record<string, unknown>;
++    return `{${Object.keys(object).sort().filter(key => object[key] !== undefined).map(key => `${JSON.stringify(key)}:${canonicalJson(object[key])}`).join(",")}}`;
++  }
++  return JSON.stringify(value);
++}
+diff --git a/client/vendor/aetherius-ui-core/shared/catalog.ts b/client/vendor/aetherius-ui-core/shared/catalog.ts
+new file mode 100644
+index 0000000..20c0d9a
+--- /dev/null
++++ b/client/vendor/aetherius-ui-core/shared/catalog.ts
+@@ -0,0 +1,47 @@
++export interface NavigationDescriptor {
++  readonly id: string;
++  readonly label: string;
++  readonly route: string;
++  readonly radialSlot: number;
++  readonly iconFallback: string;
++  readonly center?: boolean;
++}
++
++export const NAVIGATION_CATALOG: readonly NavigationDescriptor[] = Object.freeze([
++  { id: "character", label: "PERSONAGEM", route: "/character", radialSlot: 0, iconFallback: "person", center: true },
++  { id: "class", label: "CLASSE", route: "/class", radialSlot: 1, iconFallback: "class" },
++  { id: "spells", label: "FEITIÇOS", route: "/spells", radialSlot: 2, iconFallback: "spells" },
++  { id: "party", label: "GRUPO", route: "/party", radialSlot: 3, iconFallback: "party" },
++  { id: "inventory", label: "INVENTÁRIO", route: "/inventory", radialSlot: 4, iconFallback: "inventory" },
++  { id: "server", label: "SERVIDOR", route: "/server", radialSlot: 5, iconFallback: "server" },
++  { id: "map", label: "MAPA", route: "/map", radialSlot: 6, iconFallback: "map" },
++  { id: "professions", label: "PROFISSÕES", route: "/professions", radialSlot: 7, iconFallback: "professions" },
++  { id: "supernatural", label: "SOBRENATURAL", route: "/supernatural", radialSlot: 8, iconFallback: "supernatural" },
++  { id: "properties", label: "PROPRIEDADES", route: "/properties", radialSlot: 9, iconFallback: "properties" },
++  { id: "house", label: "CASA", route: "/house", radialSlot: 10, iconFallback: "house" },
++  { id: "shop", label: "LOJA", route: "/shop", radialSlot: 11, iconFallback: "module" },
++].map((item) => Object.freeze(item)));
++
++export const RADIAL_CATALOG = NAVIGATION_CATALOG.filter((item) => !item.center);
++
++export function calculateRadialLayout(count: number, width: number, height: number) {
++  if (!Number.isInteger(count) || count < 1) throw new RangeError("count must be a positive integer");
++  if (!Number.isFinite(width) || !Number.isFinite(height) || width <= 0 || height <= 0) {
++    throw new RangeError("width and height must be positive finite values");
++  }
++  const step = (2 * Math.PI) / count;
++  const radius = Math.min(width * 0.43, height * 0.40);
++  const outerDiameter = Math.min(116, Math.max(68, Math.min(width, height) * 0.105));
++  const centerDiameter = outerDiameter * 1.15;
++  return Array.from({ length: count }, (_, index) => {
++    const angle = -Math.PI / 2 + index * step;
++    return {
++      index,
++      angle,
++      x: width / 2 + radius * Math.cos(angle),
++      y: height / 2 + radius * Math.sin(angle),
++      outerDiameter,
++      centerDiameter,
++    };
++  });
++}
+diff --git a/client/vendor/aetherius-ui-core/shared/moduleRegistry.ts b/client/vendor/aetherius-ui-core/shared/moduleRegistry.ts
+new file mode 100644
+index 0000000..18824b4
+--- /dev/null
++++ b/client/vendor/aetherius-ui-core/shared/moduleRegistry.ts
+@@ -0,0 +1,246 @@
++import { NAVIGATION_CATALOG, type NavigationDescriptor } from "./catalog";
++
++export const UI_SDK_VERSION = "1.0.0";
++
++export interface ModuleAvailability {
++  available: boolean;
++  reason?: string;
++}
++
++export interface ModuleMountContext {
++  readonly moduleId: string;
++  readonly route: string;
++  readonly signal: AbortSignal;
++  readonly sdkVersion: string;
++  readonly assets: readonly string[];
++  readonly capabilities: readonly string[];
++  readonly permissions: readonly string[];
++}
++
++export interface ModuleRuntime {
++  mount(container: HTMLElement, context: ModuleMountContext): void | Promise<void>;
++  unmount?(): void | Promise<void>;
++}
++
++export interface UiModuleDefinition {
++  id: string;
++  version: string;
++  sdk: { min: string; maxExclusive?: string };
++  label: string;
++  rootRoute: string;
++  radialSlot?: number;
++  icon?: string;
++  subroutes?: readonly string[];
++  assets?: readonly string[];
++  permissions?: readonly string[];
++  capabilities?: readonly string[];
++  availability?: () => ModuleAvailability;
++  loader: () => Promise<ModuleRuntime>;
++}
++
++export interface RegisteredModuleView {
++  descriptor: NavigationDescriptor | null;
++  definition: UiModuleDefinition;
++  availability: ModuleAvailability;
++}
++
++interface ActiveMount {
++  runtime: ModuleRuntime;
++  abortController: AbortController;
++  container: HTMLElement;
++}
++
++export class ModuleRegistryError extends Error {
++  constructor(message: string) {
++    super(message);
++    this.name = "ModuleRegistryError";
++  }
++}
++
++function parseVersion(value: string): [number, number, number] | null {
++  const match = /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/.exec(value);
++  return match ? [Number(match[1]), Number(match[2]), Number(match[3])] : null;
++}
++
++function compareVersion(a: [number, number, number], b: [number, number, number]): number {
++  for (let i = 0; i < 3; i += 1) if (a[i] !== b[i]) return a[i] < b[i] ? -1 : 1;
++  return 0;
++}
++
++function routeIsSafe(route: string): boolean {
++  if (!route.startsWith("/") || route.startsWith("//") || route.includes("\\")) return false;
++  let decoded: string;
++  try { decoded = decodeURIComponent(route.split(/[?#]/, 1)[0]); } catch { return false; }
++  return !decoded.startsWith("//") && !decoded.includes("\\") &&
++    !decoded.split("/").some((part) => part === "." || part === "..");
++}
++
++function routeBelongsToModule(route: string, rootRoute: string): boolean {
++  const normalizedRoot = rootRoute.replace(/\/$/, "") || "/";
++  return route === normalizedRoot || route.startsWith(`${normalizedRoot === "/" ? "" : normalizedRoot}/`);
++}
++
++function cleanLabel(label: string): string {
++  return label.replace(/[\u0000-\u001f\u007f]/g, "").trim().slice(0, 48);
++}
++
++export class UiModuleRegistry {
++  private readonly modules = new Map<string, UiModuleDefinition>();
++  private readonly slots = new Map<number, string>();
++  private readonly active = new Map<string, ActiveMount>();
++  private readonly mounting = new Map<string, AbortController>();
++  private readonly unmounting = new Map<string, Promise<void>>();
++
++  constructor(private readonly sdkVersion = UI_SDK_VERSION) {}
++
++  register(definition: UiModuleDefinition): void {
++    if (!/^[a-z][a-z0-9-]*(?:\.[a-z0-9-]+)?$/.test(definition.id)) {
++      throw new ModuleRegistryError("Module id has an invalid format.");
++    }
++    if (this.modules.has(definition.id)) throw new ModuleRegistryError(`Module ${definition.id} is already registered.`);
++    const version = parseVersion(definition.version);
++    const min = parseVersion(definition.sdk?.min ?? "");
++    const max = definition.sdk?.maxExclusive ? parseVersion(definition.sdk.maxExclusive) : null;
++    const currentSdk = parseVersion(this.sdkVersion);
++    if (!version || !min || !currentSdk || (definition.sdk.maxExclusive && !max)) {
++      throw new ModuleRegistryError("Module and SDK versions must use numeric semantic versions.");
++    }
++    if (compareVersion(currentSdk, min) < 0 || (max && compareVersion(currentSdk, max) >= 0)) {
++      throw new ModuleRegistryError(`Module ${definition.id} is incompatible with SDK ${this.sdkVersion}.`);
++    }
++    const label = cleanLabel(definition.label);
++    if (!label || !routeIsSafe(definition.rootRoute) || typeof definition.loader !== "function") {
++      throw new ModuleRegistryError("Module requires a label, safe root route and loader.");
++    }
++    const subroutes = [...new Set(definition.subroutes ?? [])];
++    if (subroutes.some((route) => !routeIsSafe(route) || !routeBelongsToModule(route, definition.rootRoute))) {
++      throw new ModuleRegistryError("Module subroutes must stay below its root route.");
++    }
++    const assets = [...new Set(definition.assets ?? [])];
++    if (assets.some((asset) => !/^[a-zA-Z0-9._/-]{1,160}$/.test(asset) || asset.startsWith("/") || asset.split("/").some((part) => part === ".." || part === "."))) {
++      throw new ModuleRegistryError("Module assets must be relative local paths.");
++    }
++    const permissions = [...new Set(definition.permissions ?? [])];
++    const capabilities = [...new Set(definition.capabilities ?? [])];
++    if ([...permissions, ...capabilities].some((value) => !/^[a-z][a-z0-9.-]{0,63}$/.test(value))) {
++      throw new ModuleRegistryError("Module permission and capability ids must be stable lowercase identifiers.");
++    }
++    if (definition.radialSlot !== undefined) {
++      const descriptor = NAVIGATION_CATALOG.find((item) => item.radialSlot === definition.radialSlot);
++      if (!descriptor || descriptor.id !== definition.id) {
++        throw new ModuleRegistryError(`Slot ${definition.radialSlot} is not assigned to ${definition.id}.`);
++      }
++      if (this.slots.has(definition.radialSlot)) throw new ModuleRegistryError(`Slot ${definition.radialSlot} is already registered.`);
++      this.slots.set(definition.radialSlot, definition.id);
++    }
++    this.modules.set(definition.id, { ...definition, subroutes, assets, permissions, capabilities, label, rootRoute: definition.rootRoute.replace(/\/$/, "") || "/" });
++  }
++
++  get(id: string): RegisteredModuleView | null {
++    const definition = this.modules.get(id);
++    if (!definition) return null;
++    const descriptor = NAVIGATION_CATALOG.find((item) => item.id === id) ?? null;
++    let availability: ModuleAvailability = { available: true };
++    try {
++      const result = definition.availability?.() ?? availability;
++      if (typeof result.available !== "boolean") throw new Error("Invalid availability result.");
++      availability = {
++        available: result.available,
++        reason: typeof result.reason === "string" ? cleanLabel(result.reason).slice(0, 160) : undefined,
++      };
++    } catch {
++      availability = { available: false, reason: "O módulo falhou ao verificar disponibilidade." };
++    }
++    return { descriptor, definition, availability };
++  }
++
++  listNavigation(): Array<NavigationDescriptor & { registered: boolean; available: boolean; reason?: string }> {
++    return NAVIGATION_CATALOG.map((descriptor) => {
++      const module = this.get(descriptor.id);
++      return {
++        ...descriptor,
++        registered: module !== null,
++        available: module?.availability.available ?? false,
++        reason: module?.availability.reason ?? "Módulo externo não registrado.",
++      };
++    });
++  }
++
++  async mount(id: string, container: HTMLElement, route: string): Promise<void> {
++    if (this.active.has(id) || this.mounting.has(id) || this.unmounting.has(id)) throw new ModuleRegistryError(`Module ${id} is already mounting, mounted or unmounting.`);
++    const module = this.get(id);
++    if (!module || !module.availability.available) {
++      throw new ModuleRegistryError(module?.availability.reason ?? `Module ${id} is not registered.`);
++    }
++    if (!routeIsSafe(route) || !routeBelongsToModule(route, module.definition.rootRoute)) {
++      throw new ModuleRegistryError("Route is outside the module's local route space.");
++    }
++    const abortController = new AbortController();
++    this.mounting.set(id, abortController);
++    let runtime: ModuleRuntime | null = null;
++    try {
++      runtime = await module.definition.loader();
++      if (abortController.signal.aborted || this.modules.get(id) !== module.definition) {
++        throw new Error("The module was unregistered while loading.");
++      }
++      await runtime.mount(container, {
++        moduleId: id,
++        route,
++        signal: abortController.signal,
++        sdkVersion: this.sdkVersion,
++        assets: module.definition.assets ?? [],
++        capabilities: module.definition.capabilities ?? [],
++        permissions: module.definition.permissions ?? [],
++      });
++      if (abortController.signal.aborted || this.modules.get(id) !== module.definition) {
++        throw new Error("The module was unregistered while mounting.");
++      }
++      this.active.set(id, { runtime, abortController, container });
++    } catch (error) {
++      abortController.abort();
++      try { await runtime?.unmount?.(); } catch { /* partial module cleanup is isolated */ }
++      container.replaceChildren();
++      throw new ModuleRegistryError(`Module ${id} failed to mount: ${safeError(error)}`);
++    } finally {
++      this.mounting.delete(id);
++    }
++  }
++
++  async unmount(id: string): Promise<boolean> {
++    this.mounting.get(id)?.abort();
++    const pendingCleanup = this.unmounting.get(id);
++    if (pendingCleanup) {
++      await pendingCleanup;
++      return this.modules.has(id);
++    }
++    const mount = this.active.get(id);
++    if (!mount) return this.modules.has(id);
++    this.active.delete(id);
++    mount.abortController.abort();
++    const cleanup = Promise.resolve().then(async () => {
++      try {
++        await mount.runtime.unmount?.();
++      } catch {
++        // Cleanup failures are isolated from the shell and other modules.
++      } finally {
++        mount.container.replaceChildren();
++      }
++    });
++    this.unmounting.set(id, cleanup);
++    try { await cleanup; } finally { if (this.unmounting.get(id) === cleanup) this.unmounting.delete(id); }
++    return true;
++  }
++
++  async unregister(id: string): Promise<boolean> {
++    await this.unmount(id);
++    const definition = this.modules.get(id);
++    if (!definition) return false;
++    this.modules.delete(id);
++    if (definition.radialSlot !== undefined) this.slots.delete(definition.radialSlot);
++    return true;
++  }
++}
++
++function safeError(error: unknown): string {
++  return error instanceof Error ? "erro do adapter" : "falha não detalhada do adapter";
++}
+diff --git a/client/vendor/aetherius-ui-core/shared/navigation.ts b/client/vendor/aetherius-ui-core/shared/navigation.ts
+new file mode 100644
+index 0000000..db1476c
+--- /dev/null
++++ b/client/vendor/aetherius-ui-core/shared/navigation.ts
+@@ -0,0 +1,68 @@
++import { NAVIGATION_CATALOG } from "./catalog";
++
++export type NavigationState =
++  | { kind: "gameplay" }
++  | { kind: "radial"; selectedId: string | null }
++  | { kind: "workspace"; moduleId: string; routeStack: string[] };
++
++export type NavigationAction =
++  | { type: "TAB" }
++  | { type: "ESCAPE" }
++  | { type: "OPEN"; moduleId: string; available: boolean }
++  | { type: "HOVER"; moduleId: string | null }
++  | { type: "NAVIGATE"; route: string }
++  | { type: "BACK" }
++  | { type: "CLOSE" };
++
++export const INITIAL_NAVIGATION_STATE: NavigationState = Object.freeze({ kind: "gameplay" });
++
++export function reduceNavigation(state: NavigationState, action: NavigationAction): NavigationState {
++  switch (action.type) {
++    case "TAB":
++      if (state.kind === "gameplay") return { kind: "radial", selectedId: null };
++      if (state.kind === "radial") return { kind: "gameplay" };
++      return { kind: "radial", selectedId: state.moduleId };
++    case "ESCAPE":
++    case "BACK":
++      if (state.kind !== "workspace") return state.kind === "radial" ? { kind: "gameplay" } : state;
++      if (state.routeStack.length > 1) return { ...state, routeStack: state.routeStack.slice(0, -1) };
++      return { kind: "radial", selectedId: state.moduleId };
++    case "OPEN": {
++      if (state.kind !== "radial" || !action.available || !isModuleId(action.moduleId)) return state;
++      const descriptor = NAVIGATION_CATALOG.find((item) => item.id === action.moduleId);
++      if (!descriptor) return state;
++      return { kind: "workspace", moduleId: action.moduleId, routeStack: [descriptor.route] };
++    }
++    case "HOVER":
++      return state.kind === "radial" ? { ...state, selectedId: action.moduleId } : state;
++    case "NAVIGATE":
++      if (state.kind !== "workspace" || !isSafeRoute(action.route) || !routeBelongsToModule(action.route, state.moduleId)) return state;
++      return { ...state, routeStack: [...state.routeStack, normalizeRoute(action.route)] };
++    case "CLOSE":
++      return { kind: "gameplay" };
++  }
++}
++
++export function isSafeRoute(route: string): boolean {
++  if (typeof route !== "string" || !route.startsWith("/") || route.startsWith("//") || route.includes("\\")) return false;
++  let decoded: string;
++  try { decoded = decodeURIComponent(route.split(/[?#]/, 1)[0]); } catch { return false; }
++  return !decoded.startsWith("//") && !decoded.includes("\\") &&
++    !decoded.split("/").some((part) => part === ".." || part === ".");
++}
++
++function normalizeRoute(route: string): string {
++  const withoutQuery = route.split(/[?#]/, 1)[0] || "/";
++  return withoutQuery.replace(/\/{2,}/g, "/").replace(/\/$/, "") || "/";
++}
++
++function isModuleId(value: string): boolean {
++  return /^[a-z][a-z0-9-]*(?:\.[a-z0-9-]+)?$/.test(value);
++}
++
++function routeBelongsToModule(route: string, moduleId: string): boolean {
++  const root = NAVIGATION_CATALOG.find((item) => item.id === moduleId)?.route;
++  if (!root) return false;
++  const normalizedRoot = root.replace(/\/$/, "") || "/";
++  return route === normalizedRoot || route.startsWith(`${normalizedRoot === "/" ? "" : normalizedRoot}/`);
++}
+diff --git a/client/vendor/aetherius-ui-core/shared/protocol.ts b/client/vendor/aetherius-ui-core/shared/protocol.ts
+new file mode 100644
+index 0000000..225b4de
+--- /dev/null
++++ b/client/vendor/aetherius-ui-core/shared/protocol.ts
+@@ -0,0 +1,166 @@
++export const UI_PROTOCOL_VERSION = 1 as const;
++export const MAX_ENVELOPE_BYTES = 16 * 1024;
++export const MAX_PAYLOAD_DEPTH = 16;
++
++/** UTF-8 size without browser globals; Skyrim Platform embeds a Node context. */
++export function utf8ByteLength(value: string): number {
++  let bytes = 0;
++  for (let i = 0; i < value.length; i++) {
++    const code = value.charCodeAt(i);
++    if (code < 0x80) bytes++;
++    else if (code < 0x800) bytes += 2;
++    else if (code >= 0xd800 && code <= 0xdbff && i + 1 < value.length && value.charCodeAt(i + 1) >= 0xdc00 && value.charCodeAt(i + 1) <= 0xdfff) { bytes += 4; i++; }
++    else bytes += 3; // BMP and the UTF-8 replacement for an unpaired surrogate.
++  }
++  return bytes;
++}
++
++export type UiMessageKind = "request" | "response" | "event" | "snapshot" | "patch" | "error";
++
++export interface UiError {
++  code: string;
++  message: string;
++}
++
++export interface UiEnvelope {
++  protocolVersion: typeof UI_PROTOCOL_VERSION;
++  kind: UiMessageKind;
++  messageId: string;
++  correlationId: string;
++  sessionId?: string;
++  moduleId: string;
++  action?: string;
++  revision?: number;
++  baseRevision?: number;
++  payload?: unknown;
++  error?: UiError;
++}
++
++const KINDS: readonly UiMessageKind[] = ["request", "response", "event", "snapshot", "patch", "error"];
++const ENVELOPE_KEYS = new Set([
++  "protocolVersion", "kind", "messageId", "correlationId", "sessionId", "moduleId",
++  "action", "revision", "baseRevision", "payload", "error",
++]);
++const UNSAFE_KEYS = new Set(["__proto__", "prototype", "constructor"]);
++const IDENTIFIER = /^[A-Za-z0-9][A-Za-z0-9._:-]{0,63}$/;
++const MODULE_ID = /^[a-z][a-z0-9-]*(?:\.[a-z0-9-]+)?$/;
++
++export class UiProtocolError extends Error {
++  readonly code: string;
++
++  constructor(code: string, message: string) {
++    super(message);
++    this.name = "UiProtocolError";
++    this.code = code;
++  }
++}
++
++function isRecord(value: unknown): value is Record<string, unknown> {
++  if (value === null || typeof value !== "object" || Array.isArray(value)) return false;
++  const proto = Object.getPrototypeOf(value);
++  return proto === Object.prototype || proto === null;
++}
++
++function validateJsonValue(value: unknown, depth = 0, seen = new Set<object>()): void {
++  if (depth > MAX_PAYLOAD_DEPTH) throw new UiProtocolError("INVALID_ENVELOPE", "Payload nesting limit exceeded.");
++  if (value === null || typeof value === "string" || typeof value === "boolean") return;
++  if (typeof value === "number") {
++    if (!Number.isFinite(value)) throw new UiProtocolError("INVALID_ENVELOPE", "Payload contains a non-finite number.");
++    return;
++  }
++  if (typeof value !== "object") throw new UiProtocolError("INVALID_ENVELOPE", "Payload must contain JSON values only.");
++  if (seen.has(value)) throw new UiProtocolError("INVALID_ENVELOPE", "Payload contains a circular reference.");
++  seen.add(value);
++  if (Array.isArray(value)) {
++    if (value.length > 256) throw new UiProtocolError("INVALID_ENVELOPE", "Payload array is too large.");
++    for (const item of value) validateJsonValue(item, depth + 1, seen);
++  } else {
++    if (!isRecord(value)) throw new UiProtocolError("INVALID_ENVELOPE", "Payload objects must be plain JSON objects.");
++    const entries = Object.entries(value);
++    if (entries.length > 256) throw new UiProtocolError("INVALID_ENVELOPE", "Payload object has too many fields.");
++    for (const [key, entry] of entries) {
++      if (UNSAFE_KEYS.has(key)) throw new UiProtocolError("INVALID_ENVELOPE", "Payload contains a reserved object key.");
++      validateJsonValue(entry, depth + 1, seen);
++    }
++  }
++  seen.delete(value);
++}
++
++function requireIdentifier(value: unknown, field: string, pattern = IDENTIFIER): asserts value is string {
++  if (typeof value !== "string" || value.length > 64 || !pattern.test(value)) {
++    throw new UiProtocolError("INVALID_ENVELOPE", `${field} has an invalid format.`);
++  }
++}
++
++export function validateEnvelope(value: unknown, options: { requireSession?: boolean } = {}): UiEnvelope {
++  if (!isRecord(value)) throw new UiProtocolError("INVALID_ENVELOPE", "Envelope must be an object.");
++  for (const key of Object.keys(value)) {
++    if (!ENVELOPE_KEYS.has(key)) throw new UiProtocolError("INVALID_ENVELOPE", `Unexpected envelope field: ${key}.`);
++  }
++  if (value.protocolVersion !== UI_PROTOCOL_VERSION) {
++    throw new UiProtocolError("UNSUPPORTED_PROTOCOL", "The UI protocol version is not supported.");
++  }
++  if (typeof value.kind !== "string" || !KINDS.includes(value.kind as UiMessageKind)) {
++    throw new UiProtocolError("INVALID_ENVELOPE", "Message kind is invalid.");
++  }
++  requireIdentifier(value.messageId, "messageId");
++  requireIdentifier(value.correlationId, "correlationId");
++  requireIdentifier(value.moduleId, "moduleId", MODULE_ID);
++  if (value.sessionId !== undefined) requireIdentifier(value.sessionId, "sessionId");
++  if (options.requireSession && typeof value.sessionId !== "string") {
++    throw new UiProtocolError("SESSION_MISMATCH", "A server-issued session is required.");
++  }
++  if (value.action !== undefined) requireIdentifier(value.action, "action");
++  if (value.revision !== undefined && (!Number.isSafeInteger(value.revision) || (value.revision as number) < 0)) {
++    throw new UiProtocolError("INVALID_ENVELOPE", "revision must be a non-negative safe integer.");
++  }
++  if (value.baseRevision !== undefined && (!Number.isSafeInteger(value.baseRevision) || (value.baseRevision as number) < 0)) {
++    throw new UiProtocolError("INVALID_ENVELOPE", "baseRevision must be a non-negative safe integer.");
++  }
++  if (value.kind === "request" && typeof value.action !== "string") {
++    throw new UiProtocolError("INVALID_ENVELOPE", "Requests require an action.");
++  }
++  if (value.kind === "patch" && (typeof value.revision !== "number" || typeof value.baseRevision !== "number" || value.revision <= value.baseRevision)) {
++    throw new UiProtocolError("INVALID_ENVELOPE", "Patches require a revision greater than baseRevision.");
++  }
++  if (value.kind === "error") {
++    if (!isRecord(value.error) || typeof value.error.code !== "string" || typeof value.error.message !== "string") {
++      throw new UiProtocolError("INVALID_ENVELOPE", "Error messages require a code and message.");
++    }
++    if (value.error.code.length > 64 || value.error.message.length > 512) {
++      throw new UiProtocolError("INVALID_ENVELOPE", "Error details are too long.");
++    }
++  }
++  if (value.payload !== undefined) validateJsonValue(value.payload);
++  const envelope = value as unknown as UiEnvelope;
++  const bytes = utf8ByteLength(JSON.stringify(envelope));
++  if (bytes > MAX_ENVELOPE_BYTES) throw new UiProtocolError("PAYLOAD_TOO_LARGE", "Envelope exceeds 16 KiB.");
++  return envelope;
++}
++
++export function encodeEnvelope(value: unknown, options: { requireSession?: boolean } = {}): string {
++  const envelope = validateEnvelope(value, options);
++  const encoded = JSON.stringify(envelope);
++  if (utf8ByteLength(encoded) > MAX_ENVELOPE_BYTES) {
++    throw new UiProtocolError("PAYLOAD_TOO_LARGE", "Envelope exceeds 16 KiB.");
++  }
++  return encoded;
++}
++
++export function decodeEnvelope(encoded: string, options: { requireSession?: boolean } = {}): UiEnvelope {
++  if (typeof encoded !== "string" || utf8ByteLength(encoded) > MAX_ENVELOPE_BYTES) {
++    throw new UiProtocolError("PAYLOAD_TOO_LARGE", "Envelope exceeds 16 KiB.");
++  }
++  try {
++    return validateEnvelope(JSON.parse(encoded), options);
++  } catch (error) {
++    if (error instanceof UiProtocolError) throw error;
++    throw new UiProtocolError("INVALID_ENVELOPE", "Envelope is not valid JSON.");
++  }
++}
++
++export function createMessageId(): string {
++  const cryptoApi = (globalThis as unknown as { crypto?: { randomUUID?: () => string } }).crypto;
++  const random = cryptoApi?.randomUUID?.();
++  return random ?? `ui-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 14)}`;
++}
+diff --git a/client/vendor/aetherius-ui-core/shared/revisionStore.ts b/client/vendor/aetherius-ui-core/shared/revisionStore.ts
+new file mode 100644
+index 0000000..29e8b0b
+--- /dev/null
++++ b/client/vendor/aetherius-ui-core/shared/revisionStore.ts
+@@ -0,0 +1,66 @@
++export type Snapshot<T> = { revision: number; value: T };
++export type Patch<TPatch> = { baseRevision: number; revision: number; patch: TPatch };
++
++export class RevisionStore<T> {
++  private current: Snapshot<T> | null = null;
++
++  get snapshot(): Snapshot<T> | null {
++    return this.current;
++  }
++
++  replace(snapshot: Snapshot<T>): boolean {
++    if (!Number.isSafeInteger(snapshot.revision) || snapshot.revision < 0) return false;
++    if (this.current && snapshot.revision < this.current.revision) return false;
++    this.current = { revision: snapshot.revision, value: snapshot.value };
++    return true;
++  }
++
++  applyPatch<TPatch>(
++    message: Patch<TPatch>,
++    apply: (current: T, patch: TPatch) => T,
++  ): "applied" | "gap" | "invalid" {
++    if (!Number.isSafeInteger(message.revision) || !Number.isSafeInteger(message.baseRevision) ||
++        message.revision <= message.baseRevision) return "invalid";
++    if (!this.current || this.current.revision !== message.baseRevision) return "gap";
++    this.current = { revision: message.revision, value: apply(this.current.value, message.patch) };
++    return "applied";
++  }
++
++  clear(): void {
++    this.current = null;
++  }
++}
++
++export class RequestDeduplicator<T> {
++  private readonly entries = new Map<string, { expiresAt: number; value: T }>();
++
++  constructor(private readonly maxEntries = 512, private readonly ttlMs = 120_000) {}
++
++  read(key: string, now = Date.now()): T | undefined {
++    this.prune(now);
++    const item = this.entries.get(key);
++    return item?.value;
++  }
++
++  remember(key: string, value: T, now = Date.now()): boolean {
++    this.prune(now);
++    if (this.entries.has(key)) return false;
++    this.entries.set(key, { value, expiresAt: now + this.ttlMs });
++    while (this.entries.size > this.maxEntries) {
++      const oldest = this.entries.keys().next().value;
++      if (oldest === undefined) break;
++      this.entries.delete(oldest);
++    }
++    return true;
++  }
++
++  clear(): void {
++    this.entries.clear();
++  }
++
++  private prune(now: number): void {
++    for (const [key, item] of this.entries) {
++      if (item.expiresAt <= now) this.entries.delete(key);
++    }
++  }
++}

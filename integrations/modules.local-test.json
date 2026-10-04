@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "modules": [
+    {
+      "id": "class",
+      "slot": 1,
+      "route": "/class",
+      "sdkMajor": 1,
+      "styles": [
+        "modules/class/class-module.css"
+      ],
+      "scripts": [
+        "modules/class/data.js",
+        "modules/class/class-module.js"
+      ]
+    },
+    {
+      "id": "party",
+      "slot": 3,
+      "route": "/party",
+      "sdkMajor": 1,
+      "styles": [
+        "modules/party/party-module.css"
+      ],
+      "scripts": [
+        "modules/party/party-module.js"
+      ]
+    },
+    {
+      "id": "inventory",
+      "slot": 4,
+      "route": "/inventory",
+      "sdkMajor": 1,
+      "styles": [
+        "modules/inventory/inventory-module.css"
+      ],
+      "scripts": [
+        "modules/inventory/sketch-icons.js",
+        "modules/inventory/momentum-scroll.js",
+        "modules/inventory/preview-controller.js",
+        "modules/inventory/inventory-module.js"
+      ]
+    },
+    {
+      "id": "spells",
+      "slot": 2,
+      "route": "/spells",
+      "sdkMajor": 1,
+      "styles": [],
+      "scripts": [
+        "modules/spells/spells-module.js"
+      ]
+    },
+    {
+      "id": "map",
+      "slot": 6,
+      "route": "/map",
+      "sdkMajor": 1,
+      "styles": [],
+      "scripts": [
+        "modules/map/map-module.js"
+      ]
+    }
+  ]
+}

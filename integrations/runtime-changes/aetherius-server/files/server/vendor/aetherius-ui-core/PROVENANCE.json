@@ -1,0 +1,43 @@
+{
+  "source": "https://github.com/mercurius17/AetheriusUI_Core",
+  "baseline": "065c7468b4e439289d55f9c4c03b8b0b8e293778",
+  "localChanges": true,
+  "files": [
+    {
+      "path": "shared/catalog.ts",
+      "sha256": "800d0e18ce7116eb2c2246c0d5d6b7735df65b2971f29f06e7505235b8d83c9b"
+    },
+    {
+      "path": "shared/moduleRegistry.ts",
+      "sha256": "829c3bbd3e78d213d474ff10437674ed673687aa018f638a6d893f614344b592"
+    },
+    {
+      "path": "shared/navigation.ts",
+      "sha256": "e7047c067881d823aa22a03b097d2c3ada7ea1388bb178528389395e4f978991"
+    },
+    {
+      "path": "shared/protocol.ts",
+      "sha256": "a6ef3cdb9dc6424458b7f77eaa9f3c1eb856fcd36d494e93f15d6debd21fa760"
+    },
+    {
+      "path": "shared/revisionStore.ts",
+      "sha256": "732b675e8e63d1967ec8a5a4378aadb5e66a8663760979b1a15a92530f437655"
+    },
+    {
+      "path": "sdk/client/localBridge.ts",
+      "sha256": "472586f714bb0679673ea3c1207bb7e6acd777a6086d759fb243c36644cae6f2"
+    },
+    {
+      "path": "sdk/frontend/client.ts",
+      "sha256": "51de449fbe4e481654602f691c7a50b6dc2b03cc4224960fe52586996ccc4c68"
+    },
+    {
+      "path": "sdk/server/envelopes.ts",
+      "sha256": "c6dc2e69196b276a9b083c6d6ed9d0ea12f5ceca4fed58739db137f0d249e1e4"
+    },
+    {
+      "path": "sdk/server/router.ts",
+      "sha256": "d96ec80cc72df4703b0f4150580ffaacc80c2d6d7ccca0724e3da84749e59e57"
+    }
+  ]
+}

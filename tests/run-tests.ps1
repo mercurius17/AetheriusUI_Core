@@ -4,7 +4,8 @@ param(
 
 $ErrorActionPreference = "Stop"
 $coreRoot = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
-$serverRoot = (Resolve-Path (Join-Path $coreRoot $ServerPackage)).Path
+$serverPath = if ([IO.Path]::IsPathRooted($ServerPackage)) { $ServerPackage } else { Join-Path $coreRoot $ServerPackage }
+$serverRoot = (Resolve-Path -LiteralPath $serverPath).Path
 $esbuild = Join-Path $serverRoot "node_modules\.bin\esbuild.cmd"
 $outputDir = Join-Path $PSScriptRoot "build"
 $outputFile = Join-Path $outputDir "core.test.cjs"

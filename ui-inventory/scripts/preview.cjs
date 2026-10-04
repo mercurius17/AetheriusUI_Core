@@ -1,5 +1,6 @@
 'use strict';
 const http=require('node:http'),fs=require('node:fs'),path=require('node:path');
+const port=Number(process.env.AETHERIUS_PREVIEW_PORT||4177);
 const root=path.resolve(__dirname,'..'),core=path.join(require('./core-path.cjs'),'frontend','Data','MeridianUI','aetheriusui');
 const {SqliteTestStore}=require('../server/stores/sqlite-test.cjs');
 const {createInventory}=require('../server/index.cjs');const {records,makeState,runtime}=require('../test-support/fixture.cjs');
@@ -12,7 +13,7 @@ const server=http.createServer(async(req,res)=>{
   try{
     const url=new URL(req.url,'http://127.0.0.1');
     if(req.method==='POST'&&url.pathname==='/api/preview'){
-      if(req.headers.origin!=='http://127.0.0.1:4177')throw new Error('Origin refused');
+      if(req.headers.origin!==`http://127.0.0.1:${port}`)throw new Error('Origin refused');
       let body='',size=0;for await(const chunk of req){size+=chunk.length;if(size>16000)throw new Error('Payload too large');body+=chunk;}
       const {moduleId='inventory',action,payload}=JSON.parse(body);let result;const context={actorId:1,userId:1,correlationId:'preview'};
       if(!['inventory','spells'].includes(moduleId))throw new Error('Module refused');
@@ -39,4 +40,4 @@ const server=http.createServer(async(req,res)=>{
     file=path.resolve(base,decodeURIComponent(relative));if(!file.startsWith(base+path.sep))throw new Error('Invalid path');
     res.setHeader('Content-Type',mime[path.extname(file)]||'application/octet-stream');res.end(fs.readFileSync(file));
   }catch(e){res.statusCode=400;res.setHeader('Content-Type','application/json');res.end(JSON.stringify({ok:false,error:{code:e.code||'PREVIEW_ERROR',message:e.message}}));}
-});server.listen(4177,'127.0.0.1',()=>console.log('Preview: http://127.0.0.1:4177/'));
+});server.listen(port,'127.0.0.1',()=>console.log(`Preview: http://127.0.0.1:${port}/`));

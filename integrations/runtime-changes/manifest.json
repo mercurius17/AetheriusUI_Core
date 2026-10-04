@@ -1,0 +1,385 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-04",
+  "format": "git binary patch plus complete changed source files",
+  "repositories": {
+    "aetherius-server": {
+      "url": "https://github.com/AetheriusRP/aetherius-server.git",
+      "baseline": "a89b2e665bb5821ecd645bc6f3b66213e65f54ef",
+      "patch": "aetherius-server/changes.patch",
+      "patchSha256": "e07309d274cb3cbac8748e322d7a77a6c307c32d12757040b6a329956d05ed0f",
+      "files": [
+        {
+          "path": "CMakeLists.txt",
+          "added": false,
+          "size": 11365,
+          "sha256": "b443de34da8644e0dc848f08581da45b0223fb6e2e6e220473bd1ccc2afb54a7"
+        },
+        {
+          "path": "server/CMakeLists.txt",
+          "added": false,
+          "size": 5310,
+          "sha256": "495bcb3a853090ab267305b55f91e29079c9816c4c329d8e26c320607cf73c72"
+        },
+        {
+          "path": "server/cpp/addon/ScampServer.cpp",
+          "added": false,
+          "size": 65596,
+          "sha256": "55cadf9c6f44d6166e4f7ac25581c81e863c726a4c09b378475523acaad7c813"
+        },
+        {
+          "path": "server/cpp/addon/property_bindings/PropertyBindingFactory.cpp",
+          "added": false,
+          "size": 4235,
+          "sha256": "e970d90d3d299a42e802eb5d965eea833488593f5f242925fca24d22b5cd010b"
+        },
+        {
+          "path": "server/cpp/server_guest_lib/MpObjectReference.cpp",
+          "added": false,
+          "size": 66628,
+          "sha256": "f34bd3030f75fb9900f2c4a4a35082bb3ce53673e56caf0b5f7f90bf55c57c0b"
+        },
+        {
+          "path": "server/cpp/server_guest_lib/WorldState.h",
+          "added": false,
+          "size": 11014,
+          "sha256": "ca8f3ef041638111062069e09ba9a812ddca8b2f808e7a4c7131b998d243e2ba"
+        },
+        {
+          "path": "server/ts/index.ts",
+          "added": false,
+          "size": 10230,
+          "sha256": "02218d25ed45b9f7738818819340396c59a99195f3121a361a8424c5e4db212e"
+        },
+        {
+          "path": "server/ts/systems/aetheriusInventoryReadModel.ts",
+          "added": true,
+          "size": 7589,
+          "sha256": "3042966582fa20da1f659c6fa5f47cd4b561bdd3dc8972a9abb719a16aff8a94"
+        },
+        {
+          "path": "server/ts/systems/aetheriusUiSystem.ts",
+          "added": true,
+          "size": 10150,
+          "sha256": "688ed05092f09742e48762d85014aa8cf4bebf83757adb7610eb3bbf21fa9daf"
+        },
+        {
+          "path": "server/vendor/aetherius-ui-core/PROVENANCE.json",
+          "added": true,
+          "size": 1383,
+          "sha256": "265ba3846d400fe6593778112a7a276fadaa41aec3b80718c2b4d1c3987ad8f8"
+        },
+        {
+          "path": "server/vendor/aetherius-ui-core/sdk/client/localBridge.ts",
+          "added": true,
+          "size": 2102,
+          "sha256": "472586f714bb0679673ea3c1207bb7e6acd777a6086d759fb243c36644cae6f2"
+        },
+        {
+          "path": "server/vendor/aetherius-ui-core/sdk/frontend/client.ts",
+          "added": true,
+          "size": 5815,
+          "sha256": "51de449fbe4e481654602f691c7a50b6dc2b03cc4224960fe52586996ccc4c68"
+        },
+        {
+          "path": "server/vendor/aetherius-ui-core/sdk/server/envelopes.ts",
+          "added": true,
+          "size": 1114,
+          "sha256": "c6dc2e69196b276a9b083c6d6ed9d0ea12f5ceca4fed58739db137f0d249e1e4"
+        },
+        {
+          "path": "server/vendor/aetherius-ui-core/sdk/server/router.ts",
+          "added": true,
+          "size": 8408,
+          "sha256": "d96ec80cc72df4703b0f4150580ffaacc80c2d6d7ccca0724e3da84749e59e57"
+        },
+        {
+          "path": "server/vendor/aetherius-ui-core/shared/catalog.ts",
+          "added": true,
+          "size": 2503,
+          "sha256": "800d0e18ce7116eb2c2246c0d5d6b7735df65b2971f29f06e7505235b8d83c9b"
+        },
+        {
+          "path": "server/vendor/aetherius-ui-core/shared/moduleRegistry.ts",
+          "added": true,
+          "size": 10355,
+          "sha256": "829c3bbd3e78d213d474ff10437674ed673687aa018f638a6d893f614344b592"
+        },
+        {
+          "path": "server/vendor/aetherius-ui-core/shared/navigation.ts",
+          "added": true,
+          "size": 3065,
+          "sha256": "e7047c067881d823aa22a03b097d2c3ada7ea1388bb178528389395e4f978991"
+        },
+        {
+          "path": "server/vendor/aetherius-ui-core/shared/protocol.ts",
+          "added": true,
+          "size": 7798,
+          "sha256": "a6ef3cdb9dc6424458b7f77eaa9f3c1eb856fcd36d494e93f15d6debd21fa760"
+        },
+        {
+          "path": "server/vendor/aetherius-ui-core/shared/revisionStore.ts",
+          "added": true,
+          "size": 2125,
+          "sha256": "732b675e8e63d1967ec8a5a4378aadb5e66a8663760979b1a15a92530f437655"
+        },
+        {
+          "path": "unit/TemplateScriptTest.cpp",
+          "added": false,
+          "size": 1822,
+          "sha256": "004cf8b7d5a88c866b19eedc624ba898e9a6fc1a57960b620851a85429ef0d55"
+        }
+      ]
+    },
+    "aetherius-client": {
+      "url": "https://github.com/AetheriusRP/aetherius-client.git",
+      "baseline": "8d1dd4e97e1f26f80b360af8e0a0cc5ff14e3523",
+      "patch": "aetherius-client/changes.patch",
+      "patchSha256": "74185e4f3540d9ce9e268e68de8820e37a49151b4ad42f10d436f37631e98281",
+      "files": [
+        {
+          "path": "client/meridian/aetherius-ui.test.cjs",
+          "added": true,
+          "size": 5360,
+          "sha256": "e797819b9f58ecbac37922f9b0c22e6e28bca9984e2e6f9667582d34c594add8"
+        },
+        {
+          "path": "client/src/index.ts",
+          "added": false,
+          "size": 8106,
+          "sha256": "eaf7e117340b491f9621b6c498ee3231010a94bfdf48adf3da171b27d281a8cd"
+        },
+        {
+          "path": "client/src/services/events/events.ts",
+          "added": false,
+          "size": 6219,
+          "sha256": "90329253c04111452fb6817b226b80265ca41b21b3ead8b7e9720e4f9c4d56ea"
+        },
+        {
+          "path": "client/src/services/services/aetheriusUiService.ts",
+          "added": true,
+          "size": 7673,
+          "sha256": "07edf0c9f76c07f5e12614e6bda84fa392ff3867fbd766f5e7263876bfee9a2a"
+        },
+        {
+          "path": "client/src/services/services/authService.ts",
+          "added": false,
+          "size": 32773,
+          "sha256": "9178a8c12137a196f5ad03296319436cb92bf9a1bfeb7bb8950506010aefa1f7"
+        },
+        {
+          "path": "client/src/services/services/browserService.ts",
+          "added": false,
+          "size": 6022,
+          "sha256": "d4d6c65c12034105120eef4c4b136b67b41e93babd710271be893c7f2382212f"
+        },
+        {
+          "path": "client/src/services/services/nativeMapControl.ts",
+          "added": true,
+          "size": 6622,
+          "sha256": "e05c798a36ba5030a68d0598fb74118bb7e150afd62ffc71a1ec1f92786e0bcd"
+        },
+        {
+          "path": "client/tsconfig.json",
+          "added": false,
+          "size": 603,
+          "sha256": "17c69a41d4a62988470faa1d9b80f07993775dbdc962460fda2b9cfb1a93fd73"
+        },
+        {
+          "path": "client/vendor/aetherius-ui-core/PROVENANCE.json",
+          "added": true,
+          "size": 1383,
+          "sha256": "265ba3846d400fe6593778112a7a276fadaa41aec3b80718c2b4d1c3987ad8f8"
+        },
+        {
+          "path": "client/vendor/aetherius-ui-core/sdk/client/localBridge.ts",
+          "added": true,
+          "size": 2102,
+          "sha256": "472586f714bb0679673ea3c1207bb7e6acd777a6086d759fb243c36644cae6f2"
+        },
+        {
+          "path": "client/vendor/aetherius-ui-core/sdk/frontend/client.ts",
+          "added": true,
+          "size": 5815,
+          "sha256": "51de449fbe4e481654602f691c7a50b6dc2b03cc4224960fe52586996ccc4c68"
+        },
+        {
+          "path": "client/vendor/aetherius-ui-core/sdk/server/envelopes.ts",
+          "added": true,
+          "size": 1114,
+          "sha256": "c6dc2e69196b276a9b083c6d6ed9d0ea12f5ceca4fed58739db137f0d249e1e4"
+        },
+        {
+          "path": "client/vendor/aetherius-ui-core/sdk/server/router.ts",
+          "added": true,
+          "size": 8408,
+          "sha256": "d96ec80cc72df4703b0f4150580ffaacc80c2d6d7ccca0724e3da84749e59e57"
+        },
+        {
+          "path": "client/vendor/aetherius-ui-core/shared/catalog.ts",
+          "added": true,
+          "size": 2503,
+          "sha256": "800d0e18ce7116eb2c2246c0d5d6b7735df65b2971f29f06e7505235b8d83c9b"
+        },
+        {
+          "path": "client/vendor/aetherius-ui-core/shared/moduleRegistry.ts",
+          "added": true,
+          "size": 10355,
+          "sha256": "829c3bbd3e78d213d474ff10437674ed673687aa018f638a6d893f614344b592"
+        },
+        {
+          "path": "client/vendor/aetherius-ui-core/shared/navigation.ts",
+          "added": true,
+          "size": 3065,
+          "sha256": "e7047c067881d823aa22a03b097d2c3ada7ea1388bb178528389395e4f978991"
+        },
+        {
+          "path": "client/vendor/aetherius-ui-core/shared/protocol.ts",
+          "added": true,
+          "size": 7798,
+          "sha256": "a6ef3cdb9dc6424458b7f77eaa9f3c1eb856fcd36d494e93f15d6debd21fa760"
+        },
+        {
+          "path": "client/vendor/aetherius-ui-core/shared/revisionStore.ts",
+          "added": true,
+          "size": 2125,
+          "sha256": "732b675e8e63d1967ec8a5a4378aadb5e66a8663760979b1a15a92530f437655"
+        }
+      ]
+    },
+    "MeridianUI": {
+      "url": "https://github.com/heathbrownkeyworks/MeridianUI.git",
+      "baseline": "5707877322c85a1bd1c2e3309487f266d0647ca9",
+      "patch": "MeridianUI/changes.patch",
+      "patchSha256": "c49c9b5e1ca7f7285ec3a99929e0efb958d95d9a930df561a2564fce4ca5ed16",
+      "files": [
+        {
+          "path": "cmake/Tests.cmake",
+          "added": false,
+          "size": 24403,
+          "sha256": "69bb6f9f7834d511a35e639cc9cf794afb08b587b006f97b576f5532cf56769c"
+        },
+        {
+          "path": "src/UIPlatform/CEF/DefaultBrowser.h",
+          "added": false,
+          "size": 10126,
+          "sha256": "a7a38cfa21be6377be5079be8565e99373caa5b2aceef30b10a2afa7d5ddcdf3"
+        },
+        {
+          "path": "src/UIPlatform/Common/KeyboardMovementPolicy.h",
+          "added": true,
+          "size": 520,
+          "sha256": "c1186b770b1dbe4dcaaa45f1a0d0b6535914e2fc642fab66e4a551d7ebb3c73c"
+        },
+        {
+          "path": "src/UIPlatform/Controllers/ViewAPIController.cpp",
+          "added": false,
+          "size": 18546,
+          "sha256": "2c418661630e19313b9729091456a67b4d2f8a0073e37ad4791bd284cb350551"
+        },
+        {
+          "path": "src/UIPlatform/Controllers/ViewAPIController.h",
+          "added": false,
+          "size": 4149,
+          "sha256": "646529effe9840c25fe33e9269648c060cdb228159def5120329a294a29e2e25"
+        },
+        {
+          "path": "src/UIPlatform/Menus/FocusArbiter.cpp",
+          "added": false,
+          "size": 8809,
+          "sha256": "f1564f9c9b8d569fb924aaaf1914e0e5af60192841aca435151a8f9cdda07f17"
+        },
+        {
+          "path": "src/UIPlatform/Menus/FocusArbiter.h",
+          "added": false,
+          "size": 1884,
+          "sha256": "3bc5539a5bddb651a94d3bd8219ff1c908c4ef8768098244af7a313fa680cdfe"
+        },
+        {
+          "path": "src/UIPlatform/Menus/FocusMenu.cpp",
+          "added": false,
+          "size": 8964,
+          "sha256": "e7fa403bc2c97e6cc095fcbc516b68135c528f71cdbf5a9ec6e562ef0b074f5d"
+        },
+        {
+          "path": "src/UIPlatform/Menus/FocusMenu.h",
+          "added": false,
+          "size": 1431,
+          "sha256": "f46d3d4c6ab8c88bd4e67f0d04918b55ba2b07e3db350d64979ff076c9937ec1"
+        },
+        {
+          "path": "src/UIPlatform/Menus/NativeSurfaceMenu.cpp",
+          "added": false,
+          "size": 8503,
+          "sha256": "67eb8d41827e879b73892d82a64e951f07d2ff49c39de52a5cb2091ce29cc5f5"
+        },
+        {
+          "path": "src/UIPlatform/Menus/WeakFocusOwner.h",
+          "added": false,
+          "size": 3396,
+          "sha256": "b68030eab0ced499e0b1014471eae95861a07cbfe3efc005a20f6cc38a6b36f6"
+        },
+        {
+          "path": "src/UIPlatform/MeridianUIAPI/KeyboardMovementAPI.h",
+          "added": true,
+          "size": 832,
+          "sha256": "0276df26954f36d317205b96253450e5d4d4080c36b2d28c25daabe41623e28f"
+        },
+        {
+          "path": "src/UIPlatform/MeridianUIAPI/KeyboardMovementDllLoader.h",
+          "added": true,
+          "size": 590,
+          "sha256": "14e66464372011f51bb9f3947a13c8a546c3a68f81b3d674356583d2d14d071f"
+        },
+        {
+          "path": "src/UIPlatform/Render/NifPreviewRenderer.cpp",
+          "added": false,
+          "size": 57127,
+          "sha256": "60ff49c9ee0e4f1719e2328621cb128bf04a213baf30fb40ba704d2c7290817e"
+        },
+        {
+          "path": "src/UIPlatform/Render/RenderHost.cpp",
+          "added": false,
+          "size": 24583,
+          "sha256": "9405bc9d4013f8f1fc322a0d76ff7ed6404657875ce9ebb711df708f53da93d9"
+        },
+        {
+          "path": "src/UIPlatform/Render/Shaders/NifMaterial.hlsl",
+          "added": false,
+          "size": 7303,
+          "sha256": "95494c481a8a16db37e24812942fe4efe37003ab1dd10fdebf82b3775389f836"
+        },
+        {
+          "path": "src/UIPlatform/Scheme/ModSchemePath.cpp",
+          "added": false,
+          "size": 9707,
+          "sha256": "71b7ab6438b467437b1a7bc93cba4121fea5bf8c04d20c8606623d7b1d408df8"
+        },
+        {
+          "path": "src/UIPlatform/Services/InputRouter.cpp",
+          "added": false,
+          "size": 6655,
+          "sha256": "960a298d8830becb266f60beac08ea4b99e582bcf64afe51acb2ae54292ef2fd"
+        },
+        {
+          "path": "src/UIPlatform/main.cpp",
+          "added": false,
+          "size": 13158,
+          "sha256": "030ef5fa2fa7808f3afefa824914182ae88da8de1cb3ac4bcd2e04d3d3aa961b"
+        },
+        {
+          "path": "tests/UIPlatform/ModSchemePathTests.cpp",
+          "added": false,
+          "size": 8859,
+          "sha256": "eb8797cc9f11e28b9d5e06cc4d783b88e8d7e9708d84f6de1c4c86f0df25a08f"
+        },
+        {
+          "path": "tests/UIPlatform/NifPreviewGpuTests.cpp",
+          "added": false,
+          "size": 18963,
+          "sha256": "6f48e2d97fdc1a0d21277991ac374219f7ee7baeac895c4bab62ce773a3ed9e2"
+        }
+      ]
+    }
+  }
+}

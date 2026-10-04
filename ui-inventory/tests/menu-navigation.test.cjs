@@ -18,3 +18,12 @@ test('same-module route does not remount and unknown subroutes cannot dispose th
 test('focus loss while cleanup is pending cannot resurrect a new workspace',async()=>{
   const {ctx,log}=setup();let release;ctx.unmountEntry=()=>new Promise(resolve=>{release=resolve;});ctx.openModule('inventory','/inventory/favorites');await new Promise(setImmediate);ctx.state={kind:'gameplay'};release();await ctx.transition;assert.deepEqual(log,[]);assert.equal(ctx.state.kind,'gameplay');
 });
+
+test('native MAPA activation stays in radial and never mounts or animates a workspace',async()=>{
+  const {ctx,log}=setup();ctx.state={kind:'radial'};ctx.AbortController=AbortController;
+  ctx.NAV.push({id:'map',route:'/map'});
+  ctx.request=()=>{};
+  ctx.modules.set('map',{definition:{subroutes:[],activate:async context=>{assert.equal(context.route,'/map');log.push('native-map');}}});
+  ctx.openModule('map');await ctx.transition;
+  assert.deepEqual(log,['native-map']);assert.equal(ctx.state.kind,'radial');
+});

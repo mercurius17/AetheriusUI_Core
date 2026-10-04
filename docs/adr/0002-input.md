@@ -1,6 +1,12 @@
 # ADR 0002: bridge Meridian e gate de input
 
-- Status: provisório; aprovação de produção bloqueada por prova M0.
+- Status: implementado e compilado para AE 1.6.1170; WASD confirmado pelo usuário. Digitação/mapa aguardam confirmação visual da última entrega. Os parágrafos seguintes registram a decisão inicial; foram superados pela extensão abaixo.
+
+O fork agora publica `Aetherius.KeyboardMovement/1`, preservando View/1 e Input/1. Core recusa foco interativo sem essa extensão. Foco Unpaused captura/restaura PlayerControls; movimento/corrida/pulo remapeados passam e ataques/mouse/câmera/teclas da UI são consumidos. Foco editável bloqueia movimento; tarefa no game thread limpa o vetor somente se o mesmo owner ainda está editando. Isso não altera autoridade de gameplay.
+
+Opener usa TAB/TweenMenu do ControlMap. A animação inicia após foco nativo confirmado, pois CEF pode focar página escondida na inicialização. Fechamento, desconexão e menus incompatíveis liberam foco. HUD é passivo e não desenha as barras controladas pelo TrueHUD. Chamadas Papyrus do cliente são drenadas em update, nunca no tick; filas são limitadas e limpas em troca de sessão.
+
+Política de input, foco e transporte têm testes aprovados; não constituem prova de todos os bindings físicos no jogo. Rollback usa o script e perfil original, com Skyrim fechado. Extensão e CEF correspondente são distribuídos juntos.
 - Contexto: o Meridian `main` auditado publica as APIs `Meridian.View/1` e `Meridian.Input/1` sobre `IUIPlatformAPI` 1.0. `View/1` oferece foco da página; `Input/1` configura navegação de controle e atalhos. A API pública verificada não define passagem seletiva de WASD/corrida simultânea ao consumo de outras teclas.
 - Decisão: o plugin consumidor usa `View::Query`, `Input::Query`, listeners públicos e conteúdo local `mod://aetheriusui/`. A Main View e a HUD View são persistentes; somente a Main View recebe foco. `TAB` é interceptado pelo sink nativo e o atalho de controle usa `LeftShoulder + Start`. O foco é `Unpaused`, sem blur de framebuffer. Nenhum hook de `PollInputDevices` ou alteração de internals do Meridian é adotado.
 - Consequências: o ciclo de vida e o visual podem ser compilados/inspecionados antes do teste in-game, mas o requisito WASD + bloqueio seletivo continua sem prova. A configuração pública atual pode capturar teclado/mouse enquanto focada e não promete passagem de movimento. M0 está pendente e a produção permanece bloqueada até o proprietário testar essa combinação no runtime real ou aprovar uma solução compatível com API pública.

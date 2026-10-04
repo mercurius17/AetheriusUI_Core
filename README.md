@@ -2,7 +2,9 @@
 
 Base de interface modular para o Aetherius/SkyMP, com shell persistente, HUD passivo, contrato versionado entre cliente e servidor e um adaptador nativo para Meridian.
 
-> **Estado:** implementação de integração em andamento. O build do cliente e do servidor e a suíte do Core passaram no ambiente de desenvolvimento. O adaptador nativo e o comportamento dentro do jogo ainda precisam de validação no runtime-alvo.
+> **Estado local (04/10/2026):** bridge CommonLibSSE-NG e Meridian compilados/carregados no Skyrim AE 1.6.1170. Usuário confirmou radial/ícones/animações, CLASSE/GRUPO, consulta de INVENTÁRIO/FEITIÇOS, mapa nativo e aparecimento de modelos 3D. As últimas correções de opacidade e TAB fechar apenas o mapa ainda aguardam confirmação visual. Mutações de gameplay permanecem bloqueadas até os adapters autoritativos; TrueHUD controla as barras de atributos.
+
+Consulte primeiro [estado atual](docs/CURRENT_STATE.md) e [implementação restante](docs/REMAINING_IMPLEMENTATION.md), depois [validação](docs/VALIDATION_REPORT.md), [build/implantação](docs/BUILD_AND_DEPLOY.md) e [integração GameplayCore](docs/INTEGRATION_GAMEPLAY_CORE.md). As alterações atuais de server/client/Meridian estão versionadas em [runtime-changes](integrations/runtime-changes/README.md), com cópia no GameplayCore, fontes, patches completos e hashes.
 
 ## O que há aqui
 
@@ -10,14 +12,14 @@ Base de interface modular para o Aetherius/SkyMP, com shell persistente, HUD pas
 - `sdk/`: cliente local, envelopes e router genérico do servidor.
 - `frontend/`: shell, HUD, estilos, ícones originais e fixtures de demonstração.
 - `native/`: consumidor SKSE do Meridian em C++ e seu CMake.
-- `integrations/`: patches para conectar este Core às revisões atuais de `aetherius-client` e `aetherius-server` registradas abaixo.
+- `integrations/`: snapshot atual de server/client/Meridian, manifesto local de módulos e patches históricos identificados por baseline.
 - `docs/`: arquitetura, protocolo, módulos, segurança, input, auditorias e decisões técnicas.
 - `tests/`: testes de contrato do Core.
 - `ui-inventory/`: inventário autoritativo, feitiços, favoritos compartilhados/hotkeys e abertura do mapa nativo pelo radial TAB, com UI CEF, persistência, adapters, testes e empacotamento.
 
 ## Inventário, feitiços, favoritos e mapa
 
-As implementações 0.3.1 estão em [`ui-inventory/`](ui-inventory/README.md). Incluem destruição de itens com confirmação, controles de equipamento por mão com alternância equipar/desequipar, feitiços nas duas mãos com indicador **L R**, favoritos e hotkeys 1–9, ícones desenhados, destaque verde `#69CF99`, conteúdo a 80% e scroll com inércia. **MAPA**, no slot 6 do TAB, libera o foco CEF e solicita a abertura do mapa nativo pelo cliente.
+As interfaces e contratos estão em [`ui-inventory/`](ui-inventory/README.md), incluindo controles de equipamento por mão, feitiços/favoritos/hotkeys e destruição com confirmação. Essas ações dependem do adapter autoritativo e permanecem desabilitadas no provider local de consulta. **MAPA**, no slot 6 do TAB, libera o foco CEF e abre o MapMenu pelo bridge SKSE. O preview 3D é apresentação local de um item confirmado pelo servidor.
 
 Para testar, gerar o pacote ou abrir a prévia, prepare os checkouts upstream e dependências descritos abaixo e execute `npm test`, `npm run check`, `npm run package:meridian` ou `npm run preview` em `ui-inventory/`. A prévia fica em `http://127.0.0.1:4177/`. Os overlays são gerados dentro do módulo; os scripts não instalam alterações no jogo automaticamente.
 
@@ -25,7 +27,11 @@ O módulo ainda exige o adapter nativo durável, a integração exclusiva de Q/1
 
 ## Integração com os repositórios Aetherius
 
-As alterações do client e do server são distribuídas como patches pequenos. Os checkouts completos de referência ficam fora deste repositório; eles não são incorporados como submódulos nem cópias de upstream.
+Use [integrations/runtime-changes](integrations/runtime-changes/README.md) para a entrega atual, baseada em server `a89b2e6`, client `8d1dd4e` e Meridian `5707877`. Os checkouts completos de referência não são incorporados; apenas as alterações necessárias estão preservadas.
+
+### Patches históricos
+
+A tabela e os comandos abaixo pertencem à integração anterior. Não os aplique juntamente com o snapshot atual.
 
 | Repositório | Revisão-base usada | Patch |
 |---|---|---|
@@ -53,16 +59,15 @@ O arquivo de referência e os documentos de entrada ficam em `referencias/` no c
 
 ## Prévia no Live Server
 
-Para conferir apenas a interface no Live Server do VS Code, abra `frontend/Data/MeridianUI/aetheriusui/index.html`. Em `localhost` ou `127.0.0.1`, a prévia exibe automaticamente a captura `ScreenShot112.png` com leve desfoque atrás do anel; no jogo, o fundo geral continua transparente. O slot **SERVIDOR** carrega uma fixture vazia de **Informações do servidor** sobre um painel preto translúcido; ela não consulta dados reais. As outras fixtures de demonstração têm suas condições de carregamento em [`frontend/test-fixtures/README.md`](frontend/test-fixtures/README.md).
+Para conferir o shell no Live Server do VS Code, abra `frontend/Data/MeridianUI/aetheriusui/index.html`. Assets demonstrativos ficam em `frontend/test-fixtures/`, fora de Data, e não entram no pacote do jogo. Fixtures/previews não comprovam dados reais ou capacidades autoritativas. Consulte [`frontend/test-fixtures/README.md`](frontend/test-fixtures/README.md).
 
 ## Validação registrada
 
-- Core: 14 testes aprovados.
-- Cliente Aetherius: `yarn build` aprovado.
-- Servidor Aetherius: `npm run build-ts` aprovado.
-- TypeScript estrito do Core e verificações de sintaxe JavaScript aprovados.
-- Native: compilação não concluída no ambiente; a configuração do Meridian/CommonLibSSE e uma cadeia C++ compatível ainda são necessárias.
-- Não houve validação in-game de foco, TAB, WASD/corrida, mouse-look, renderização ou empacotamento.
+- Core: 17/17; UI/mapa/navegação: 23/23; cliente Meridian: 28/28 na integração.
+- Bridge: compilado/carregado e 1/1 CTest; renderer: 5/5 CTest e regressões de alpha/occlusão na GPU física.
+- Servidor nativo/TypeScript e cliente compilados; host com load order local validou consultas e isolamento.
+- GameplayCore ClassSystem: build aprovado, 49/55 testes com seis falhas preexistentes documentadas.
+- A confirmação visual das correções finais de opacidade/TAB ainda está pendente.
 
 Os detalhes e limites estão em [`docs/REPOSITORY_AUDIT.md`](docs/REPOSITORY_AUDIT.md), [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) e [`docs/TEST_MATRIX.md`](docs/TEST_MATRIX.md).
 

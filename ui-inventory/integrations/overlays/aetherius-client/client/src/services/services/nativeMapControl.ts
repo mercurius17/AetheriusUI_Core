@@ -18,9 +18,9 @@ export class NativeMapControl {
   }
 
   onFocusChanged(focused: boolean): void {
-    this.focused = focused;
     // A newly focused browser must not inherit an old committed map command.
-    if (focused && this.pending?.phase !== "prepared") this.pending = null;
+    if (focused && !this.focused && this.pending?.phase !== "prepared") this.pending = null;
+    this.focused = focused;
   }
 
   reset(): void { this.pending = null; this.recent.clear(); }

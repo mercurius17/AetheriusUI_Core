@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { NAVIGATION_CATALOG, RADIAL_CATALOG, calculateRadialLayout } from "../shared/catalog";
 import { INITIAL_NAVIGATION_STATE, reduceNavigation } from "../shared/navigation";
-import { MAX_ENVELOPE_BYTES, decodeEnvelope, encodeEnvelope, validateEnvelope } from "../shared/protocol";
+import { MAX_ENVELOPE_BYTES, decodeEnvelope, encodeEnvelope, validateEnvelope, utf8ByteLength } from "../shared/protocol";
 import { RequestDeduplicator, RevisionStore } from "../shared/revisionStore";
 import { UiModuleRegistry } from "../shared/moduleRegistry";
 import { UiServerRouter } from "../sdk/server/router";
@@ -21,6 +21,16 @@ const validRequest = (overrides: Record<string, unknown> = {}) => ({
   action: "echo",
   payload: { text: "hello" },
   ...overrides,
+});
+
+test("UTF-8 limits work without TextEncoder in an embedded runtime", () => {
+  const original = globalThis.TextEncoder;
+  try {
+    (globalThis as any).TextEncoder = undefined;
+    for (const text of ["ASCII", "ação", "漢字", "😀", "\ud800", "\udc00", "x😀ç"]) assert.equal(utf8ByteLength(text), Buffer.byteLength(text));
+    assert.equal(decodeEnvelope(encodeEnvelope(validRequest({ payload: { text: "ação 😀" } }))).moduleId, "core");
+    assert.throws(() => encodeEnvelope(validRequest({ payload: { text: "😀".repeat(MAX_ENVELOPE_BYTES) } })), /16 KiB/);
+  } finally { globalThis.TextEncoder = original; }
 });
 
 test("catalog fixes character center plus eleven external slots", () => {
@@ -218,6 +228,34 @@ test("server SDK builds validated event, snapshot and patch envelopes", () => {
   assert.equal(createUiSnapshot("session-001", "core", 4, {}).revision, 4);
   assert.equal(createUiPatch("session-001", "core", 4, 5, {}).baseRevision, 4);
   assert.throws(() => createUiPatch("session-001", "core", 5, 4, {}));
+});
+
+test("router reserves concurrent requests and rejects changed payload or actor", async () => {
+  const router = new UiServerRouter();
+  let calls = 0;
+  let release!: () => void;
+  const wait = new Promise<void>(resolve => { release = resolve; });
+  router.register("core", "echo", async () => { calls++; await wait; return { accepted: true }; });
+  const context = { userId: 42, actorId: 9001, expectedSessionId: "session-001" };
+  const first = router.dispatch(validRequest(), context);
+  const second = router.dispatch(validRequest(), context);
+  await Promise.resolve();
+  assert.equal(calls, 1);
+  assert.equal((await router.dispatch(validRequest({ payload: { forged: true } }), context)).error?.code, "REQUEST_ID_REUSED");
+  assert.equal((await router.dispatch(validRequest(), { ...context, actorId: 9002 })).error?.code, "SESSION_MISMATCH");
+  release();
+  assert.deepEqual(await first, await second);
+  assert.equal(calls, 1);
+});
+
+test("router validates outgoing size and aborts session handlers on disconnect", async () => {
+  const router = new UiServerRouter();
+  const context = { userId: 42, actorId: 9001, expectedSessionId: "session-001" };
+  let signal: AbortSignal | undefined;
+  router.register("core", "echo", (ctx) => { signal = ctx.signal; return { text: "é".repeat(9000) }; });
+  assert.equal((await router.dispatch(validRequest(), context)).error?.code, "PAYLOAD_TOO_LARGE");
+  router.forgetSession("session-001");
+  assert.equal(signal?.aborted, true);
 });
 
 test("frontend SDK correlates a request and discards messages from an old session", async () => {

@@ -16,6 +16,7 @@
   };
   window.AetheriusInventoryInteraction={current:()=>null};
   deliver({type:'session',sessionId});
+  deliver({envelope:{protocolVersion:1,kind:'snapshot',messageId:'preview-core',correlationId:'preview-core',sessionId,moduleId:'core',revision:0,payload:{navigation:window.AetheriusUI.catalog.map(r=>({...r,available:['inventory','spells','map'].includes(r.id)}))}}});
   window.AetheriusUI.nativeFocusChanged(true);
   window.addEventListener('load',()=>{
     const target=new URLSearchParams(window.location.search).get('menu');

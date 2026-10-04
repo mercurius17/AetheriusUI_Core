@@ -23,7 +23,10 @@ async function harness(t,favorites=false,options={}){
   if(options.moduleId==='spells')vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../ui/spells-module.js'),'utf8'),{window:win});
   const abort=new AbortController();const mount=definition.mount(container,{moduleId:options.moduleId||'inventory',route:options.moduleId==='spells'?'/spells':favorites?'/inventory/favorites':'/inventory',signal:abort.signal,subscribe(){},async request(moduleId,action,payload){
     calls.push({action,payload});const c={actorId:1};
-    if(action==='snapshot')return moduleId==='spells'?service.magicSnapshot(c,payload):service.snapshot(c,payload);
+    if(action==='snapshot') {
+      const snapshot=await (moduleId==='spells'?service.magicSnapshot(c,payload):service.snapshot(c,payload));
+      return options.readOnly?{...snapshot,readOnlyReason:'Consulta do servidor.',items:snapshot.items.map(row=>({...row,actions:[]}))}:snapshot;
+    }
     if(action==='favoritesSnapshot')return service.favoritesSnapshot(c,payload);
     if(action==='itemDetails')return moduleId==='spells'?service.magicDetails(c,payload):service.details(c,payload);
     if(action==='operationStatus')return service.status(c,payload);
@@ -101,6 +104,17 @@ test('mouse toggles fixed-slot armor, shields, two-hand weapons and ammo using t
     await h.click(id);row=(await h.store.read(1)).items.find(r=>r.id===id);assert.deepEqual(row.equipped,[]);assert.equal(row.count,count);assert.equal(h.calls.filter(r=>r.action==='unequip').at(-1).payload.hand,'auto');
   }
 });
+test('server read-only projection keeps browsing and consumes action keys without mutations',async t=>{
+  const h=await harness(t,false,{readOnly:true});
+  assert.match(h.container.innerHTML,/SOMENTE CONSULTA/);
+  assert.match(h.container.innerHTML,/Consulta do servidor/);
+  await h.click('sword');
+  for(const key of ['e','f','r','t','q','1'])await h.key(key);
+  assert(h.calls.every(call=>['snapshot','itemDetails'].includes(call.action)));
+  assert.equal(h.opened.length,0);
+  assert.deepEqual((await h.store.read(1)).items.find(row=>row.id==='sword').equipped,[]);
+});
+
 test('favorites mouse toggles spells by hand and powers by power slot without forgetting or unfavoriting',async t=>{
   const abilities=[{key:'Preview.esm:001234',name:'Chamas',kind:'spell'},{key:'Preview.esm:001235',name:'Voz do norte',kind:'power'}],state=makeState();state.knownSpells=[abilities[0].key];state.knownPowers=[abilities[1].key];state.favoriteAbilities=abilities.map(r=>r.key);
   const h=await harness(t,true,{state,abilities}),spell='ability:'+abilities[0].key,power='ability:'+abilities[1].key;

@@ -2,6 +2,7 @@
 const fs=require('node:fs'),path=require('node:path');
 function overlay(core){
   let source=fs.readFileSync(path.join(core,'shell.js'),'utf8');
+  if (source.includes('    openModule: openModule,') && source.includes('function openModule(id, requestedRoute) {')) return source;
   const edits=[
     ['function openModule(id) {','function openModule(id, requestedRoute) {'],
     ["    transition = transition.then(async function () {\n      if (state.kind !== 'radial') return;", "    const route = requestedRoute || descriptor.route;\n    const entry = modules.get(id);\n    if (!routeIsSafe(route, descriptor.route) || (route !== descriptor.route && !entry?.definition.subroutes.includes(route))) throw new Error('Rota não registrada.');\n    transition = transition.then(async function () {\n      if (state.kind === 'workspace' && state.moduleId === id) { navigate(route); return; }\n      if (state.kind === 'workspace') {\n        const previousState = state;\n        await unmountEntry(modules.get(state.moduleId));\n        if (state !== previousState) return;\n      } else if (state.kind !== 'radial') return;"],
