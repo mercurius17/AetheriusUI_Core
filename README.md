@@ -8,6 +8,8 @@ Consulte primeiro [estado atual](docs/CURRENT_STATE.md) e [implementação resta
 
 ## O que há aqui
 
+Para compilar as DLLs, consulte o [guia completo de compilação](docs/DLL_BUILD_GUIDE.md): bridge CommonLibSSE-NG, Meridian/CEF, addon nativo do servidor, TypeScript, empacotamento e diagnóstico. Ele registra os caches usados e os limites de reprodução em uma máquina limpa.
+
 - `shared/`: protocolo, navegação, catálogo, registry de módulos e store de revisão.
 - `sdk/`: cliente local, envelopes e router genérico do servidor.
 - `frontend/`: shell, HUD, estilos, ícones originais e fixtures de demonstração.
@@ -23,7 +25,7 @@ As interfaces e contratos estão em [`ui-inventory/`](ui-inventory/README.md), i
 
 Para testar, gerar o pacote ou abrir a prévia, prepare os checkouts upstream e dependências descritos abaixo e execute `npm test`, `npm run check`, `npm run package:meridian` ou `npm run preview` em `ui-inventory/`. A prévia fica em `http://127.0.0.1:4177/`. Os overlays são gerados dentro do módulo; os scripts não instalam alterações no jogo automaticamente.
 
-O módulo ainda exige o adapter nativo durável, a integração exclusiva de Q/1–9 durante gameplay, migração e validação MySQL e testes dentro do Skyrim antes de produção. Consulte [integração](ui-inventory/docs/INSTALL.md), [favoritos/hotkeys](ui-inventory/docs/FAVORITES_HOTKEYS.md), [feitiços](ui-inventory/docs/SPELLS.md), [mapa](ui-inventory/docs/MAP.md) e [validação](ui-inventory/docs/VALIDATION.md).
+O módulo ainda exige o adapter nativo durável, a integração exclusiva de Q/1–9 durante gameplay, conversão da persistência para PostgreSQL, adaptação ao servidor oficial e testes dentro do Skyrim antes de produção. Consulte [integração](ui-inventory/docs/INSTALL.md), [favoritos/hotkeys](ui-inventory/docs/FAVORITES_HOTKEYS.md), [feitiços](ui-inventory/docs/SPELLS.md), [mapa](ui-inventory/docs/MAP.md) e [validação](ui-inventory/docs/VALIDATION.md).
 
 ## Integração com os repositórios Aetherius
 
