@@ -1,2 +1,3 @@
 # Preserve exported patch/source bytes so their SHA-256 survives checkout.
 integrations/runtime-changes/** -text
+integrations/character-creation/upstream/** -text whitespace=cr-at-eol

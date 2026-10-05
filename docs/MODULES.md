@@ -21,6 +21,8 @@ Cada registro declara versão, janela do SDK, label, rota raiz e subrotas, slot,
 
 ## Fixtures de demonstração
 
+O destino PERSONAGEM agora possui adapter de catálogo de raças em consulta, registrado pelo manifesto local. O servidor precisa instalar character-creation/register-character.cjs e publicar disponibilidade; nenhum botão habilita criação autoritativa por instalação local. A vista nativa chargen acompanha um RaceSexMenu já aberto e aceita apenas apresentação/câmera. Consulte [CHARACTER_CREATION.md](CHARACTER_CREATION.md).
+
 `frontend/test-fixtures/` registra três módulos externos removíveis: uma fixture `class` de eco que exercita request/response, uma fixture `shop` com painel em branco e uma fixture `server` com estado vazio para prévia visual. Elas exercitam slots, mount/unmount e navegação. A fixture `shop` não apresenta serviço, preço, catálogo, pagamento, apoiador ou estado persistente. A fixture `server` não fornece dados de conexão. Elas não são módulos finais e só entram no pacote de desenvolvimento quando explicitamente habilitadas.
 
 ## Processo de integração

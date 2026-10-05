@@ -1,0 +1,28 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Criação de personagem</title><link rel="stylesheet" href="chargen.css"></head><body><div id="meridian-creator" lang="pt-BR">
+  <main class="mc-workspace">
+    <aside class="mc-left mc-panel" aria-label="Identidade do personagem">
+      <span class="mc-overline">01 / IDENTIDADE</span>
+      <label class="mc-name">Nome<input id="mc-name" type="text" maxlength="32" placeholder="Seu nome em Tamriel" autocomplete="off"></label>
+      <div class="mc-sex"><span class="mc-field-label">Sexo</span><div><button type="button" data-sex="male" aria-pressed="true">Masculino</button><button type="button" data-sex="female" aria-pressed="false">Feminino</button></div></div>
+      <div class="mc-section-heading mc-origins"><h2>Origens</h2><p>Escolha a raça do seu personagem.</p></div>
+      <div id="mc-races" class="mc-race-grid" aria-label="Raças"></div>
+      <div class="mc-race-description"><h3 id="mc-race-name">Nórdico</h3><p id="mc-race-copy"></p></div>
+
+    </aside>
+    <section class="mc-stage" aria-label="Personagem no Skyrim">
+      <div class="mc-view-wrap"><div id="mc-character" role="img" aria-label="Arraste para girar ou mover a câmera; use o scroll para aproximar e afastar."></div></div>
+    </section>
+    <aside class="mc-right mc-panel" aria-label="Ajustes de aparência">
+      <div class="mc-section-heading"><div class="mc-panel-kicker"><span class="mc-overline">02 / APARÊNCIA</span><button type="button" id="mc-finish" class="mc-primary mc-review-overlay">Finalizar personagem <span aria-hidden="true">✓</span></button></div><h2>Os seus traços</h2><p>Pequenos detalhes. Uma identidade.</p></div>
+      <nav id="mc-categories" aria-label="Categorias de aparência"></nav>
+      <div class="mc-current-heading"><h3 id="mc-category-name">Cabeça</h3><span id="mc-category-count">5 ajustes</span></div>
+      <div id="mc-sliders" role="region" aria-label="Ajustes da categoria" tabindex="0"></div>
+      <div id="mc-scroll-cue" class="mc-scroll-cue" aria-hidden="true">Mais ajustes abaixo <span>↓</span></div>
+      <div class="mc-category-footer"><p id="mc-category-help">Ajustes disponíveis no menu vanilla.</p><div class="mc-tool-actions"><div class="mc-tool-row"><button id="mc-reset-category" class="mc-quiet" type="button"><span class="mc-tool-icon" aria-hidden="true">↺</span> Restaurar categoria</button><button id="mc-randomize-category" class="mc-quiet" type="button"><span class="mc-tool-icon" aria-hidden="true">✧</span> Sortear categoria</button></div><div class="mc-tool-row"><button id="mc-reset-all" class="mc-quiet" type="button"><span class="mc-tool-icon" aria-hidden="true">↺</span> Restaurar tudo</button><button id="mc-randomize" class="mc-quiet" type="button"><span class="mc-tool-icon" aria-hidden="true">✧</span> Sortear aparência</button></div></div></div>
+    </aside>
+  </main>
+
+  <div class="mc-toast" id="mc-toast" role="status" aria-live="polite"></div>
+  <dialog id="mc-confirm"><button type="button" class="mc-dialog-close" aria-label="Fechar confirmação">×</button><span class="mc-overline">CONFIRMAÇÃO</span><h2>Finalizar personagem?</h2><p id="mc-confirm-name"></p><div class="mc-dialog-actions"><button type="button" class="mc-primary" id="mc-confirm-finish">Confirmar finalização <span aria-hidden="true">✓</span></button></div></dialog>
+</div>
+<script src="chargen-visuals.js"></script><script src="chargen.js"></script></body></html>

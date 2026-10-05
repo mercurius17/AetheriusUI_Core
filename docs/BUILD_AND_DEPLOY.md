@@ -1,5 +1,7 @@
 # Build e implantação local
 
+A integração de criação/raças usa a mesma DLL AetheriusUIBridge e acrescenta CharacterPresentationPolicyTests; veja [CHARACTER_CREATION.md](CHARACTER_CREATION.md). Não instale a DLL homônima do módulo original em paralelo.
+
 Os comandos completos de configuração/compilação, toolchains, DLLs/PDBs e dependências estão no [guia de compilação das DLLs](DLL_BUILD_GUIDE.md), também preservado no GameplayCore. Este documento complementa o guia com o fluxo de implantação local.
 
 Esta entrega usa Skyrim 1.6.1170.0, SKSE 2.2.6, Skyrim Platform 2.9.0 e Node 22.14.0. O alvo efetivamente testado é Windows x64/AE. As opções SE da CommonLib não constituem validação SE ou VR.

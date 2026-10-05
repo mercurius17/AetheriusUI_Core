@@ -14,6 +14,7 @@ Esta entrega é um runtime local de testes integrado, com consulta real ao servi
 - Renderer NIF usa contexto deferred do dispositivo do jogo quando texturas compartilhadas são indisponíveis. Materiais opacos ignoram alpha difuso; transparência real é composta em formato premultiplicado.
 - TAB com MapMenu aberto solicita apenas seu fechamento e consome o pressionamento. Abertura do radial é bloqueada enquanto o mapa permanece aberto.
 - Screenshot demonstrativa fica fora de Data. Barras de vida/magia/vigor pertencem ao TrueHUD e foram retiradas do Core.
+- Menu de raças importado de Aetherius_Criacao_Personagem, com atribuição e snapshot verificável. PERSONAGEM apresenta catálogo vanilla em consulta após registro no servidor; a vista RaceSexMenu e sua câmera foram incorporadas à mesma DLL. Raça, sexo, aparência, nome e finalização permanecem bloqueados no Core até integração autoritativa. Veja [CHARACTER_CREATION.md](CHARACTER_CREATION.md).
 
 ## Verificação e limites
 
@@ -23,10 +24,10 @@ O usuário confirmou em jogo ícones/animações do radial, abertura de classes/
 
 | Verificação | Resultado registrado |
 |---|---|
-| Core/protocolo/router/SDK | 17/17; executado novamente antes do commit. |
+| Core/protocolo/router/SDK | 18/18 após integração do catálogo de raças, incluindo sessão, comandos falsificados e unload. |
 | UI, navegação, mapa e ciclo de preview | 23/23 na última rodada funcional. |
 | Cliente Meridian | 28/28 na rodada de integração. |
-| Bridge/input | 1/1 CTest. |
+| Bridge/input/criação | 2/2 CTest, incluindo a política de comandos de apresentação do menu de raças. |
 | Renderer gráfico/composição/câmera/arquitetura | 5/5 CTest e renderer de produção na GPU física; transparência e occlusão com geometria sintética. |
 | Host nativo com load order local | Leitura de itens/feitiços/tokens, rejeição de ator/item alheios e mutações; inventário preservado. |
 | ClassSystem GameplayCore | Build TypeScript aprovado; 49/55 testes, seis falhas preexistentes, rechecados antes do commit. |

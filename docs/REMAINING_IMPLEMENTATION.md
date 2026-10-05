@@ -25,6 +25,7 @@ Aceite: testes de duas sessões/atores, comandos falsificados, ator/item alheios
 - Manter um único escritor de leveling; resolver integração com o módulo separado sem inicialização duplicada.
 - Integrar Damage/Durability e os demais destinos do radial por contratos e providers próprios. Slots/fixtures não comprovam implementação de comércio, propriedades, profissões, sobrenatural ou servidor.
 - Definir favoritos/hotkeys compartilhados entre inventário/feitiços e gameplay, com exclusividade de Q/1–9 e dispatch autorizado no servidor.
+- Registrar PERSONAGEM no bootstrap do servidor e implementar criação autoritativa de personagem com catálogo permitido, validação, aplicação, rollback e persistência de raça/nome/aparência no PostgreSQL. Testar a vista RaceSexMenu, câmera, foco e retorno ao vanilla em jogo; o catálogo integrado é somente apresentação. Detalhes em [CHARACTER_CREATION.md](CHARACTER_CREATION.md).
 
 ## 4. Resolver regressões e persistência de produção
 

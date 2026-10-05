@@ -19,6 +19,7 @@
 #include <cmath>
 #include <unordered_set>
 #include <atomic>
+#include "chargen.h"
 
 namespace
 {
@@ -417,6 +418,7 @@ namespace
             spdlog::info("AetheriusUI: client session delivered (main ready={})", g_mainReady);
 
         if (StringField(parsed, "type") == "disconnect") {
+            SKSE::GetTaskInterface()->AddUITask([]() { Aetherius::Chargen::Close(); });
             g_pendingPackets.clear();
             g_pendingBytes = 0;
             g_previewTokens.clear();
@@ -525,8 +527,24 @@ namespace
         RE::BSEventNotifyControl ProcessEvent(const RE::MenuOpenCloseEvent* event,
                                               RE::BSTEventSource<RE::MenuOpenCloseEvent>*) override
         {
-            if (!event || !event->opening)
+            if (!event)
                 return RE::BSEventNotifyControl::kContinue;
+            if (event->menuName == RE::RaceSexMenu::MENU_NAME) {
+                const bool opening = event->opening;
+                SKSE::GetTaskInterface()->AddTask([opening]() {
+                    if (opening) CloseMainView();
+                    SKSE::GetTaskInterface()->AddUITask([opening]() {
+                        if (opening) Aetherius::Chargen::Open();
+                        else Aetherius::Chargen::Close(true);
+                    });
+                });
+            } else if (event->menuName == RE::MessageBoxMenu::MENU_NAME || event->menuName == RE::Console::MENU_NAME) {
+                SKSE::GetTaskInterface()->AddUITask([opening = event->opening]() {
+                    if (opening) Aetherius::Chargen::OnMessageBoxOpened();
+                    else Aetherius::Chargen::OnMessageBoxClosed();
+                });
+            }
+            if (!event->opening) return RE::BSEventNotifyControl::kContinue;
             if (event->menuName == RE::MapMenu::MENU_NAME) {
                 SKSE::GetTaskInterface()->AddTask([]() {
                     const auto id = std::exchange(g_mapRequest, {});
@@ -666,8 +684,11 @@ SKSEPluginLoad(const SKSE::LoadInterface* skse)
             if (const auto ui = RE::UI::GetSingleton())
                 ui->AddEventSink(&g_menuSink);
             CreateViews();
+            Aetherius::Chargen::InstallCameraHook();
+            Aetherius::Chargen::CreateView(g_views, g_input);
         } else if (message->type == SKSE::MessagingInterface::kPreLoadGame) {
             SKSE::GetTaskInterface()->AddTask([]() { CloseMainView(); });
+            SKSE::GetTaskInterface()->AddUITask([]() { Aetherius::Chargen::Close(); });
         }
     });
 }

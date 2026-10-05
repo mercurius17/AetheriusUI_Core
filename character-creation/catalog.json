@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "scope": "vanilla-presentation",
+  "races": [
+    {
+      "id": "nord",
+      "name": "Nórdico",
+      "description": "Habitantes de Skyrim, são um povo alto e de cabelos claros. Fortes e resistentes, os nórdicos são famosos por sua resistência ao frio e seu talento como guerreiros. Podem usar um Grito de Batalha para fazer os adversários fugirem."
+    },
+    {
+      "id": "imperial",
+      "name": "Imperial",
+      "description": "Nativos de Cyrodiil, provaram ser diplomatas e comerciantes astutos. São habilidosos no combate e na magia. Onde quer que se encontrem moedas de ouro, os imperiais sempre parecem encontrar algumas a mais. Podem invocar a Voz do Imperador para acalmar um inimigo."
+    },
+    {
+      "id": "breton",
+      "name": "Bretão",
+      "description": "Além de sua compreensão rápida e perspicaz das artes mágicas, até o mais humilde dos bretões de High Rock pode se orgulhar de sua resistência à magia. Os bretões podem invocar o poder Pele de Dragão para absorver feitiços."
+    },
+    {
+      "id": "redguard",
+      "name": "Redguard",
+      "description": "Os guerreiros de maior talento natural em Tamriel, os redguards de Hammerfell possuem uma constituição robusta e resistência natural a venenos. Podem recorrer a uma Descarga de Adrenalina em combate."
+    },
+    {
+      "id": "altmer",
+      "name": "Alto elfo",
+      "description": "Também conhecidos como “Altmer” em sua terra natal, a Ilha Summerset, os altos elfos são a raça mais dotada para as artes arcanas. Podem invocar seu poder de Sangue Nobre para regenerar a Magicka rapidamente."
+    },
+    {
+      "id": "dunmer",
+      "name": "Elfo negro",
+      "description": "Também conhecidos como “Dunmer” em sua terra natal, Morrowind, os elfos negros são reconhecidos por suas habilidades furtivas e mágicas. São naturalmente resistentes ao fogo e podem invocar a Ira dos Ancestrais para se envolverem em chamas."
+    },
+    {
+      "id": "bosmer",
+      "name": "Elfo da floresta",
+      "description": "Os povos dos clãs das florestas do oeste de Valenwood, também conhecidos como “Bosmer”. Os elfos da floresta são bons batedores e ladrões, e não há melhores arqueiros em toda Tamriel. Possuem resistência natural a venenos e doenças. Podem Comandar Animais para que lutem por eles."
+    },
+    {
+      "id": "orc",
+      "name": "Orc",
+      "description": "Originários das montanhas Wrothgarian e Dragontail, os ferreiros orcs são valorizados por sua habilidade artesanal. As tropas orcs de armadura pesada estão entre as melhores do Império e são temíveis quando usam sua Fúria Berserker."
+    },
+    {
+      "id": "khajiit",
+      "name": "Khajiit",
+      "description": "Originários da província de Elsweyr, são inteligentes, rápidos e ágeis. Sua furtividade natural faz deles excelentes ladrões. Todos os khajiit podem enxergar no escuro à vontade e atacar com suas garras quando desarmados."
+    },
+    {
+      "id": "argonian",
+      "name": "Argoniano",
+      "description": "Esta raça reptiliana, bem adaptada aos pântanos traiçoeiros de sua terra natal, Black Marsh, desenvolveu resistência natural a doenças e a capacidade de respirar debaixo d’água. Pode invocar o poder Pele de Hist para regenerar a saúde muito rapidamente."
+    }
+  ]
+}

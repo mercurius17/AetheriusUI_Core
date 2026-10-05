@@ -319,3 +319,36 @@ test("Meridian shell exposes the fixture registry, lifecycle and shared componen
   assert.match(shopFixture, /id: 'shop'/);
   assert.match(shopFixture, /radialSlot: 11/);
 });
+
+test("character catalog is authenticated read-only and rejects gameplay commands", async () => {
+  const register = require("../character-creation/register-character.cjs");
+  const router = new UiServerRouter();
+  const unload = register(router);
+  const context = { userId: 42, actorId: 9001, expectedSessionId: "character-session" };
+  const request = (action: string, payload: unknown = {}, suffix = action) => validRequest({
+    moduleId: "character", action, payload, sessionId: "character-session",
+    messageId: "character-" + suffix, correlationId: "character-" + suffix,
+  });
+  const first = await router.dispatch(request("snapshot"), context);
+  assert.equal(first.kind, "response");
+  const snapshot = first.payload as any;
+  assert.equal(snapshot.readOnly, true);
+  assert.equal(snapshot.scope, "vanilla-presentation");
+  assert.equal(snapshot.races.length, 10);
+  assert.equal(new Set(snapshot.races.map((row: any) => row.id)).size, 10);
+  for (const action of ["race", "slider", "finish", "selectRace", "changeName"]) {
+    const denied = await router.dispatch(request(action, { raceId: "nord", actorId: 9002 }), context);
+    assert.equal(denied.kind, "error");
+    assert.equal(denied.error?.code, "ACTION_UNAVAILABLE");
+  }
+  const spoof = await router.dispatch(request("snapshot", { actorId: 9002 }, "spoof"), context);
+  assert.equal(spoof.kind, "error");
+  const wrongSession = await router.dispatch(request("snapshot", {}, "wrong-session"), { ...context, expectedSessionId: "another-session" });
+  assert.equal(wrongSession.error?.code, "SESSION_MISMATCH");
+  snapshot.races[0].name = "Changed response";
+  const fresh = await router.dispatch(request("snapshot", {}, "fresh"), context);
+  assert.notEqual((fresh.payload as any).races[0].name, "Changed response");
+  unload();
+  const afterUnload = await router.dispatch(request("snapshot", {}, "unloaded"), context);
+  assert.equal(afterUnload.error?.code, "ACTION_UNAVAILABLE");
+});

@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "source": "https://github.com/NaoTemJuju/Aetherius_Criacao_Personagem",
+  "commit": "b7b8584a84b113ac4f7b1799d4d944648ba7ff50",
+  "license": "No license file declared at this revision; preserve attribution and review redistribution rights.",
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "02ebb18afe82b8c8f6dabb4f3ac96189735532895530da06e384c8e390fbede2"
+    },
+    {
+      "path": "docs/CHARACTER_CREATION.md",
+      "sha256": "26870713aec9aa5323cea45112288ba10298bbe9c9b68469e9282e52b7409d56"
+    },
+    {
+      "path": "native/CMakeLists.txt",
+      "sha256": "01bb1f35aac792c92e2f156a4914da2f6016e410554ab988666397e61c0f28e8"
+    },
+    {
+      "path": "native/src/main.cpp",
+      "sha256": "81fb69e5e8fea69f19628a973d01a169b67741834ddf1bcd7ca2960b2ab6835b"
+    },
+    {
+      "path": "native/src/chargen.h",
+      "sha256": "4852b9dc3910edd4da72e2261a1be728cad558f26145dd45ab73a9f64c97452a"
+    },
+    {
+      "path": "native/src/chargen.cpp",
+      "sha256": "0e794e70608665b977239f8947c581ce366f81d3f94a8435d30088e8dc60e875"
+    },
+    {
+      "path": "frontend/Data/MeridianUI/aetheriusui/chargen.html",
+      "sha256": "883c42afa4ecbee7fed636041b369ba53615d5c2a94f0a93fb8a02dad4c833fd"
+    },
+    {
+      "path": "frontend/Data/MeridianUI/aetheriusui/chargen.css",
+      "sha256": "a2f9a05f8f43f895fa9df585856b8f5e89acc2a9e9811b2578d766d50f52e10e"
+    },
+    {
+      "path": "frontend/Data/MeridianUI/aetheriusui/chargen.js",
+      "sha256": "215eb3c5ca68e225e7b83be7e433976854f2bd7f7da757123e84750aca7f6ffb"
+    },
+    {
+      "path": "frontend/Data/MeridianUI/aetheriusui/chargen-visuals.js",
+      "sha256": "59c0b0e77b4cb2372d08083056aa9cfbfbda6166a3acf867cae06e5229371248"
+    }
+  ]
+}

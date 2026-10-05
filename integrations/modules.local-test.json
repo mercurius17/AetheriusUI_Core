@@ -2,6 +2,14 @@
   "schemaVersion": 1,
   "modules": [
     {
+      "id": "character",
+      "slot": 0,
+      "route": "/character",
+      "sdkMajor": 1,
+      "styles": ["modules/character/character-module.css"],
+      "scripts": ["modules/character/race-catalog.js", "modules/character/character-module.js"]
+    },
+    {
       "id": "class",
       "slot": 1,
       "route": "/class",

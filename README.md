@@ -8,12 +8,15 @@ Consulte primeiro [estado atual](docs/CURRENT_STATE.md) e [implementação resta
 
 ## O que há aqui
 
+O [menu de raças/criação de personagem](docs/CHARACTER_CREATION.md), importado de NaoTemJuju/Aetherius_Criacao_Personagem, está incorporado ao bridge e ao frontend. O destino PERSONAGEM fornece catálogo em consulta após registro no servidor; alterações de raça, sexo, aparência e nome permanecem bloqueadas até a integração autoritativa.
+
 Para compilar as DLLs, consulte o [guia completo de compilação](docs/DLL_BUILD_GUIDE.md): bridge CommonLibSSE-NG, Meridian/CEF, addon nativo do servidor, TypeScript, empacotamento e diagnóstico. Ele registra os caches usados e os limites de reprodução em uma máquina limpa.
 
 - `shared/`: protocolo, navegação, catálogo, registry de módulos e store de revisão.
 - `sdk/`: cliente local, envelopes e router genérico do servidor.
 - `frontend/`: shell, HUD, estilos, ícones originais e fixtures de demonstração.
 - `native/`: consumidor SKSE do Meridian em C++ e seu CMake.
+- `character-creation/`: catálogo vanilla de apresentação e bootstrap de consulta para o router autenticado.
 - `integrations/`: snapshot atual de server/client/Meridian, manifesto local de módulos e patches históricos identificados por baseline.
 - `docs/`: arquitetura, protocolo, módulos, segurança, input, auditorias e decisões técnicas.
 - `tests/`: testes de contrato do Core.
